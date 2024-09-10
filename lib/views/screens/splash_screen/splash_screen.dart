@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:umair_liaqat_portfolio/config/size_config.dart';
 import 'package:umair_liaqat_portfolio/utils/colors.dart';
+import 'package:umair_liaqat_portfolio/views/screens/home_screen/home_screen.dart';
+import 'package:umair_liaqat_portfolio/views/widgets/buttons/bouncy_button.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,14 +33,13 @@ class SplashScreen extends StatelessWidget {
                 ),
               ),
             ),
+            // Positioned circles
             Positioned(
-              top: -150, // Position circle above the screen
-              left: -100, // Position circle to the left
+              top: -150,
+              left: -100,
               child: Container(
-                height:
-                    SizeConfig.height(context) * 1.5, // Adjust size as needed
-                width:
-                    SizeConfig.height(context) * 1.5, // Adjust size as needed
+                height: SizeConfig.height(context) * 1.5,
+                width: SizeConfig.height(context) * 1.5,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: secondaryColor.withOpacity(0.5),
@@ -40,13 +47,11 @@ class SplashScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: -20, // Position circle below the screen
-              right: -100, // Position circle to the right
+              bottom: -20,
+              right: -100,
               child: Container(
-                height:
-                    SizeConfig.height20(context) * 1.5, // Adjust size as needed
-                width:
-                    SizeConfig.width20(context) * 1.5, // Adjust size as needed
+                height: SizeConfig.height20(context) * 1.5,
+                width: SizeConfig.width20(context) * 1.5,
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: secondaryColor.withOpacity(0.5),
@@ -54,13 +59,11 @@ class SplashScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: -20, // Position circle below the screen
-              left: -100, // Position circle to the right
+              top: -20,
+              left: -100,
               child: Container(
-                height:
-                    SizeConfig.height20(context) * 1.5, // Adjust size as needed
-                width:
-                    SizeConfig.width20(context) * 1.5, // Adjust size as needed
+                height: SizeConfig.height20(context) * 1.5,
+                width: SizeConfig.width20(context) * 1.5,
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   color: secondaryColor.withOpacity(0.5),
@@ -68,11 +71,11 @@ class SplashScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: -200, // Position circle above the screen
-              right: -250, // Position circle to the right
+              top: -200,
+              right: -250,
               child: Container(
-                height: SizeConfig.height(context), // Adjust size as needed
-                width: SizeConfig.height(context), // Adjust size as needed
+                height: SizeConfig.height(context),
+                width: SizeConfig.height(context),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: secondaryColor.withOpacity(0.5),
@@ -80,13 +83,11 @@ class SplashScreen extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: -150, // Position circle below the screen
-              left: -150, // Position circle to the left
+              bottom: -150,
+              left: -150,
               child: Container(
-                height:
-                    SizeConfig.height(context) * 1.2, // Adjust size as needed
-                width:
-                    SizeConfig.height(context) * 1.2, // Adjust size as needed
+                height: SizeConfig.height(context) * 1.2,
+                width: SizeConfig.height(context) * 1.2,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: secondaryColor.withOpacity(0.5),
@@ -97,20 +98,43 @@ class SplashScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "Umair Liaqat",
-                    style: TextStyle(
-                      fontSize: SizeConfig.font20(context),
-                      fontWeight: FontWeight.bold,
-                      color: whiteColor,
+                  AnimationConfiguration.synchronized(
+                    duration: const Duration(milliseconds: 500),
+                    child: FadeInAnimation(
+                      child: Text(
+                        "Umair Liaqat",
+                        style: TextStyle(
+                          fontSize: SizeConfig.font20(context),
+                          fontWeight: FontWeight.bold,
+                          color: whiteColor,
+                        ),
+                      ),
                     ),
                   ),
-                  Text(
-                    "A Flutter developer",
-                    style: TextStyle(
-                      fontSize: SizeConfig.font10(context),
-                      fontWeight: FontWeight.bold,
-                      color: whiteColor,
+                  AnimationConfiguration.synchronized(
+                    duration: const Duration(milliseconds: 500),
+                    child: FadeInAnimation(
+                      child: Text(
+                        "A Flutter developer",
+                        style: TextStyle(
+                          fontSize: SizeConfig.font10(context),
+                          fontWeight: FontWeight.bold,
+                          color: whiteColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  AnimationConfiguration.synchronized(
+                    duration: const Duration(milliseconds: 500),
+                    child: FadeInAnimation(
+                      child: BouncyButton(
+                        buttonWidget: Icon(
+                          Icons.keyboard_arrow_down_outlined,
+                          color: secondaryColor,
+                          size: SizeConfig.height20(context),
+                        ),
+                        onTap: () => _switchPage(),
+                      ),
                     ),
                   ),
                 ],
@@ -118,6 +142,28 @@ class SplashScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _switchPage() {
+    // Perform the fade transition to the next page
+    Navigator.of(context).pushReplacement(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            const HomeScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(0.0, 1.0);
+          const end = Offset.zero;
+          const curve = Curves.easeInOut;
+          var tween = Tween(begin: begin, end: end);
+          var offsetAnimation =
+              animation.drive(tween.chain(CurveTween(curve: curve)));
+          return FadeTransition(
+            opacity: animation,
+            child: SlideTransition(position: offsetAnimation, child: child),
+          );
+        },
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:umair_liaqat_portfolio/config/size_config.dart';
 import 'package:umair_liaqat_portfolio/views/screens/splash_screen/splash_screen.dart';
 
@@ -31,10 +32,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        textTheme: GoogleFonts.pacificoTextTheme(),
+      ),
       debugShowCheckedModeBanner: false,
-      title: 'Responsive App',
-      home: SplashScreen(),
+      title: 'Umair Liaqat',
+      home: const SplashScreen(),
     );
   }
 }
