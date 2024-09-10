@@ -19,8 +19,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    // This runs before the widget is fully built
-    // We use addPostFrameCallback to run code after the widget is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       performActionAfterBuild();
     });
@@ -34,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        textTheme: GoogleFonts.pacificoTextTheme(),
+        textTheme: GoogleFonts.dancingScriptTextTheme(),
       ),
       debugShowCheckedModeBanner: false,
       title: 'Umair Liaqat',

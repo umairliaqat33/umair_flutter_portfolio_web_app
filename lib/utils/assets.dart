@@ -60,15 +60,15 @@ class Assets {
 
 //images
 
-  static const String logo = "$_imagesDir/app_logo.png";
-  static const String emptyScreenImage = "$_imagesDir/empty_screen.png";
-  static const String selectImgSmallRectangle =
-      "$_imagesDir/select_img_small_rectangle.png";
-  static const String selectImgBigRectangle =
-      "$_imagesDir/select_img_big_rectangle.png";
-  static const String blankProfilePicture =
-      "$_imagesDir/blank_profile_image.png";
-  static const String deleteAccountAlert =
-      "$_imagesDir/delete_account_alert.png";
-  static const String feedbackImage = "$_imagesDir/feedback_image.png";
+  // static const String logo = "$_imagesDir/app_logo.png";
+  static const String profileImage = "$_imagesDir/profile_picture.png";
+  // static const String selectImgSmallRectangle =
+  //     "$_imagesDir/select_img_small_rectangle.png";
+  // static const String selectImgBigRectangle =
+  //     "$_imagesDir/select_img_big_rectangle.png";
+  // static const String blankProfilePicture =
+  //     "$_imagesDir/blank_profile_image.png";
+  // static const String deleteAccountAlert =
+  //     "$_imagesDir/delete_account_alert.png";
+  // static const String feedbackImage = "$_imagesDir/feedback_image.png";
 }

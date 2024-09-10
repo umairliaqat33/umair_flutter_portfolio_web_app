@@ -31,13 +31,13 @@ class CustomButton extends StatelessWidget {
           ),
         ),
         height: SizeConfig.height10(context) + 2,
-        width: SizeConfig.width20(context) * 2,
+        width: SizeConfig.width20(context),
         child: Center(
           child: Text(
             title,
             style: TextStyle(
               color: whiteColor,
-              fontSize: SizeConfig.font10(context) - 15,
+              fontSize: SizeConfig.font10(context),
             ),
           ),
         ),

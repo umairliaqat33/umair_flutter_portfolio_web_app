@@ -104,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Text(
                         "Umair Liaqat",
                         style: TextStyle(
-                          fontSize: SizeConfig.font20(context),
+                          fontSize: SizeConfig.font24(context),
                           fontWeight: FontWeight.bold,
                           color: whiteColor,
                         ),
@@ -117,8 +117,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       child: Text(
                         "A Flutter developer",
                         style: TextStyle(
-                          fontSize: SizeConfig.font10(context),
-                          fontWeight: FontWeight.bold,
+                          fontSize: SizeConfig.font12(context),
                           color: whiteColor,
                         ),
                       ),
