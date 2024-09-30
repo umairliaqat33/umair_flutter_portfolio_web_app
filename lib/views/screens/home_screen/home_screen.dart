@@ -3,6 +3,10 @@ import 'package:umair_liaqat_portfolio/config/size_config.dart';
 import 'package:umair_liaqat_portfolio/utils/assets.dart';
 import 'package:umair_liaqat_portfolio/utils/colors.dart';
 import 'package:umair_liaqat_portfolio/views/widgets/buttons/custom_button.dart';
+import 'package:umair_liaqat_portfolio/views/widgets/container_widgets.dart/project_container_widget.dart';
+import 'package:umair_liaqat_portfolio/views/widgets/container_widgets.dart/service_container_widget.dart';
+import 'package:umair_liaqat_portfolio/views/widgets/text_widgets/heading_text_widget.dart';
+import 'package:umair_liaqat_portfolio/views/widgets/text_widgets/normal_text_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -65,27 +69,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              "Hello, I'm",
-                              style: TextStyle(
-                                fontSize: SizeConfig.font10(context),
-                                color: whiteColor,
-                              ),
+                            HeadingTextWidget(
+                              'Hello I\'m,',
+                              fontSize: SizeConfig.font10(context),
+                              fontWeight: FontWeight.w300,
                             ),
-                            Text(
+                            HeadingTextWidget(
                               "Umair Liaqat",
-                              style: TextStyle(
-                                fontSize: SizeConfig.font24(context),
-                                fontWeight: FontWeight.bold,
-                                color: whiteColor,
-                              ),
+                              fontSize: SizeConfig.font24(context),
                             ),
-                            Text(
+                            const NormalTextWidget(
                               "A passionate Flutter developer more than 1.5 years. With hands-on experience in creating feature-rich, user-friendly apps. I specialize in crafting solutions that include firebase as database.",
-                              style: TextStyle(
-                                fontSize: SizeConfig.font6(context),
-                                color: whiteColor,
-                              ),
                             ),
                             SizedBox(
                               height: SizeConfig.height5(context),
@@ -107,18 +101,42 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                Text(
-                  "About Me",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: SizeConfig.headingFont(context),
-                    color: whiteColor,
-                    fontWeight: FontWeight.bold,
-                  ),
+                const HeadingTextWidget(
+                  "About me",
                 ),
                 SizedBox(
-                  height: SizeConfig.height3(context),
+                  height: SizeConfig.height1(context),
                 ),
+                const NormalTextWidget(
+                  "Greetings! I'm Umair Liaqat, a dedicated professional with over year of experience in flutter. My journey in the tech world began over a year ago, and I've been immersed in the exciting realm of Flutter ever since. I also have three years of experience in the dynamic call center industry, specializing in both Tele Sales and Customer Support.",
+                ),
+                SizedBox(
+                  height: SizeConfig.height1(context),
+                ),
+                const HeadingTextWidget(
+                  "Services i offer:",
+                ),
+                SizedBox(
+                  height: SizeConfig.height1(context),
+                ),
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ServiceContainerWidget(
+                      title: 'Mobile App',
+                      iconData: Icons.flutter_dash_outlined,
+                      child:
+                          'I am a Junior Flutter developer. I can help you building your dream app. In my experience of a year i have worked on several succesfull applications',
+                    ),
+                    ServiceContainerWidget(
+                      title: 'Customer Support',
+                      iconData: Icons.headphones,
+                      child:
+                          'I have helped many organizations in building their customer base and generating their sales. I have also helped them to streamline their support processes.',
+                    ),
+                  ],
+                ),
+                ProjectContainerWidget(),
               ],
             ),
           ),

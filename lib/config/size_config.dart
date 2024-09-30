@@ -101,6 +101,7 @@ class SizeConfig {
   static double font34(BuildContext context) => fontSize(context, 8.5);
 
   static double headingFont(BuildContext context) => fontSize(context, 2.5);
+  static double normalFont(BuildContext context) => fontSize(context, 1.5);
 
   // Example of predefined paddings
   static double pad8(BuildContext context) => padding(context, 2);

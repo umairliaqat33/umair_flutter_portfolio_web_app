@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:umair_liaqat_portfolio/config/size_config.dart';
 import 'package:umair_liaqat_portfolio/utils/colors.dart';
 import 'package:umair_liaqat_portfolio/views/screens/home_screen/home_screen.dart';
@@ -103,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: FadeInAnimation(
                       child: Text(
                         "Umair Liaqat",
-                        style: TextStyle(
+                        style: GoogleFonts.dancingScript().copyWith(
                           fontSize: SizeConfig.font24(context),
                           fontWeight: FontWeight.bold,
                           color: whiteColor,
@@ -116,8 +117,9 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: FadeInAnimation(
                       child: Text(
                         "A Flutter developer",
-                        style: TextStyle(
+                        style: GoogleFonts.dancingScript().copyWith(
                           fontSize: SizeConfig.font12(context),
+                          fontWeight: FontWeight.bold,
                           color: whiteColor,
                         ),
                       ),

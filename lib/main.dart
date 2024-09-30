@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:umair_liaqat_portfolio/config/size_config.dart';
@@ -18,21 +20,20 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      performActionAfterBuild();
-    });
+    _getScreenSize();
   }
 
-  void performActionAfterBuild() {
-    SizeConfig.init(context);
+  void _getScreenSize() {
+    Future.delayed(const Duration(seconds: 2), () {
+      SizeConfig.init(context);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        textTheme: GoogleFonts.dancingScriptTextTheme(),
+        textTheme: GoogleFonts.eduQldBeginnerTextTheme(),
       ),
       debugShowCheckedModeBanner: false,
       title: 'Umair Liaqat',
