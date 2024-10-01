@@ -39,6 +39,9 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   google_fonts: ^6.2.1
   flutter_staggered_animations: ^1.1.1
+  infinite_carousel: ^1.1.1
+  video_player: ^2.9.1
+  flick_video_player: ^0.9.0
 
 
 flutter_icons:
@@ -73,6 +76,7 @@ flutter:
     - assets/
     - assets/app_icon/
     - assets/images/
+    - assets/images/freelancers.mp4
     # - assets/svg_icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see

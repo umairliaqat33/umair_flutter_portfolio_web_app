@@ -24,6 +24,7 @@ class NormalTextWidget extends StatelessWidget {
       textAlign: textAlign,
       style: TextStyle(
         fontSize: fontSize ?? SizeConfig.normalFont(context),
+        overflow: TextOverflow.visible,
         color: fontColor,
         fontWeight: fontWeight,
       ),

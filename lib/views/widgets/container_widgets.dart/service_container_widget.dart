@@ -33,7 +33,7 @@ class _ServiceContainerWidgetState extends State<ServiceContainerWidget> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(
             Radius.circular(
-              SizeConfig.font10(context),
+              SizeConfig.height3(context),
             ),
           ),
           border: Border.all(

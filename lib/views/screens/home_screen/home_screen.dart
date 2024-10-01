@@ -136,7 +136,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                ProjectContainerWidget(),
+                SizedBox(
+                  height: SizeConfig.height1(context),
+                ),
+                const HeadingTextWidget(
+                  "Featured Projects",
+                ),
+                SizedBox(
+                  height: SizeConfig.height1(context),
+                ),
+                const ProjectContainerWidget(),
               ],
             ),
           ),
