@@ -5,6 +5,7 @@ class Assets {
 
   // images
   static const String profileImage = "$_imagesDir/profile_picture.png";
+  static const String image = "$_imagesDir/picture.jpg";
   static const String frelancersCalendar =
       "$_imagesDir/freelancers_calender.png";
 }

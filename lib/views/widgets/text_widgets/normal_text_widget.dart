@@ -8,6 +8,8 @@ class NormalTextWidget extends StatelessWidget {
   final double? fontSize;
   final FontWeight? fontWeight;
   final TextAlign? textAlign;
+  final TextOverflow? overflow;
+  final int? maxLines;
   const NormalTextWidget(
     this.text, {
     super.key,
@@ -15,6 +17,8 @@ class NormalTextWidget extends StatelessWidget {
     this.fontSize,
     this.fontWeight = FontWeight.w300,
     this.textAlign,
+    this.overflow,
+    this.maxLines,
   });
 
   @override
@@ -22,9 +26,11 @@ class NormalTextWidget extends StatelessWidget {
     return Text(
       text,
       textAlign: textAlign,
+      maxLines: maxLines ?? 4,
       style: TextStyle(
+        fontFamily: 'Lato',
         fontSize: fontSize ?? SizeConfig.normalFont(context),
-        overflow: TextOverflow.visible,
+        overflow: overflow,
         color: fontColor,
         fontWeight: fontWeight,
       ),

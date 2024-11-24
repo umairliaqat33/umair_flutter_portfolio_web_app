@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:umair_liaqat_portfolio/config/size_config.dart';
 import 'package:umair_liaqat_portfolio/views/screens/splash_screen/splash_screen.dart';
 
@@ -32,9 +31,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        textTheme: GoogleFonts.eduQldBeginnerTextTheme(),
-      ),
+      // theme: ThemeData(
+      //   textTheme: GoogleFonts.eduQldBeginnerTextTheme(),
+      // ),
       debugShowCheckedModeBanner: false,
       title: 'Umair Liaqat',
       home: const SplashScreen(),

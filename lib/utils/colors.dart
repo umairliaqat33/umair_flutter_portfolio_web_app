@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
-const Color primaryColor = Color(0xff31baf7);
-const Color secondaryColor = Color(0xff055a9d);
+const Color primaryColor = Color(0xff5700ef);
+const Color secondaryColor = Color(0xff00D1A0);
+const Color scaffoldColor = Color(0xFFFFFFFF);
+const Color headingColor = Color(0xff374151);
+const Color smallHeadingColor = Color(0xff4B5563);
+const Color normalTextColor = Color(0xff6B7280);
+const Color subtitleTextColor = Color(0xff9CA3AF);
 const Color errorColor = Color(0xffFF5630);
 const Color whiteColor = Color(0xffffffff);
 const Color greyColor = Color(0xff606964);
@@ -26,7 +31,6 @@ const Color orangeColor = Color(0xffFFAB00);
 const Color parrotColor = Color(0xff66ff33);
 const Color maroonColor = Color(0xff990000);
 const Color textFieldFillColor = Color(0xffedf7f1);
-Color scaffoldColor = const Color(0xfff0f4f8);
 const Color purpleColor = Color(0xffCC10EA);
 const Color oceanColor = Color(0xff70B4E0);
 const Color listViewCardColor = Color(0xfff0faf4);

@@ -27,7 +27,7 @@ class _ServiceContainerWidgetState extends State<ServiceContainerWidget> {
       onEnter: (event) => changeCententColor(true),
       onExit: (event) => changeCententColor(false),
       child: Container(
-        height: SizeConfig.height40(context) + SizeConfig.height20(context),
+        height: SizeConfig.height30(context),
         width: SizeConfig.width30(context),
         padding: EdgeInsets.all(SizeConfig.pad12(context)),
         decoration: BoxDecoration(
@@ -45,19 +45,29 @@ class _ServiceContainerWidgetState extends State<ServiceContainerWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Icon(
-              widget.iconData,
-              size: SizeConfig.height20(context),
-              color: isHover ? secondaryColor : whiteColor,
-            ),
-            HeadingTextWidget(
-              widget.title,
-              textAlign: TextAlign.center,
-              fontColor: isHover ? secondaryColor : whiteColor,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  widget.iconData,
+                  size: SizeConfig.height8(context),
+                  color: isHover ? secondaryColor : whiteColor,
+                ),
+                SizedBox(
+                  width: SizeConfig.height1(context),
+                ),
+                HeadingTextWidget(
+                  widget.title,
+                  textAlign: TextAlign.center,
+                  fontColor: isHover ? secondaryColor : whiteColor,
+                ),
+              ],
             ),
             NormalTextWidget(
               widget.child,
-              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              textAlign: TextAlign.left,
               fontColor: isHover ? secondaryColor : whiteColor,
             )
           ],
