@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1076895934039",
+    "project_id": "umair-liaqat",
+    "storage_bucket": "umair-liaqat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076895934039:android:2e4f019efa5b5a7fa76512",
+        "android_client_info": {
+          "package_name": "com.example.umair_liaqat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpka-oAc82N7aqx1XjDCKU_-aBEYY5w6Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076895934039:android:dd8e9e6f4a6dd1e8a76512",
+        "android_client_info": {
+          "package_name": "com.example.umair_liaqat_portfolio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpka-oAc82N7aqx1XjDCKU_-aBEYY5w6Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
