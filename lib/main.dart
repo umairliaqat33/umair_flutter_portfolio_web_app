@@ -1,42 +1,58 @@
-// ignore_for_file: use_build_context_synchronously
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
-import 'package:umair_liaqat_portfolio/config/size_config.dart';
-import 'package:umair_liaqat_portfolio/views/screens/splash_screen/splash_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:umair_liaqat_portfolio/bloc/home_bloc.dart';
+import 'package:umair_liaqat_portfolio/firebase_options.dart';
+import 'package:umair_liaqat_portfolio/ui/home/home_screen.dart';
+import 'package:umair_liaqat_portfolio/utils/app_routes.dart';
+import 'package:umair_liaqat_portfolio/utils/app_theme.dart';
 
-void main() {
+import 'bloc/bloc_observer.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await setupRemoteConfig(); // Initialize Remote Config
+  Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-    _getScreenSize();
-  }
-
-  void _getScreenSize() {
-    Future.delayed(const Duration(seconds: 2), () {
-      SizeConfig.init(context);
-    });
-  }
-
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // theme: ThemeData(
-      //   textTheme: GoogleFonts.eduQldBeginnerTextTheme(),
-      // ),
-      debugShowCheckedModeBanner: false,
-      title: 'Umair Liaqat',
-      home: const SplashScreen(),
+    return BlocProvider<HomeBloc>(
+      create: (_) => HomeBloc(),
+      child: MaterialApp(
+        title: 'Umair Liaqat',
+        debugShowCheckedModeBanner: false,
+        theme: PortfolioAppTheme.baseTheme(),
+        initialRoute: HomeScreen.routeName,
+        routes: routes,
+      ),
     );
   }
+}
+
+Future<FirebaseRemoteConfig> setupRemoteConfig() async {
+  final remoteConfig = FirebaseRemoteConfig.instance;
+
+  try {
+    await remoteConfig.setConfigSettings(RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 10),
+      minimumFetchInterval:
+          const Duration(hours: 1), // Reduce unnecessary fetches
+    ));
+
+    await remoteConfig.fetchAndActivate();
+
+    debugPrint("🔥 Remote Config Fetched Successfully");
+  } catch (e) {
+    debugPrint("⚠️ Remote Config Error: $e");
+  }
+
+  return remoteConfig;
 }
