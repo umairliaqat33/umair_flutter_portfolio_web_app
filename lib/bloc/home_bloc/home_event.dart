@@ -14,6 +14,15 @@ class ChangeAppBarHeadersIndex extends HomeEvent {
   List<Object?> get props => [index];
 }
 
+class ChangeLoading extends HomeEvent {
+  final bool isLoading;
+
+  ChangeLoading(this.isLoading);
+
+  @override
+  List<Object?> get props => [isLoading];
+}
+
 class ChangeAppBarHeadersAxis extends HomeEvent {
   final AppBarHeadersAxis headersAxis;
 

@@ -24,3 +24,16 @@ class PortfolioAppTheme {
 extension ThemeExtras on ThemeData {
   Color get secondaryColor => const Color(0xFFFE53BB);
 }
+
+InputDecoration textFieldDecoration = InputDecoration(
+  focusedBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.white,
+    ),
+  ),
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.white,
+    ),
+  ),
+);

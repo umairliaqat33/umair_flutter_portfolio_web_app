@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:umair_liaqat/bloc/home_bloc.dart';
+import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
 import 'package:umair_liaqat/firebase_options.dart';
 import 'package:umair_liaqat/ui/home/home_screen.dart';
 import 'package:umair_liaqat/utils/app_routes.dart';

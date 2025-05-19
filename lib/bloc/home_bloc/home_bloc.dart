@@ -12,9 +12,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<ChangeAppBarHeadersIndex>(_changeAppBarHeadersIndex);
     on<ChangeAppBarHeadersAxis>(_changeAppBarHeadersAxis);
     on<ChangeAppBarHeadersColorByColor>(_changeAppBarHeadersColorByColor);
+    on<ChangeLoading>(_changeLoading);
   }
   int _appBarHeaderIndex = 0;
+  bool _isLoading = false;
   int get appBarHeaderIndex => _appBarHeaderIndex;
+  bool get buttonLoading => _isLoading;
 
   FutureOr<void> _changeAppBarHeadersIndex(
     ChangeAppBarHeadersIndex event,
@@ -22,6 +25,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) {
     _appBarHeaderIndex = event.index;
     emit(AppBarHeadersIndexChanged(_appBarHeaderIndex));
+  }
+
+  FutureOr<void> _changeLoading(
+    ChangeLoading event,
+    Emitter<HomeState> emit,
+  ) {
+    _isLoading = !event.isLoading;
+    emit(ChangeLoadingVal(_isLoading));
   }
 
   FutureOr<void> _changeAppBarHeadersColorByColor(

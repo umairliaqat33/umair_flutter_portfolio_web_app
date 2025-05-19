@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:umair_liaqat/ui/login_screen/login_screen.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
@@ -131,6 +132,31 @@ class _ContactMeState extends State<ContactMe> {
               ),
               onPressed: () {
                 html.window.open(AppStrings.cv, "pdf");
+              },
+            ),
+            ElevatedButton.icon(
+              label: Text(
+                "Login",
+                style: textTheme.titleMedium,
+              ),
+              icon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    FontAwesomeIcons.rightToBracket,
+                    color: Colors.white,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
               },
             ),
           ],
