@@ -33,12 +33,3 @@ class AppBarHeadersColorChangedByIndex extends HomeState {
   @override
   List<Object?> get props => [index];
 }
-
-class ChangeLoadingVal extends HomeState {
-  final bool isLoading;
-
-  ChangeLoadingVal(this.isLoading);
-
-  @override
-  List<Object?> get props => [isLoading];
-}

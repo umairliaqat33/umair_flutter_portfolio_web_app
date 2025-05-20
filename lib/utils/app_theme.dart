@@ -16,8 +16,15 @@ class PortfolioAppTheme {
       textTheme: GoogleFonts.poppinsTextTheme(),
     );
     return theme.copyWith(
-        textTheme: theme.textTheme.copyWith(
-            titleMedium: theme.textTheme.titleMedium!.copyWith(color: white)));
+      textTheme: theme.textTheme.copyWith(
+        titleMedium: theme.textTheme.titleMedium!.copyWith(
+          color: white,
+        ),
+        bodySmall: theme.textTheme.bodySmall!.copyWith(
+          color: white,
+        ),
+      ),
+    );
   }
 }
 

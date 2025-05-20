@@ -39,9 +39,9 @@
     },
     {
       "name": "bloc",
-      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/bloc-8.1.4",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/bloc-9.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.14"
     },
     {
       "name": "boolean_selector",
@@ -182,6 +182,24 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "firebase_auth",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth-5.5.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "firebase_auth_platform_interface",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_platform_interface-7.6.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "firebase_auth_web",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_auth_web-5.14.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "firebase_core",
       "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-3.13.0",
       "packageUri": "lib/",
@@ -237,9 +255,9 @@
     },
     {
       "name": "flutter_bloc",
-      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_bloc-8.1.6",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_bloc-9.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.14"
     },
     {
       "name": "flutter_cache_manager",
@@ -249,9 +267,51 @@
     },
     {
       "name": "flutter_inappwebview",
-      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview-5.8.0",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview-6.1.5",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "flutter_inappwebview_android",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview_android-1.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "flutter_inappwebview_internal_annotations",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview_internal_annotations-1.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "flutter_inappwebview_ios",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview_ios-1.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "flutter_inappwebview_macos",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview_macos-1.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "flutter_inappwebview_platform_interface",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview_platform_interface-1.3.0+1",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "flutter_inappwebview_web",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview_web-1.1.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "flutter_inappwebview_windows",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_inappwebview_windows-0.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
     },
     {
       "name": "flutter_launcher_icons",
@@ -288,6 +348,12 @@
       "rootUri": "file:///C:/flutter/flutter_latest/packages/flutter_web_plugins",
       "packageUri": "lib/",
       "languageVersion": "3.2"
+    },
+    {
+      "name": "fluttertoast",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/fluttertoast-8.2.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "font_awesome_flutter",
@@ -651,7 +717,7 @@
     },
     {
       "name": "video_player_android",
-      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_android-2.8.3",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/video_player_android-2.8.4",
       "packageUri": "lib/",
       "languageVersion": "3.6"
     },
@@ -699,25 +765,25 @@
     },
     {
       "name": "webview_flutter",
-      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter-4.11.0",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter-4.12.0",
       "packageUri": "lib/",
       "languageVersion": "3.6"
     },
     {
       "name": "webview_flutter_android",
-      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_android-4.4.2",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_android-4.7.0",
       "packageUri": "lib/",
       "languageVersion": "3.6"
     },
     {
       "name": "webview_flutter_platform_interface",
-      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_platform_interface-2.11.0",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_platform_interface-2.13.0",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
     {
       "name": "webview_flutter_wkwebview",
-      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_wkwebview-3.20.0",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/webview_flutter_wkwebview-3.22.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
     },
@@ -747,9 +813,9 @@
     },
     {
       "name": "youtube_player_flutter",
-      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/youtube_player_flutter-8.1.2",
+      "rootUri": "file:///C:/Users/Umair/AppData/Local/Pub/Cache/hosted/pub.dev/youtube_player_flutter-9.1.1",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.5"
     },
     {
       "name": "youtube_player_iframe",
@@ -770,7 +836,7 @@
       "languageVersion": "3.6"
     }
   ],
-  "generated": "2025-05-19T09:59:25.984044Z",
+  "generated": "2025-05-20T14:31:09.804884Z",
   "generator": "pub",
   "generatorVersion": "3.6.1",
   "flutterRoot": "file:///C:/flutter/flutter_latest",

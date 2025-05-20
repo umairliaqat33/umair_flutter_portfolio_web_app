@@ -1,8 +1,22 @@
 import 'package:equatable/equatable.dart';
 
-abstract class LoginState extends Equatable {
+class LoginState extends Equatable {
+  final bool isLoading;
+  final String? errorMessage;
+
+  const LoginState({
+    this.isLoading = false,
+    this.errorMessage,
+  });
+  LoginState copyWith({bool? isLoading, String? errorMessage}) {
+    return LoginState(
+      isLoading: isLoading ?? this.isLoading,
+      errorMessage: errorMessage,
+    );
+  }
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [isLoading, errorMessage];
 }
 
 class LoginInitial extends LoginState {}

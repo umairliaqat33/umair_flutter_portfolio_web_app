@@ -3,6 +3,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
+import 'package:umair_liaqat/bloc/login_bloc/login_bloc.dart';
 import 'package:umair_liaqat/firebase_options.dart';
 import 'package:umair_liaqat/ui/home/home_screen.dart';
 import 'package:umair_liaqat/utils/app_routes.dart';
@@ -24,8 +25,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HomeBloc>(
-      create: (_) => HomeBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<HomeBloc>(
+          create: (_) => HomeBloc(),
+        ),
+        BlocProvider<LoginBloc>(
+          create: (_) => LoginBloc(),
+        ),
+      ],
       child: MaterialApp(
         title: 'Umair Liaqat',
         debugShowCheckedModeBanner: false,
