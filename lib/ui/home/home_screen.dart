@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
 import 'package:umair_liaqat/ui/home/components/home_app_bar.dart';
-import 'package:umair_liaqat/ui/portfolio_details/portfolio_details_screen.dart';
 import 'package:umair_liaqat/utils/app_enum.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
@@ -21,7 +20,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: HomeAppBar(),
-      body: PortfolioDetailsScreen(),
+      body: HomeBody(),
     );
   }
 }
