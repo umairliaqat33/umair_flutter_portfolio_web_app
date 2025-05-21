@@ -9,3 +9,5 @@ enum DeviceType {
   largeScreenDesktop,
   extraLargeTV
 }
+
+enum ImageType { svg, pngAndOthers, network, lottie }

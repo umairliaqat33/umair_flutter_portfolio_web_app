@@ -12,11 +12,7 @@
         "lib/firebase_options.dart": {
           "projectId": "umair-liaqat",
           "configurations": {
-            "android": "1:1076895934039:android:2e4f019efa5b5a7fa76512",
-            "ios": "1:1076895934039:ios:36503e509867b67ea76512",
-            "macos": "1:1076895934039:ios:36503e509867b67ea76512",
-            "web": "1:1076895934039:web:06c73c01c28fb7eda76512",
-            "windows": "1:1076895934039:web:130954a7b6e80644a76512"
+            "web": "1:1076895934039:web:d7c8a43dbdfa46f6a76512"
           }
         }
       }

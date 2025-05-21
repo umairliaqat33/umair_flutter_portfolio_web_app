@@ -21,6 +21,21 @@ extension MediaQueryExtension on BuildContext {
   double get height => _size.height;
 }
 
+extension TapExtension on Widget {
+  Widget onTapWidget({
+    required void Function() onTap,
+    HitTestBehavior? hitTestBehavior,
+  }) {
+    return GestureDetector(
+      behavior: hitTestBehavior ?? HitTestBehavior.opaque,
+      onTap: () async {
+        onTap.call();
+      },
+      child: this,
+    );
+  }
+}
+
 extension DeviceTypeExtension on DeviceType {
   int getMinWidth() {
     switch (this) {

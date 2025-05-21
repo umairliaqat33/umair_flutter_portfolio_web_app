@@ -1,9 +1,9 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:umair_liaqat/ui/widgets/my_photo.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
-import 'package:umair_liaqat/widgets/my_photo.dart';
 import 'package:universal_html/html.dart' as html;
 
 class AboutMe extends StatelessWidget {
@@ -12,7 +12,6 @@ class AboutMe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      final textTheme = Theme.of(context).textTheme;
       bool isMobile = constraints.maxWidth < 600;
       if (isMobile) {
         return SingleChildScrollView(
@@ -26,7 +25,7 @@ class AboutMe extends StatelessWidget {
                 children: [
                   Text(
                     "Hello, I'm",
-                    style: textTheme.titleLarge!.copyWith(
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: PortfolioAppTheme.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
@@ -35,10 +34,10 @@ class AboutMe extends StatelessWidget {
                   Text(
                     "Umair Liaqat",
                     style: context.width > 456
-                        ? textTheme.displayLarge!.copyWith(
+                        ? Theme.of(context).textTheme.displayLarge!.copyWith(
                             color: PortfolioAppTheme.nameColor,
                             fontWeight: FontWeight.w700)
-                        : textTheme.displayMedium!.copyWith(
+                        : Theme.of(context).textTheme.displayMedium!.copyWith(
                             color: PortfolioAppTheme.nameColor,
                             fontWeight: FontWeight.w700),
                   ),
@@ -48,13 +47,18 @@ class AboutMe extends StatelessWidget {
                     animatedTexts: [
                       TyperAnimatedText(
                         "A Mobile App Developer",
-                        textStyle: textTheme.titleMedium!
-                            .copyWith(fontWeight: FontWeight.w400),
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
                         speed: const Duration(milliseconds: 120),
                       ),
                       TyperAnimatedText(
                         "A Web App Developer",
-                        textStyle: textTheme.titleMedium,
+                        textStyle: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
                         speed: const Duration(milliseconds: 100),
                       ),
                     ],
@@ -65,7 +69,7 @@ class AboutMe extends StatelessWidget {
                     height: context.height * 0.042,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        html.window.open(AppStrings.resume, "pdf");
+                        html.window.open(AppConstants.resume, "pdf");
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: PortfolioAppTheme.white,
@@ -75,10 +79,11 @@ class AboutMe extends StatelessWidget {
                       label: FittedBox(
                         child: Text(
                           "Download Resume",
-                          style: textTheme.titleMedium!.copyWith(
-                            color: PortfolioAppTheme.greyButtonColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: PortfolioAppTheme.greyButtonColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                       ),
                     ),
@@ -92,7 +97,10 @@ class AboutMe extends StatelessWidget {
                           //  context.width > 550?
                           Text(
                         "Passionate Flutter developer with 2+ years of experience, always exploring the latest advancements in the Flutter ecosystem. I focus on building scalable, high-performance apps with clean architecture and future-proof solutions.",
-                        style: textTheme.titleMedium,
+                        style:
+                            Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: Colors.white,
+                                ),
                         // softWrap: true,
                       ),
                       // : const SizedBox(),
@@ -115,7 +123,7 @@ class AboutMe extends StatelessWidget {
                 children: [
                   Text(
                     "Hello, I'm",
-                    style: textTheme.titleLarge!.copyWith(
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: PortfolioAppTheme.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
@@ -124,10 +132,10 @@ class AboutMe extends StatelessWidget {
                   Text(
                     "Umair Liaqat",
                     style: context.width > 456
-                        ? textTheme.displayLarge!.copyWith(
+                        ? Theme.of(context).textTheme.displayLarge!.copyWith(
                             color: PortfolioAppTheme.nameColor,
                             fontWeight: FontWeight.w700)
-                        : textTheme.displayMedium!.copyWith(
+                        : Theme.of(context).textTheme.displayMedium!.copyWith(
                             color: PortfolioAppTheme.nameColor,
                             fontWeight: FontWeight.w700),
                   ),
@@ -137,13 +145,15 @@ class AboutMe extends StatelessWidget {
                     animatedTexts: [
                       TyperAnimatedText(
                         "A Mobile App Developer",
-                        textStyle: textTheme.titleMedium!
+                        textStyle: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
                             .copyWith(fontWeight: FontWeight.w400),
                         speed: const Duration(milliseconds: 120),
                       ),
                       TyperAnimatedText(
                         "A Web App Developer",
-                        textStyle: textTheme.titleMedium,
+                        textStyle: Theme.of(context).textTheme.titleMedium,
                         speed: const Duration(milliseconds: 100),
                       ),
                     ],
@@ -154,7 +164,7 @@ class AboutMe extends StatelessWidget {
                     height: context.height * 0.042,
                     child: ElevatedButton.icon(
                       onPressed: () {
-                        html.window.open(AppStrings.resume, "pdf");
+                        html.window.open(AppConstants.resume, "pdf");
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: PortfolioAppTheme.white,
@@ -164,10 +174,11 @@ class AboutMe extends StatelessWidget {
                       label: FittedBox(
                         child: Text(
                           "Download Resume",
-                          style: textTheme.titleMedium!.copyWith(
-                            color: PortfolioAppTheme.greyButtonColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    color: PortfolioAppTheme.greyButtonColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                         ),
                       ),
                     ),
@@ -180,7 +191,7 @@ class AboutMe extends StatelessWidget {
                       child: context.width > 550
                           ? Text(
                               "Passionate Flutter developer with 2+ years of experience, always exploring the latest advancements in the Flutter ecosystem. I focus on building scalable, high-performance apps with clean architecture and future-proof solutions.",
-                              style: textTheme.titleMedium,
+                              style: Theme.of(context).textTheme.titleMedium,
                               // softWrap: true,
                             )
                           : const SizedBox(),

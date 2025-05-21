@@ -4,7 +4,7 @@ import 'package:umair_liaqat/ui/login_screen/login_screen.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
-import 'package:umair_liaqat/widgets/contact_form.dart';
+import 'package:umair_liaqat/ui/widgets/contact_form.dart';
 import 'package:universal_html/html.dart' as html;
 
 class ContactMe extends StatefulWidget {
@@ -102,19 +102,20 @@ class _ContactMeState extends State<ContactMe> {
         Wrap(
           alignment: WrapAlignment.center,
           spacing: 10,
+          runSpacing: 10,
           children: [
             IconButton(
               icon: const Icon(FontAwesomeIcons.whatsapp, color: Colors.green),
-              onPressed: () => gotoUrl(AppStrings.whatsapp),
+              onPressed: () => gotoUrl(AppConstants.whatsapp),
             ),
             IconButton(
               icon: const Icon(FontAwesomeIcons.linkedin,
                   color: PortfolioAppTheme.blue),
-              onPressed: () => gotoUrl(AppStrings.linkedIn),
+              onPressed: () => gotoUrl(AppConstants.linkedIn),
             ),
             IconButton(
               icon: const Icon(FontAwesomeIcons.github, color: Colors.black),
-              onPressed: () => gotoUrl(AppStrings.github),
+              onPressed: () => gotoUrl(AppConstants.github),
             ),
             ElevatedButton.icon(
               label: Text(
@@ -131,7 +132,7 @@ class _ContactMeState extends State<ContactMe> {
                 ],
               ),
               onPressed: () {
-                html.window.open(AppStrings.cv, "pdf");
+                html.window.open(AppConstants.cv, "pdf");
               },
             ),
             ElevatedButton.icon(

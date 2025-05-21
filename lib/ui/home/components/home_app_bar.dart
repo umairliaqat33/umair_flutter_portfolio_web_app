@@ -55,7 +55,10 @@ class AppBarMenu extends StatelessWidget {
             crossFadeState: _getCrossFadeState(context),
             firstChild: TextButton(
               onPressed: () => _menuBtnClicked(context),
-              child: const Icon(Icons.menu),
+              child: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
             ),
             secondChild: TextButton(
               onPressed: () => _closeBtnClicked(context),

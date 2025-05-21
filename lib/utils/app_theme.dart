@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class PortfolioAppTheme {
   static const Color primary = Color(0xFF2C2C2F);
+  static const Color normalTextColor = Colors.white;
   static const Color greyButtonColor = Color(0xFF5E5E60);
   static const Color nameColor = Color(0xFFf9a51f);
   static const white = Color(0xFFFFFFFF);
@@ -12,19 +13,35 @@ class PortfolioAppTheme {
     final themeData = ThemeData.dark();
 
     final theme = themeData.copyWith(
+      scaffoldBackgroundColor: PortfolioAppTheme.greyButtonColor,
       primaryColor: primary,
-      textTheme: GoogleFonts.poppinsTextTheme(),
-    );
-    return theme.copyWith(
-      textTheme: theme.textTheme.copyWith(
-        titleMedium: theme.textTheme.titleMedium!.copyWith(
-          color: white,
+      inputDecorationTheme: InputDecorationTheme(
+        hintStyle: TextStyle(
+          color: Colors.black,
         ),
-        bodySmall: theme.textTheme.bodySmall!.copyWith(
+        labelStyle: TextStyle(
+          color: Colors.black,
+        ),
+        errorStyle: TextStyle(
+          color: Colors.red,
+        ),
+      ),
+      textTheme: GoogleFonts.poppinsTextTheme().copyWith(
+        bodyLarge: TextStyle(
+          color: Colors.black,
+        ),
+        bodyMedium: TextStyle(
+          color: Colors.white,
+        ),
+        bodySmall: TextStyle(
+          color: Colors.white,
+        ),
+        titleMedium: TextStyle(
           color: white,
         ),
       ),
     );
+    return theme.copyWith();
   }
 }
 

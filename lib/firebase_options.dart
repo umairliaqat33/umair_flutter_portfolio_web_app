@@ -42,12 +42,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyC7YyzxISjm8Jrl-9MTnPV84fJ8UBwSJCU',
-    appId: '1:1076895934039:web:06c73c01c28fb7eda76512',
+    appId: '1:1076895934039:web:d7c8a43dbdfa46f6a76512',
     messagingSenderId: '1076895934039',
     projectId: 'umair-liaqat',
     authDomain: 'umair-liaqat.firebaseapp.com',
     storageBucket: 'umair-liaqat.firebasestorage.app',
-    measurementId: 'G-PFQS82SRP4',
+    measurementId: 'G-TRRH9JMVRK',
   );
 
   static const FirebaseOptions android = FirebaseOptions(

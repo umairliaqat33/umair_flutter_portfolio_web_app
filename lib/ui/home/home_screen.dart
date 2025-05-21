@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
 import 'package:umair_liaqat/ui/home/components/home_app_bar.dart';
+import 'package:umair_liaqat/ui/portfolio_details/portfolio_details_screen.dart';
 import 'package:umair_liaqat/utils/app_enum.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
+import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
-import 'package:umair_liaqat/widgets/vertical_headers.dart';
+import 'package:umair_liaqat/ui/widgets/vertical_headers.dart';
 
 import 'components/about_me.dart';
 import 'components/contact_me.dart';
@@ -17,9 +19,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: HomeAppBar(),
-      body: HomeBody(),
+      body: PortfolioDetailsScreen(),
     );
   }
 }
@@ -102,7 +104,7 @@ class _HomeBodyState extends State<HomeBody> {
           Container(
             width: context.width,
             height: context.height,
-            padding: EdgeInsets.all(context.width * 0.04),
+            padding: AppSizes.appPadding(context),
             color: PortfolioAppTheme.primary,
             child: SingleChildScrollView(
               controller: _controller,

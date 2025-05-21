@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:umair_liaqat/bloc/details_bloc/details_bloc.dart';
 import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
 import 'package:umair_liaqat/bloc/login_bloc/login_bloc.dart';
 import 'package:umair_liaqat/firebase_options.dart';
@@ -33,13 +35,19 @@ class MyApp extends StatelessWidget {
         BlocProvider<LoginBloc>(
           create: (_) => LoginBloc(),
         ),
+        BlocProvider<DetailsBloc>(
+          create: (_) => DetailsBloc(),
+        ),
       ],
-      child: MaterialApp(
-        title: 'Umair Liaqat',
-        debugShowCheckedModeBanner: false,
-        theme: PortfolioAppTheme.baseTheme(),
-        initialRoute: HomeScreen.routeName,
-        routes: routes,
+      child: ScreenUtilInit(
+        designSize: Size(1440, 1024),
+        child: MaterialApp(
+          title: 'Umair Liaqat',
+          debugShowCheckedModeBanner: false,
+          theme: PortfolioAppTheme.baseTheme(),
+          initialRoute: HomeScreen.routeName,
+          routes: routes,
+        ),
       ),
     );
   }
