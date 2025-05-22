@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:umair_liaqat/models/user_model.dart';
 
 class LoginState extends Equatable {
   final bool isLoading;
@@ -8,7 +9,8 @@ class LoginState extends Equatable {
     this.isLoading = false,
     this.errorMessage,
   });
-  LoginState copyWith({bool? isLoading, String? errorMessage}) {
+  LoginState copyWith(
+      {bool? isLoading, String? errorMessage, UserModel? userData}) {
     return LoginState(
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage,
@@ -16,7 +18,10 @@ class LoginState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [isLoading, errorMessage];
+  List<Object?> get props => [
+        isLoading,
+        errorMessage,
+      ];
 }
 
 class LoginInitial extends LoginState {}

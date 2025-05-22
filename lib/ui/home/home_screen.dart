@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
+import 'package:umair_liaqat/ui/home/components/education_part.dart';
 import 'package:umair_liaqat/ui/home/components/home_app_bar.dart';
+import 'package:umair_liaqat/ui/home/components/work_history_part.dart';
 import 'package:umair_liaqat/utils/app_enum.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
@@ -46,6 +48,7 @@ class _HomeBodyState extends State<HomeBody> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeBloc>().add(GetUserData());
       _initListenerForInteractWithHeaderIndex();
     });
   }
@@ -110,11 +113,37 @@ class _HomeBodyState extends State<HomeBody> {
               child: Column(
                 children: [
                   SizedBox(height: 0.08 * context.height),
-                  AboutMe(key: aboutMeKey),
+                  AboutMe(
+                    key: aboutMeKey,
+                    userModel: context.watch<HomeBloc>().state.userModel,
+                  ),
                   SizedBox(height: context.height * 0.09),
-                  FeatureProjects(key: featuredProjectsKey),
+                  WorkHistoryPart(
+                    jobHistoryList:
+                        context.watch<HomeBloc>().state.userModel?.jobs ?? [],
+                  ),
                   SizedBox(height: context.height * 0.09),
-                  ContactMe(key: contactMeKey)
+                  EducationPart(
+                    qualifications: context
+                            .watch<HomeBloc>()
+                            .state
+                            .userModel
+                            ?.qualifications ??
+                        [],
+                  ),
+                  SizedBox(height: context.height * 0.09),
+                  FeatureProjects(
+                    key: featuredProjectsKey,
+                    projectsList:
+                        context.watch<HomeBloc>().state.userModel?.projects ??
+                            [],
+                  ),
+                  SizedBox(height: context.height * 0.09),
+                  ContactMe(
+                    key: contactMeKey,
+                    userModel: context.watch<HomeBloc>().state.userModel,
+                  ),
+                  SizedBox(height: context.height * 0.09),
                 ],
               ),
             ),

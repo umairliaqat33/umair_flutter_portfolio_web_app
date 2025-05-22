@@ -1,16 +1,20 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:umair_liaqat/models/project_model.dart';
+import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
 
 class FeatureProjects extends StatefulWidget {
-  const FeatureProjects({super.key});
+  final List<ProjectModel> projectsList;
+  const FeatureProjects({
+    super.key,
+    required this.projectsList,
+  });
 
   @override
   State<FeatureProjects> createState() => _FeatureProjectsState();
@@ -18,51 +22,6 @@ class FeatureProjects extends StatefulWidget {
 
 class _FeatureProjectsState extends State<FeatureProjects> {
   int hoveredIndex = -1;
-  List<Map<String, dynamic>> projects = [];
-
-  @override
-  void initState() {
-    super.initState();
-    fetchProjects();
-  }
-
-  void fetchProjects() async {
-    final remoteConfig = FirebaseRemoteConfig.instance;
-
-    try {
-      await remoteConfig.fetchAndActivate();
-      String jsonString = remoteConfig.getString('projects');
-
-      if (jsonString.isEmpty) {
-        jsonString = '''
-      {
-        "projects": [
-          {
-            "image": "assets/imgs/default.png",
-            "title": "Default Project",
-            "description": "This is a default project description.",
-            "github": "https://github.com/default",
-            "videoUrl": "https://www.youtube.com/watch?v=default"
-          }
-        ]
-      }
-      ''';
-      }
-
-      Map<String, dynamic> jsonData = jsonDecode(jsonString);
-      if (jsonData.containsKey('projects') && jsonData['projects'] is List) {
-        setState(() {
-          projects = List<Map<String, dynamic>>.from(jsonData['projects']);
-        });
-      } else {
-        projects = [];
-      }
-
-      log("✅ Projects Loaded Successfully");
-    } catch (e) {
-      log("❌ Error Fetching Projects: $e");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,17 +34,21 @@ class _FeatureProjectsState extends State<FeatureProjects> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Featured Projects',
+            Strings.featuredProjects,
             style: textTheme.displaySmall!.copyWith(
               color: PortfolioAppTheme.nameColor,
               fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 20),
-          projects.isEmpty
-              ? const Center(child: CircularProgressIndicator())
+          widget.projectsList.isEmpty
+              ? Center(
+                  child: Text(
+                    Strings.noProjects,
+                  ),
+                )
               : GridView.builder(
-                  itemCount: projects.length,
+                  itemCount: widget.projectsList.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -95,7 +58,7 @@ class _FeatureProjectsState extends State<FeatureProjects> {
                     childAspectRatio: isMobile ? 1.2 : 1.0,
                   ),
                   itemBuilder: (context, index) {
-                    var project = projects[index];
+                    var project = widget.projectsList[index];
 
                     return MouseRegion(
                       onEnter: (_) => setState(() => hoveredIndex = index),
@@ -107,11 +70,10 @@ class _FeatureProjectsState extends State<FeatureProjects> {
                           scale: hoveredIndex == index ? 1.05 : 1.0,
                           duration: const Duration(milliseconds: 200),
                           child: _buildProjectCard(
-                            project["image"],
-                            project["title"],
-                            project["description"],
-                            project["github"],
-                            project["videoUrl"],
+                            project.files![0],
+                            project.name ?? "",
+                            project.description ?? "",
+                            project.link ?? "",
                             textTheme,
                           ),
                         ),
@@ -125,9 +87,13 @@ class _FeatureProjectsState extends State<FeatureProjects> {
   }
 
   Widget _buildProjectCard(String image, String title, String description,
-      String github, String videoUrl, TextTheme textTheme) {
+      String github, TextTheme textTheme) {
     return GestureDetector(
-      onTap: () => _showProjectPopup(context, title, description, videoUrl),
+      onTap: () => _showProjectPopup(
+        context,
+        title,
+        description,
+      ),
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -189,7 +155,10 @@ class _FeatureProjectsState extends State<FeatureProjects> {
   }
 
   void _showProjectPopup(
-      BuildContext context, String title, String description, String videoUrl) {
+    BuildContext context,
+    String title,
+    String description,
+  ) {
     final isMobile = context.width < 600;
 
     showDialog(
@@ -244,26 +213,26 @@ class _FeatureProjectsState extends State<FeatureProjects> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        if (videoUrl.isNotEmpty) ...[
-                          // Video Player
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.1),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: BuildVideoPlayer(videoUrl: videoUrl),
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                        ],
+                        // if (videoUrl.isNotEmpty) ...[
+                        //   // Video Player
+                        //   Container(
+                        //     decoration: BoxDecoration(
+                        //       borderRadius: BorderRadius.circular(12),
+                        //       boxShadow: [
+                        //         BoxShadow(
+                        //           color: Colors.black.withValues(alpha: 0.1),
+                        //           blurRadius: 10,
+                        //           offset: const Offset(0, 4),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     child: ClipRRect(
+                        //       borderRadius: BorderRadius.circular(12),
+                        //       child: BuildVideoPlayer(videoUrl: videoUrl),
+                        //     ),
+                        //   ),
+                        //   const SizedBox(height: 24),
+                        // ],
 
                         // Description
                         Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:umair_liaqat/models/user_model.dart';
 import 'package:umair_liaqat/ui/login_screen/login_screen.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
@@ -8,7 +9,11 @@ import 'package:umair_liaqat/ui/widgets/contact_form.dart';
 import 'package:universal_html/html.dart' as html;
 
 class ContactMe extends StatefulWidget {
-  const ContactMe({super.key});
+  final UserModel? userModel;
+  const ContactMe({
+    super.key,
+    this.userModel,
+  });
 
   @override
   State<ContactMe> createState() => _ContactMeState();
@@ -106,16 +111,19 @@ class _ContactMeState extends State<ContactMe> {
           children: [
             IconButton(
               icon: const Icon(FontAwesomeIcons.whatsapp, color: Colors.green),
-              onPressed: () => gotoUrl(AppConstants.whatsapp),
+              onPressed: () => gotoUrl(
+                  widget.userModel?.phoneNumber ?? AppConstants.whatsapp),
             ),
             IconButton(
               icon: const Icon(FontAwesomeIcons.linkedin,
                   color: PortfolioAppTheme.blue),
-              onPressed: () => gotoUrl(AppConstants.linkedIn),
+              onPressed: () =>
+                  gotoUrl(widget.userModel?.linkedIn ?? AppConstants.linkedIn),
             ),
             IconButton(
               icon: const Icon(FontAwesomeIcons.github, color: Colors.black),
-              onPressed: () => gotoUrl(AppConstants.github),
+              onPressed: () =>
+                  gotoUrl(widget.userModel?.github ?? AppConstants.github),
             ),
             ElevatedButton.icon(
               label: Text(
@@ -137,7 +145,7 @@ class _ContactMeState extends State<ContactMe> {
             ),
             ElevatedButton.icon(
               label: Text(
-                "Login",
+                Strings.login,
                 style: textTheme.titleMedium,
               ),
               icon: Row(

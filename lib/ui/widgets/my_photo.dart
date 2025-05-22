@@ -6,7 +6,8 @@ import 'package:umair_liaqat/utils/assets.dart';
 import 'custom_outline.dart';
 
 class MyPhoto extends StatefulWidget {
-  const MyPhoto({super.key});
+  final String? picture;
+  const MyPhoto({super.key, this.picture});
 
   @override
   State<MyPhoto> createState() => _MyPhotoState();
@@ -94,7 +95,9 @@ class _MyPhotoState extends State<MyPhoto> with TickerProviderStateMixin {
                 image: DecorationImage(
                   fit: BoxFit.cover,
                   alignment: Alignment.bottomLeft,
-                  image: AssetImage(Assets.profilePicture),
+                  image: widget.picture == null
+                      ? AssetImage(Assets.errorImagePlaceholder)
+                      : NetworkImage(widget.picture!),
                 ),
               ),
             ),

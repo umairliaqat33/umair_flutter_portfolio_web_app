@@ -10,6 +10,13 @@ class AppConstants {
   static const String github = 'https://github.com/umairliaqat33';
 }
 
+class DatabaseCollections {
+  static String user = "user";
+  static String projects = "projects";
+  static String jobHistory = "jobHistory";
+  static String qualifications = "qualifications";
+}
+
 class Strings {
   static String passwordRequired = "Password is required";
 
@@ -17,9 +24,19 @@ class Strings {
       "Minimum 8 character required in password";
 
   static String emailRequired = "Email required";
+  static String helloIAm = "Hello, I'm";
+  static String downloadResume = "Download Resume";
   static String password = "Password";
+  static String login = "Login";
+  static String qualifications = "Qualifications";
+  static String featuredProjects = 'Featured Projects';
+  static String noProjects = 'No projects added yet';
+  static String noQualifications = 'No qualifications added yet';
+  static String noWorkHistory = 'No work history added yet';
+  static String workHistory = "Work history";
   static String email = "Email";
   static String headline1 = "Headline 1";
+  static String userName = "User name";
   static String headline2 = "Headline 2";
   static String description = "Description";
   static String institute = "Institute";

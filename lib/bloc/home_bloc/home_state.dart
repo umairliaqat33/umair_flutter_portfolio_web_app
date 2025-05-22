@@ -1,8 +1,20 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'home_bloc.dart';
 
-abstract class HomeState extends Equatable {
+class HomeState extends Equatable {
+  final UserModel? userModel;
+  const HomeState({
+    this.userModel,
+  });
+  HomeState copyWith(
+      {bool? isLoading, String? errorMessage, UserModel? userData}) {
+    return HomeState(
+      userModel: userModel,
+    );
+  }
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [userModel];
 }
 
 class HomeInitial extends HomeState {}
@@ -10,7 +22,7 @@ class HomeInitial extends HomeState {}
 class AppBarHeadersIndexChanged extends HomeState {
   final int index;
 
-  AppBarHeadersIndexChanged(this.index);
+  const AppBarHeadersIndexChanged(this.index);
 
   @override
   List<Object?> get props => [index];
@@ -19,7 +31,7 @@ class AppBarHeadersIndexChanged extends HomeState {
 class AppBarHeadersAxisChanged extends HomeState {
   final AppBarHeadersAxis headersAxis;
 
-  AppBarHeadersAxisChanged(this.headersAxis);
+  const AppBarHeadersAxisChanged(this.headersAxis);
 
   @override
   List<Object?> get props => [headersAxis];
@@ -28,7 +40,7 @@ class AppBarHeadersAxisChanged extends HomeState {
 class AppBarHeadersColorChangedByIndex extends HomeState {
   final int index;
 
-  AppBarHeadersColorChangedByIndex(this.index);
+  const AppBarHeadersColorChangedByIndex(this.index);
 
   @override
   List<Object?> get props => [index];

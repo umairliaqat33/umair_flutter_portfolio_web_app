@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:umair_liaqat/models/user_model.dart';
 import 'package:umair_liaqat/ui/widgets/my_photo.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
@@ -7,7 +8,11 @@ import 'package:umair_liaqat/utils/app_theme.dart';
 import 'package:universal_html/html.dart' as html;
 
 class AboutMe extends StatelessWidget {
-  const AboutMe({super.key});
+  final UserModel? userModel;
+  const AboutMe({
+    super.key,
+    this.userModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class AboutMe extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Hello, I'm",
+                    Strings.helloIAm,
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: PortfolioAppTheme.white,
                         fontWeight: FontWeight.bold,
@@ -32,7 +37,7 @@ class AboutMe extends StatelessWidget {
                   ),
                   SizedBox(height: context.height * 0.01),
                   Text(
-                    "Umair Liaqat",
+                    userModel?.name ?? "",
                     style: context.width > 456
                         ? Theme.of(context).textTheme.displayLarge!.copyWith(
                             color: PortfolioAppTheme.nameColor,
@@ -46,7 +51,7 @@ class AboutMe extends StatelessWidget {
                     repeatForever: true,
                     animatedTexts: [
                       TyperAnimatedText(
-                        "A Mobile App Developer",
+                        userModel?.headline1 ?? "",
                         textStyle: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Colors.white,
@@ -54,7 +59,7 @@ class AboutMe extends StatelessWidget {
                         speed: const Duration(milliseconds: 120),
                       ),
                       TyperAnimatedText(
-                        "A Web App Developer",
+                        userModel?.headline2 ?? "",
                         textStyle: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Colors.white,
@@ -78,7 +83,7 @@ class AboutMe extends StatelessWidget {
                           color: PortfolioAppTheme.nameColor),
                       label: FittedBox(
                         child: Text(
-                          "Download Resume",
+                          Strings.downloadResume,
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
                                     color: PortfolioAppTheme.greyButtonColor,
@@ -96,7 +101,7 @@ class AboutMe extends StatelessWidget {
                       child:
                           //  context.width > 550?
                           Text(
-                        "Passionate Flutter developer with 2+ years of experience, always exploring the latest advancements in the Flutter ecosystem. I focus on building scalable, high-performance apps with clean architecture and future-proof solutions.",
+                        userModel?.description ?? "",
                         style:
                             Theme.of(context).textTheme.titleMedium!.copyWith(
                                   color: Colors.white,
@@ -122,7 +127,7 @@ class AboutMe extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Hello, I'm",
+                    Strings.helloIAm,
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: PortfolioAppTheme.white,
                         fontWeight: FontWeight.bold,
@@ -130,7 +135,7 @@ class AboutMe extends StatelessWidget {
                   ),
                   SizedBox(height: context.height * 0.01),
                   Text(
-                    "Umair Liaqat",
+                    userModel?.name ?? "",
                     style: context.width > 456
                         ? Theme.of(context).textTheme.displayLarge!.copyWith(
                             color: PortfolioAppTheme.nameColor,
@@ -144,7 +149,7 @@ class AboutMe extends StatelessWidget {
                     repeatForever: true,
                     animatedTexts: [
                       TyperAnimatedText(
-                        "A Mobile App Developer",
+                        userModel?.headline1 ?? "",
                         textStyle: Theme.of(context)
                             .textTheme
                             .titleMedium!
@@ -152,7 +157,7 @@ class AboutMe extends StatelessWidget {
                         speed: const Duration(milliseconds: 120),
                       ),
                       TyperAnimatedText(
-                        "A Web App Developer",
+                        userModel?.headline2 ?? "",
                         textStyle: Theme.of(context).textTheme.titleMedium,
                         speed: const Duration(milliseconds: 100),
                       ),
@@ -173,7 +178,7 @@ class AboutMe extends StatelessWidget {
                           color: PortfolioAppTheme.nameColor),
                       label: FittedBox(
                         child: Text(
-                          "Download Resume",
+                          Strings.downloadResume,
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
                                     color: PortfolioAppTheme.greyButtonColor,
@@ -190,7 +195,7 @@ class AboutMe extends StatelessWidget {
                       width: context.width * 0.6,
                       child: context.width > 550
                           ? Text(
-                              "Passionate Flutter developer with 2+ years of experience, always exploring the latest advancements in the Flutter ecosystem. I focus on building scalable, high-performance apps with clean architecture and future-proof solutions.",
+                              userModel?.description ?? "",
                               style: Theme.of(context).textTheme.titleMedium,
                               // softWrap: true,
                             )
@@ -201,7 +206,9 @@ class AboutMe extends StatelessWidget {
               ),
             ),
             SizedBox(width: context.width * 0.03),
-            const MyPhoto(),
+            MyPhoto(
+              picture: userModel?.profilePicture,
+            ),
             SizedBox(width: context.width * 0.11)
           ],
         );

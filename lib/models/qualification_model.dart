@@ -2,11 +2,13 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class QualificationModel {
-  final String? instituteName;
-  final String? completionYear;
-  final String? degreeName;
-  final int? sortingIndex;
+  String? id;
+  String? instituteName;
+  String? completionYear;
+  String? degreeName;
+  int? sortingIndex;
   QualificationModel({
+    this.id,
     this.instituteName,
     this.completionYear,
     this.degreeName,
@@ -15,6 +17,7 @@ class QualificationModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'instituteName': instituteName,
       'completionYear': completionYear,
       'degreeName': degreeName,
@@ -24,6 +27,7 @@ class QualificationModel {
 
   factory QualificationModel.fromMap(Map<String, dynamic> map) {
     return QualificationModel(
+      id: map['id'] != null ? map['id'] as String : null,
       instituteName:
           map['instituteName'] != null ? map['instituteName'] as String : null,
       completionYear: map['completionYear'] != null
@@ -42,12 +46,14 @@ class QualificationModel {
       QualificationModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   QualificationModel copyWith({
+    String? id,
     String? instituteName,
     String? completionYear,
     String? degreeName,
     int? sortingIndex,
   }) {
     return QualificationModel(
+      id: id ?? this.id,
       instituteName: instituteName ?? this.instituteName,
       completionYear: completionYear ?? this.completionYear,
       degreeName: degreeName ?? this.degreeName,

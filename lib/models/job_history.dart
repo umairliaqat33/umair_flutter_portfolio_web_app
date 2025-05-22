@@ -2,12 +2,13 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class JobHistory {
-  final String? position;
-  final String? jobDescription;
-  final String? organization;
-  final String? fromDate;
-  final String? toDate;
-  final int? sortIndex;
+  String? id;
+  String? position;
+  String? jobDescription;
+  String? organization;
+  String? fromDate;
+  String? toDate;
+  int? sortIndex;
   JobHistory({
     this.position,
     this.jobDescription,
@@ -15,6 +16,7 @@ class JobHistory {
     this.fromDate,
     this.toDate,
     this.sortIndex,
+    this.id,
   });
 
   JobHistory copyWith({
@@ -24,6 +26,7 @@ class JobHistory {
     String? fromDate,
     String? toDate,
     int? sortIndex,
+    String? id,
   }) {
     return JobHistory(
       position: position ?? this.position,
@@ -32,6 +35,7 @@ class JobHistory {
       fromDate: fromDate ?? this.fromDate,
       toDate: toDate ?? this.toDate,
       sortIndex: sortIndex ?? this.sortIndex,
+      id: id ?? this.id,
     );
   }
 
@@ -43,12 +47,14 @@ class JobHistory {
       'fromDate': fromDate,
       'toDate': toDate,
       'sortIndex': sortIndex,
+      'id': id,
     };
   }
 
   factory JobHistory.fromMap(Map<String, dynamic> map) {
     return JobHistory(
       position: map['position'] != null ? map['position'] as String : null,
+      id: map['id'] != null ? map['id'] as String : null,
       jobDescription: map['jobDescription'] != null
           ? map['jobDescription'] as String
           : null,

@@ -31,3 +31,10 @@ class ChangeAppBarHeadersColorByColor extends HomeEvent {
   @override
   List<Object?> get props => [index];
 }
+
+class GetUserData extends HomeEvent {
+  GetUserData();
+
+  @override
+  List<Object?> get props => [];
+}
