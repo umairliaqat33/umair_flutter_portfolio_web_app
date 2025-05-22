@@ -409,133 +409,149 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   }
 
   Widget _buildWorkHistoryPart(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        HeadingTextWidget(
-          Strings.addWorkHistory,
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Container(
-          padding: PortfolioDetailsSizes.imageSectionPadding(context),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.white,
-            ),
-            borderRadius: BorderRadius.circular(
-              12,
-            ),
+    return Form(
+      key: _workHistoryFormKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          HeadingTextWidget(
+            Strings.addWorkHistory,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  CustomTextFormField(
-                    width: AppSizes.textfieldWidth(context),
-                    controller: _positionController,
-                    label: Strings.jobPosition,
-                    hintText:
-                        Strings.enterValue(Strings.jobPosition.toLowerCase()),
-                    validator: (value) =>
-                        ValidatorUtils.customValidatorValidator(
-                            value, Strings.isRequired(Strings.jobPosition)),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  CustomTextFormField(
-                    width: AppSizes.textfieldWidth(context),
-                    controller: _organizationController,
-                    label: Strings.organization,
-                    hintText:
-                        Strings.enterValue(Strings.organization.toLowerCase()),
-                    validator: (value) =>
-                        ValidatorUtils.customValidatorValidator(
-                            value, Strings.isRequired(Strings.organization)),
-                  ),
-                ],
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            padding: PortfolioDetailsSizes.imageSectionPadding(context),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white,
               ),
-              SizedBox(
-                height: 20,
+              borderRadius: BorderRadius.circular(
+                12,
               ),
-              Row(
-                children: [
-                  CustomTextFormField(
-                    width: AppSizes.textfieldWidth(context),
-                    controller: _fromDateController,
-                    label: Strings.fromDate,
-                    hintText:
-                        Strings.enterValue(Strings.fromDate.toLowerCase()),
-                    validator: (value) =>
-                        ValidatorUtils.customValidatorValidator(
-                            value, Strings.isRequired(Strings.fromDate)),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  CustomTextFormField(
-                    width: AppSizes.textfieldWidth(context),
-                    controller: _toDateController,
-                    label: Strings.toDate,
-                    hintText: Strings.enterValue(Strings.toDate.toLowerCase()),
-                    validator: (value) =>
-                        ValidatorUtils.customValidatorValidator(
-                            value, Strings.isRequired(Strings.toDate)),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomTextFormField(
-                    width: AppSizes.textfieldWidth(context),
-                    maxLines: 5,
-                    controller: _jobDescriptionController,
-                    label: Strings.jobDescription,
-                    hintText: Strings.enterValue(
-                        Strings.jobDescription.toLowerCase()),
-                    validator: (value) =>
-                        ValidatorUtils.customValidatorValidator(
-                            value, Strings.isRequired(Strings.jobDescription)),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  CustomTextFormField(
-                    width: AppSizes.textfieldWidth(context),
-                    controller: _jobSortingIndexController,
-                    label: Strings.sortingIndex,
-                    hintText:
-                        Strings.enterValue(Strings.sortingIndex.toLowerCase()),
-                    validator: (value) =>
-                        ValidatorUtils.customValidatorValidator(
-                            value, Strings.isRequired(Strings.sortingIndex)),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Center(
-                child: NormalButton(
-                  label: Strings.aDD,
-                  width: AppSizes.textfieldWidth(context),
-                  icon: Icons.add,
-                  onTap: () {
-                    if (_workHistoryFormKey.currentState!.validate()) {}
-                  },
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    CustomTextFormField(
+                      width: AppSizes.textfieldWidth(context),
+                      controller: _positionController,
+                      label: Strings.jobPosition,
+                      hintText:
+                          Strings.enterValue(Strings.jobPosition.toLowerCase()),
+                      validator: (value) =>
+                          ValidatorUtils.customValidatorValidator(
+                              value, Strings.isRequired(Strings.jobPosition)),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    CustomTextFormField(
+                      width: AppSizes.textfieldWidth(context),
+                      controller: _organizationController,
+                      label: Strings.organization,
+                      hintText: Strings.enterValue(
+                          Strings.organization.toLowerCase()),
+                      validator: (value) =>
+                          ValidatorUtils.customValidatorValidator(
+                              value, Strings.isRequired(Strings.organization)),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    CustomTextFormField(
+                      width: AppSizes.textfieldWidth(context),
+                      controller: _fromDateController,
+                      label: Strings.fromDate,
+                      hintText:
+                          Strings.enterValue(Strings.fromDate.toLowerCase()),
+                      validator: (value) =>
+                          ValidatorUtils.customValidatorValidator(
+                              value, Strings.isRequired(Strings.fromDate)),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    CustomTextFormField(
+                      width: AppSizes.textfieldWidth(context),
+                      controller: _toDateController,
+                      label: Strings.toDate,
+                      hintText:
+                          Strings.enterValue(Strings.toDate.toLowerCase()),
+                      validator: (value) =>
+                          ValidatorUtils.customValidatorValidator(
+                              value, Strings.isRequired(Strings.toDate)),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomTextFormField(
+                      width: AppSizes.textfieldWidth(context),
+                      maxLines: 5,
+                      controller: _jobDescriptionController,
+                      label: Strings.jobDescription,
+                      hintText: Strings.enterValue(
+                          Strings.jobDescription.toLowerCase()),
+                      validator: (value) =>
+                          ValidatorUtils.customValidatorValidator(value,
+                              Strings.isRequired(Strings.jobDescription)),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    CustomTextFormField(
+                      width: AppSizes.textfieldWidth(context),
+                      controller: _jobSortingIndexController,
+                      label: Strings.sortingIndex,
+                      hintText: Strings.enterValue(
+                          Strings.sortingIndex.toLowerCase()),
+                      validator: (value) =>
+                          ValidatorUtils.customValidatorValidator(
+                              value, Strings.isRequired(Strings.sortingIndex)),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Center(
+                  child: NormalButton(
+                    label: Strings.aDD,
+                    width: AppSizes.textfieldWidth(context),
+                    icon: Icons.add,
+                    onTap: () {
+                      if (_workHistoryFormKey.currentState!.validate()) {
+                        context.read<DetailsBloc>().add(
+                              UploadWorkHistory(
+                                organization: _organizationController.text,
+                                jobPosition: _positionController.text,
+                                sortIndex:
+                                    int.parse(_jobSortingIndexController.text),
+                                fromDate: _fromDateController.text,
+                                toDate: _toDateController.text,
+                                desctiption: _jobDescriptionController.text,
+                              ),
+                            );
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

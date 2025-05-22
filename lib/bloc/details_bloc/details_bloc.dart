@@ -7,16 +7,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_events.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_state.dart';
+import 'package:umair_liaqat/models/job_history.dart';
 import 'package:umair_liaqat/models/user_model.dart';
 import 'package:umair_liaqat/services/media_service.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
+import 'package:uuid/uuid.dart';
 
 class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
   DetailsBloc() : super(DetailInitial()) {
     on<ImagePickEvent>(_imagePick);
     on<PickProjectFilesEvent>(_selectProjectFiles);
     on<UserDataUpdateEvent>(_updateUserProfile);
+    on<UploadWorkHistory>(_uploadWorkHistory);
   }
+  final Uuid _uuid = Uuid();
 
   Future<void> _imagePick(
       ImagePickEvent event, Emitter<DetailsState> emit) async {
@@ -95,6 +99,30 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
           .doc(user!.uid)
           .update(
             userModel.toMap(),
+          );
+    } catch (e) {
+      log("Error while picking file: $e");
+    }
+  }
+
+  Future<void> _uploadWorkHistory(
+      UploadWorkHistory event, Emitter<DetailsState> emit) async {
+    String id = _uuid.v4();
+    try {
+      JobHistory jobHistory = JobHistory(
+        id: id,
+        fromDate: event.fromDate,
+        jobDescription: event.desctiption,
+        organization: event.organization,
+        position: event.jobPosition,
+        sortIndex: event.sortIndex,
+        toDate: event.toDate,
+      );
+      await FirebaseFirestore.instance
+          .collection(DatabaseCollections.jobHistory)
+          .doc(id)
+          .set(
+            jobHistory.toMap(),
           );
     } catch (e) {
       log("Error while picking file: $e");

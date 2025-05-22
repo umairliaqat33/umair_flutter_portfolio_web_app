@@ -42,3 +42,30 @@ class UserDataUpdateEvent extends DetailsEvents {
         phoneNumber,
       ];
 }
+
+class UploadWorkHistory extends DetailsEvents {
+  final String organization;
+  final String jobPosition;
+  final int sortIndex;
+  final String fromDate;
+  final String toDate;
+  final String desctiption;
+
+  UploadWorkHistory({
+    required this.organization,
+    required this.jobPosition,
+    required this.sortIndex,
+    required this.fromDate,
+    required this.toDate,
+    required this.desctiption,
+  });
+  @override
+  List<Object?> get props => [
+        organization,
+        jobPosition,
+        sortIndex,
+        fromDate,
+        toDate,
+        desctiption,
+      ];
+}
