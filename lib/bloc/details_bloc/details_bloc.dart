@@ -2,13 +2,14 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_events.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_state.dart';
 import 'package:umair_liaqat/models/job_history.dart';
+import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/models/user_model.dart';
+import 'package:umair_liaqat/services/google_drive_service.dart';
 import 'package:umair_liaqat/services/media_service.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:uuid/uuid.dart';
@@ -19,6 +20,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     on<PickProjectFilesEvent>(_selectProjectFiles);
     on<UserDataUpdateEvent>(_updateUserProfile);
     on<UploadWorkHistory>(_uploadWorkHistory);
+    on<UploadQualification>(_uploadQualification);
   }
   final Uuid _uuid = Uuid();
 
@@ -26,11 +28,15 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       ImagePickEvent event, Emitter<DetailsState> emit) async {
     try {
       final value = await MediaService.selectFile(imageExtensions);
-      emit(
-        state.copyWith(
-          pf: value,
-        ),
-      );
+      if (value != null) {
+        String? uploadedProfileLink = await uploadPlatformFileToDrive(value);
+
+        emit(
+          state.copyWith(
+            profilePictureLink: uploadedProfileLink,
+          ),
+        );
+      }
     } catch (e) {
       log("Error while picking file: $e");
     }
@@ -59,49 +65,28 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     }
   }
 
-  Future<String> _uploadImage(PlatformFile image) async {
-    try {
-      String fileName = image.name;
-
-      Reference ref =
-          FirebaseStorage.instance.ref().child('profiles/$fileName');
-
-      UploadTask uploadTask = ref.putData(
-        image.bytes!,
-        SettableMetadata(contentType: 'image/jpeg'),
-      );
-
-      TaskSnapshot snapshot = await uploadTask;
-      return await snapshot.ref.getDownloadURL();
-    } catch (e) {
-      log("Error while uploading image: $e");
-      rethrow;
-    }
-  }
-
   Future<void> _updateUserProfile(
       UserDataUpdateEvent event, Emitter<DetailsState> emit) async {
     try {
       final User? user = FirebaseAuth.instance.currentUser;
-      final String url = await _uploadImage(event.profilePicture);
       final UserModel userModel = UserModel(
         name: event.name,
         description: event.description,
         headline1: event.headline1,
         headline2: event.headline2,
-        profilePicture: url,
+        profilePicture: event.profilePicture,
         github: event.github,
         linkedIn: event.linkedIn,
         phoneNumber: event.phoneNumber,
       );
-      FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection(DatabaseCollections.user)
           .doc(user!.uid)
-          .update(
+          .set(
             userModel.toMap(),
           );
     } catch (e) {
-      log("Error while picking file: $e");
+      log("Error while updatingUser: $e");
     }
   }
 
@@ -112,7 +97,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       JobHistory jobHistory = JobHistory(
         id: id,
         fromDate: event.fromDate,
-        jobDescription: event.desctiption,
+        jobDescription: event.description,
         organization: event.organization,
         position: event.jobPosition,
         sortIndex: event.sortIndex,
@@ -125,7 +110,29 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
             jobHistory.toMap(),
           );
     } catch (e) {
-      log("Error while picking file: $e");
+      log("Error while uploading work history: $e");
+    }
+  }
+
+  Future<void> _uploadQualification(
+      UploadQualification event, Emitter<DetailsState> emit) async {
+    String id = _uuid.v4();
+    try {
+      QualificationModel qualificationModel = QualificationModel(
+        id: id,
+        completionYear: event.completionYear,
+        degreeName: event.degreeName,
+        instituteName: event.institute,
+        sortingIndex: event.sortIndex,
+      );
+      await FirebaseFirestore.instance
+          .collection(DatabaseCollections.qualifications)
+          .doc(id)
+          .set(
+            qualificationModel.toMap(),
+          );
+    } catch (e) {
+      log("Error while uploading qualification: $e");
     }
   }
 }

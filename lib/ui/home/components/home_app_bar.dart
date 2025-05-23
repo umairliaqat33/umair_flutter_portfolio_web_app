@@ -117,7 +117,10 @@ class CustomHeaderBtn extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return TextButton(
       onPressed: () {
-        context.read<HomeBloc>().add(ChangeAppBarHeadersIndex(headerIndex));
+        context.read<HomeBloc>().add(ChangeAppBarHeadersIndex(
+              headerIndex,
+              context.read<HomeBloc>().state.userModel,
+            ));
       },
       style: TextButton.styleFrom(
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),

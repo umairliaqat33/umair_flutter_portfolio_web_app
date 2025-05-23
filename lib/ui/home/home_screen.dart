@@ -46,9 +46,9 @@ class _HomeBodyState extends State<HomeBody> {
   @override
   void initState() {
     super.initState();
+    context.read<HomeBloc>().add(GetUserData());
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<HomeBloc>().add(GetUserData());
       _initListenerForInteractWithHeaderIndex();
     });
   }
@@ -109,44 +109,51 @@ class _HomeBodyState extends State<HomeBody> {
             padding: AppSizes.appPadding(context),
             color: PortfolioAppTheme.primary,
             child: SingleChildScrollView(
-              controller: _controller,
-              child: Column(
-                children: [
-                  SizedBox(height: 0.08 * context.height),
-                  AboutMe(
-                    key: aboutMeKey,
-                    userModel: context.watch<HomeBloc>().state.userModel,
-                  ),
-                  SizedBox(height: context.height * 0.09),
-                  WorkHistoryPart(
-                    jobHistoryList:
-                        context.watch<HomeBloc>().state.userModel?.jobs ?? [],
-                  ),
-                  SizedBox(height: context.height * 0.09),
-                  EducationPart(
-                    qualifications: context
-                            .watch<HomeBloc>()
-                            .state
-                            .userModel
-                            ?.qualifications ??
-                        [],
-                  ),
-                  SizedBox(height: context.height * 0.09),
-                  FeatureProjects(
-                    key: featuredProjectsKey,
-                    projectsList:
-                        context.watch<HomeBloc>().state.userModel?.projects ??
-                            [],
-                  ),
-                  SizedBox(height: context.height * 0.09),
-                  ContactMe(
-                    key: contactMeKey,
-                    userModel: context.watch<HomeBloc>().state.userModel,
-                  ),
-                  SizedBox(height: context.height * 0.09),
-                ],
-              ),
-            ),
+                controller: _controller,
+                child: BlocBuilder<HomeBloc, HomeState>(
+                  builder: (BuildContext context, state) {
+                    return Column(
+                      children: [
+                        SizedBox(height: 0.08 * context.height),
+                        AboutMe(
+                          key: aboutMeKey,
+                          userModel: context.watch<HomeBloc>().state.userModel,
+                        ),
+                        SizedBox(height: context.height * 0.09),
+                        WorkHistoryPart(
+                          jobHistoryList:
+                              context.watch<HomeBloc>().state.userModel?.jobs ??
+                                  [],
+                        ),
+                        SizedBox(height: context.height * 0.09),
+                        EducationPart(
+                          qualifications: context
+                                  .watch<HomeBloc>()
+                                  .state
+                                  .userModel
+                                  ?.qualifications ??
+                              [],
+                        ),
+                        SizedBox(height: context.height * 0.09),
+                        FeatureProjects(
+                          key: featuredProjectsKey,
+                          projectsList: context
+                                  .watch<HomeBloc>()
+                                  .state
+                                  .userModel
+                                  ?.projects ??
+                              [],
+                        ),
+                        SizedBox(height: context.height * 0.09),
+                        ContactMe(
+                          key: contactMeKey,
+                          userModel: context.watch<HomeBloc>().state.userModel,
+                        ),
+                        SizedBox(height: context.height * 0.09),
+                      ],
+                    );
+                  },
+                )),
           ),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {

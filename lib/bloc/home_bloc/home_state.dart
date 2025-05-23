@@ -9,7 +9,7 @@ class HomeState extends Equatable {
   HomeState copyWith(
       {bool? isLoading, String? errorMessage, UserModel? userData}) {
     return HomeState(
-      userModel: userModel,
+      userModel: userData ?? userModel,
     );
   }
 
@@ -21,11 +21,16 @@ class HomeInitial extends HomeState {}
 
 class AppBarHeadersIndexChanged extends HomeState {
   final int index;
+  @override
+  final UserModel? userModel;
 
-  const AppBarHeadersIndexChanged(this.index);
+  const AppBarHeadersIndexChanged(
+    this.index,
+    this.userModel,
+  );
 
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [index, userModel];
 }
 
 class AppBarHeadersAxisChanged extends HomeState {
@@ -38,10 +43,18 @@ class AppBarHeadersAxisChanged extends HomeState {
 }
 
 class AppBarHeadersColorChangedByIndex extends HomeState {
+  @override
+  final UserModel? userModel;
   final int index;
 
-  const AppBarHeadersColorChangedByIndex(this.index);
+  const AppBarHeadersColorChangedByIndex(
+    this.index,
+    this.userModel,
+  );
 
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [
+        index,
+        userModel,
+      ];
 }

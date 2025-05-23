@@ -7,11 +7,18 @@ abstract class HomeEvent extends Equatable {
 
 class ChangeAppBarHeadersIndex extends HomeEvent {
   final int index;
+  final UserModel? userModel;
 
-  ChangeAppBarHeadersIndex(this.index);
+  ChangeAppBarHeadersIndex(
+    this.index,
+    this.userModel,
+  );
 
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [
+        index,
+        userModel,
+      ];
 }
 
 class ChangeAppBarHeadersAxis extends HomeEvent {

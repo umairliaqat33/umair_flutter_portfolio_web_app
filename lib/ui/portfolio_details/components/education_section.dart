@@ -17,16 +17,6 @@ class EducationSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(title,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: 4),
-            Text(duration, style: TextStyle(color: Colors.grey[600])),
-          ],
-        ),
-        SizedBox(width: 30),
-        Column(
           children: [
             Icon(Icons.work, size: 36, color: Colors.white),
             Container(width: 2, height: 80, color: Colors.grey[300]),
@@ -37,6 +27,11 @@ class EducationSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(title,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              SizedBox(height: 4),
+              Text(duration, style: TextStyle(color: Colors.grey[600])),
+              SizedBox(width: 30),
               Text(institution,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               SizedBox(height: 6),

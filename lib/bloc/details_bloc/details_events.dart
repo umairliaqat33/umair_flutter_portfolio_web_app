@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:file_picker/file_picker.dart';
 
 class DetailsEvents extends Equatable {
   @override
@@ -17,7 +16,7 @@ class UserDataUpdateEvent extends DetailsEvents {
   final String headline2;
   final String linkedIn;
   final String github;
-  final PlatformFile profilePicture;
+  final String profilePicture;
   final String phoneNumber;
 
   UserDataUpdateEvent({
@@ -49,7 +48,7 @@ class UploadWorkHistory extends DetailsEvents {
   final int sortIndex;
   final String fromDate;
   final String toDate;
-  final String desctiption;
+  final String description;
 
   UploadWorkHistory({
     required this.organization,
@@ -57,7 +56,7 @@ class UploadWorkHistory extends DetailsEvents {
     required this.sortIndex,
     required this.fromDate,
     required this.toDate,
-    required this.desctiption,
+    required this.description,
   });
   @override
   List<Object?> get props => [
@@ -66,6 +65,27 @@ class UploadWorkHistory extends DetailsEvents {
         sortIndex,
         fromDate,
         toDate,
-        desctiption,
+        description,
+      ];
+}
+
+class UploadQualification extends DetailsEvents {
+  final String institute;
+  final String degreeName;
+  final int sortIndex;
+  final String completionYear;
+
+  UploadQualification({
+    required this.institute,
+    required this.degreeName,
+    required this.sortIndex,
+    required this.completionYear,
+  });
+  @override
+  List<Object?> get props => [
+        institute,
+        degreeName,
+        sortIndex,
+        completionYear,
       ];
 }

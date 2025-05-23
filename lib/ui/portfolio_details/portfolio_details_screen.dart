@@ -75,11 +75,12 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   final TextEditingController _projectDescriptionController =
       TextEditingController();
 
-  String? _pictureUrl;
-
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getUserData();
+    });
   }
 
   @override
@@ -120,16 +121,21 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   }
 
   void getUserData() {
-    context.read<HomeBloc>().add(GetUserData());
-    UserModel? userModel = context.watch<HomeBloc>().state.userModel;
-    if (userModel != null) {
-      _userNameController.text = userModel.name!;
-      _linkedInController.text = userModel.linkedIn!;
-      _githubController.text = userModel.name!;
-      _descriptionController.text = userModel.name!;
-      _pictureUrl = userModel.profilePicture!;
-      _title2Controller.text = userModel.headline2!;
-      _titleController.text = userModel.headline1!;
+    try {
+      context.read<HomeBloc>().add(GetUserData());
+      UserModel? userModel = context.read<HomeBloc>().state.userModel;
+      if (userModel != null) {
+        _userNameController.text = userModel.name!;
+        _linkedInController.text = userModel.linkedIn!;
+        _githubController.text = userModel.github!;
+        _descriptionController.text = userModel.description!;
+        // _pictureUrl = userModel.profilePicture!;
+        _phoneController.text = userModel.phoneNumber!;
+        _title2Controller.text = userModel.headline2!;
+        _titleController.text = userModel.headline1!;
+      }
+    } catch (e) {
+      log("Error fetching data in portfolio screen: ${e.toString()}");
     }
   }
 
@@ -157,9 +163,12 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
                   onPressed: () {
                     context.read<DetailsBloc>().add(ImagePickEvent());
                   },
-                  platformFile:
-                      context.watch<DetailsBloc>().state.profilePicturePlatform,
-                  imgUrl: _pictureUrl,
+                  platformFile: null,
+                  imgUrl: context
+                          .watch<DetailsBloc>()
+                          .state
+                          .profilePictureLink ??
+                      context.watch<HomeBloc>().state.userModel?.profilePicture,
                 ),
                 NormalTextWidget(
                   Strings.profilePictureSize,
@@ -289,7 +298,7 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
                                     profilePicture: context
                                         .read<DetailsBloc>()
                                         .state
-                                        .profilePicturePlatform!),
+                                        .profilePictureLink!),
                               );
                         }
                       } catch (e) {
@@ -540,7 +549,7 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
                                     int.parse(_jobSortingIndexController.text),
                                 fromDate: _fromDateController.text,
                                 toDate: _toDateController.text,
-                                desctiption: _jobDescriptionController.text,
+                                description: _jobDescriptionController.text,
                               ),
                             );
                       }

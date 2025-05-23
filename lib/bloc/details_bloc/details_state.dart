@@ -2,27 +2,32 @@ import 'package:equatable/equatable.dart';
 import 'package:file_picker/file_picker.dart';
 
 class DetailsState extends Equatable {
-  final PlatformFile? profilePicturePlatform;
+  final String? profilePictureLink;
+  final List<String>? projectFileLinks;
   final List<PlatformFile>? projectFiles;
   const DetailsState({
-    this.profilePicturePlatform,
+    this.profilePictureLink,
     this.projectFiles,
+    this.projectFileLinks,
   });
   DetailsState copyWith({
-    PlatformFile? pf,
+    String? profilePictureLink,
     List<PlatformFile>? projectContent,
+    List<String>? projectFilesLinks,
   }) {
     return DetailsState(
-      profilePicturePlatform: pf ?? profilePicturePlatform,
+      profilePictureLink: profilePictureLink ?? this.profilePictureLink,
       projectFiles: projectContent ?? projectContent,
+      projectFileLinks: projectFilesLinks ?? projectFileLinks,
     );
   }
 
   @override
   // TODO: implement props
   List<Object?> get props => [
-        profilePicturePlatform,
+        profilePictureLink,
         projectFiles,
+        projectFileLinks,
       ];
 }
 

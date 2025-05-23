@@ -30,7 +30,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) {
     _appBarHeaderIndex = event.index;
-    emit(AppBarHeadersIndexChanged(_appBarHeaderIndex));
+    emit(AppBarHeadersIndexChanged(
+      _appBarHeaderIndex,
+      state.userModel,
+    ));
   }
 
   FutureOr<void> _changeAppBarHeadersColorByColor(
@@ -38,7 +41,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) {
     _appBarHeaderIndex = event.index;
-    emit(AppBarHeadersColorChangedByIndex(_appBarHeaderIndex));
+    emit(
+      AppBarHeadersColorChangedByIndex(
+        _appBarHeaderIndex,
+        state.userModel,
+      ),
+    );
   }
 
   //
@@ -53,7 +61,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(AppBarHeadersAxisChanged(_appBarHeaderAxis));
   }
 
-  Future<void> _getUserData(GetUserData event, Emitter<HomeState> state) async {
+  Future<void> _getUserData(GetUserData event, Emitter<HomeState> emit) async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection(DatabaseCollections.user)
@@ -70,6 +78,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         userModel!.qualifications = qualificationsList;
         userModel!.jobs = jobsList;
       }
+      emit(
+        state.copyWith(
+          userData: userModel,
+        ),
+      );
     } catch (e) {
       log("Error while fetching user information: ${e.toString()}");
     }
