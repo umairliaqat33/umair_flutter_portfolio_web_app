@@ -29,7 +29,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     try {
       final value = await MediaService.selectFile(imageExtensions);
       if (value != null) {
-        String? uploadedProfileLink = await uploadPlatformFileToDrive(value);
+        String? uploadedProfileLink = await uploadPlatformFile(value);
 
         emit(
           state.copyWith(

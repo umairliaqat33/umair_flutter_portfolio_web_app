@@ -98,7 +98,7 @@ class _MyPhotoState extends State<MyPhoto> with TickerProviderStateMixin {
                   image: widget.picture == null
                       ? AssetImage(Assets.errorImagePlaceholder)
                       : NetworkImage(
-                          getDirectGoogleDriveImageUrl(widget.picture)!),
+                          "https://drive.google.com/uc?export=view&id=1FwrPE6M1EWdlg57SgwGPUBppSwEdeDM9"),
                 ),
               ),
             ),
@@ -108,20 +108,20 @@ class _MyPhotoState extends State<MyPhoto> with TickerProviderStateMixin {
     });
   }
 
-  String? getDirectGoogleDriveImageUrl(String? url) {
-    if (url == null) return null;
+  // String? getDirectGoogleDriveImageUrl(String? url) {
+  //   if (url == null) return null;
 
-    final regex =
-        RegExp(r'https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)');
-    final match = regex.firstMatch(url);
+  //   final regex =
+  //       RegExp(r'https:\/\/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]+)');
+  //   final match = regex.firstMatch(url);
 
-    if (match != null && match.groupCount >= 1) {
-      final fileId = match.group(1);
-      final newUrl = 'https://drive.google.com/uc?export=view&id=$fileId';
-      return newUrl;
-    }
+  //   if (match != null && match.groupCount >= 1) {
+  //     final fileId = match.group(1);
+  //     final newUrl = 'https://drive.google.com/uc?export=download&id=$fileId';
+  //     return newUrl;
+  //   }
 
-    // If input url is already direct or not a drive url, return it as is
-    return url;
-  }
+  //   // If input url is already direct or not a drive url, return it as is
+  //   return url;
+  // }
 }

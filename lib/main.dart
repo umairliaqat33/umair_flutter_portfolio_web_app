@@ -13,9 +13,21 @@ import 'package:umair_liaqat/utils/app_theme.dart';
 
 import 'bloc/bloc_observer.dart';
 
+FirebaseApp? storageFirebase;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  storageFirebase = await Firebase.initializeApp(
+    name: 'SecondaryApp',
+    options: FirebaseOptions(
+      apiKey: "AIzaSyA-fliaPgnwoibiHG4ddCMInCLZL3KibUc",
+      appId: "1:923083136188:android:a59c07f6868358a15744b9",
+      messagingSenderId: "923083136188",
+      projectId: "life-link-86ed1",
+      storageBucket: "life-link-86ed1.appspot.com",
+    ),
+  );
   await setupRemoteConfig(); // Initialize Remote Config
   Bloc.observer = MyBlocObserver();
   runApp(const MyApp());

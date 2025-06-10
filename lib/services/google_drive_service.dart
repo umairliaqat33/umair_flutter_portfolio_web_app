@@ -1,61 +1,37 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:googleapis/drive/v3.dart' as drive;
-import 'package:http/http.dart' as http;
-
-/// Google Sign-In with Drive scope
-final GoogleSignIn _googleSignIn = GoogleSignIn(
-  clientId:
-      '1076895934039-dv91vrhq6cen8oqrqkg9sp37hobj03i2.apps.googleusercontent.com',
-  scopes: [drive.DriveApi.driveFileScope],
-);
-
-/// Auth Client for Google APIs
-class GoogleAuthClient extends http.BaseClient {
-  final Map<String, String> _headers;
-  final http.Client _client = http.Client();
-
-  GoogleAuthClient(this._headers);
-
-  @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
-    request.headers.addAll(_headers);
-    return _client.send(request);
-  }
-}
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:umair_liaqat/main.dart';
 
 /// Upload a PlatformFile to Google Drive and get its public link
-Future<String?> uploadPlatformFileToDrive(PlatformFile platformFile) async {
+Future<String?> uploadPlatformFile(PlatformFile platformFile) async {
   try {
-    final account =
-        await _googleSignIn.signInSilently() ?? await _googleSignIn.signIn();
-    if (account == null) return null;
-
-    final authHeaders = await account.authHeaders;
-    final driveApi = drive.DriveApi(GoogleAuthClient(authHeaders));
-
-    final fileBytes = platformFile.bytes;
-    if (fileBytes == null) return null;
-
-    final media = drive.Media(Stream.value(fileBytes), fileBytes.length);
-    final driveFile = drive.File()..name = platformFile.name;
-
-    // Upload
-    final uploadedFile =
-        await driveApi.files.create(driveFile, uploadMedia: media);
-
-    // Set permission to public
-    final permission = drive.Permission()
-      ..type = 'anyone'
-      ..role = 'reader';
-    await driveApi.permissions.create(permission, uploadedFile.id!);
-
-    // Return shareable link
-    return 'https://drive.google.com/file/d/${uploadedFile.id}';
+    final imageFile = File(platformFile.path!);
+    String url = await uploadImage(imageFile);
+    return url;
   } catch (e) {
     log('❌ Error uploading to Drive: $e');
     return null;
+  }
+}
+
+Future<String> uploadImage(File image) async {
+  final FirebaseStorage storage = FirebaseStorage.instanceFor(
+    app: storageFirebase,
+    // bucket: "life-link-86ed1.appspot.com",
+  );
+
+  try {
+    String fileName = image.path.split('/').last;
+    Reference ref = storage.ref().child('files/$fileName');
+    UploadTask uploadTask = ref.putFile(image);
+    TaskSnapshot snapshot = await uploadTask;
+    return await snapshot.ref.getDownloadURL();
+  } catch (e) {
+    log(e.toString());
+
+    rethrow;
   }
 }
