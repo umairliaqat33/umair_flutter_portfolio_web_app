@@ -7,7 +7,12 @@ import 'package:umair_liaqat/bloc/details_bloc/details_bloc.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_events.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_state.dart';
 import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
+import 'package:umair_liaqat/models/job_history.dart';
+import 'package:umair_liaqat/models/project_model.dart';
+import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/models/user_model.dart';
+import 'package:umair_liaqat/ui/widgets/common_widgtes/info_card_widget.dart';
+import 'package:umair_liaqat/ui/widgets/text_fields/text_field_title.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
@@ -74,6 +79,9 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
 
   final TextEditingController _projectDescriptionController =
       TextEditingController();
+  List<ProjectModel> projectsList = [];
+  List<QualificationModel> qualificationsList = [];
+  List<JobHistory> workHistoryList = [];
 
   @override
   void initState() {
@@ -133,6 +141,9 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
         _phoneController.text = userModel.phoneNumber!;
         _title2Controller.text = userModel.headline2!;
         _titleController.text = userModel.headline1!;
+        projectsList = userModel.projects ?? [];
+        workHistoryList = userModel.jobs ?? [];
+        qualificationsList = userModel.qualifications ?? [];
       }
     } catch (e) {
       log("Error fetching data in portfolio screen: ${e.toString()}");
@@ -316,104 +327,138 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   }
 
   Widget _buildQualificationPart(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        HeadingTextWidget(
-          Strings.addADegree,
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Container(
-          padding: PortfolioDetailsSizes.imageSectionPadding(context),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.white,
-            ),
-            borderRadius: BorderRadius.circular(
-              12,
-            ),
+    return Form(
+      key: _qualificationFormKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          HeadingTextWidget(
+            Strings.addADegree,
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  CustomTextFormField(
-                    width: AppSizes.textfieldWidth(context),
-                    controller: _degreeController,
-                    label: Strings.degreeName,
-                    hintText:
-                        Strings.enterValue(Strings.degreeName.toLowerCase()),
-                    validator: (value) =>
-                        ValidatorUtils.customValidatorValidator(
-                      value,
-                      Strings.isRequired(Strings.degreeName),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            padding: PortfolioDetailsSizes.imageSectionPadding(context),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.white,
+              ),
+              borderRadius: BorderRadius.circular(
+                12,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    CustomTextFormField(
+                      width: AppSizes.textfieldWidth(context),
+                      controller: _degreeController,
+                      label: Strings.degreeName,
+                      hintText:
+                          Strings.enterValue(Strings.degreeName.toLowerCase()),
+                      validator: (value) =>
+                          ValidatorUtils.customValidatorValidator(
+                        value,
+                        Strings.isRequired(Strings.degreeName),
+                      ),
                     ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    CustomTextFormField(
+                      width: AppSizes.textfieldWidth(context),
+                      controller: _instituteController,
+                      label: Strings.institute,
+                      hintText:
+                          Strings.enterValue(Strings.institute.toLowerCase()),
+                      validator: (value) =>
+                          ValidatorUtils.customValidatorValidator(
+                        value,
+                        Strings.isRequired(Strings.institute),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    CustomTextFormField(
+                      width: AppSizes.textfieldWidth(context),
+                      controller: _completionDateController,
+                      label: Strings.completionYear,
+                      hintText: Strings.enterValue(
+                          Strings.completionYear.toLowerCase()),
+                      validator: (value) =>
+                          ValidatorUtils.customValidatorValidator(value,
+                              Strings.isRequired(Strings.completionYear)),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    CustomTextFormField(
+                      width: AppSizes.textfieldWidth(context),
+                      controller: _qualificationSortingIndexController,
+                      label: Strings.sortingIndex,
+                      hintText: Strings.enterValue(
+                          Strings.sortingIndex.toLowerCase()),
+                      validator: (value) =>
+                          ValidatorUtils.customValidatorValidator(
+                              value, Strings.isRequired(Strings.sortingIndex)),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                NormalButton(
+                  label: Strings.aDD,
+                  width: AppSizes.textfieldWidth(context),
+                  icon: Icons.add,
+                  onTap: () {
+                    if (_qualificationFormKey.currentState!.validate()) {
+                      context.read<DetailsBloc>().add(
+                            UploadQualification(
+                              institute: _instituteController.text,
+                              degreeName: _degreeController.text,
+                              sortIndex: int.parse(
+                                  _qualificationSortingIndexController.text),
+                              completionYear: _completionDateController.text,
+                            ),
+                          );
+                      _instituteController.clear();
+                      _degreeController.clear();
+                      _completionDateController.clear();
+                      _qualificationSortingIndexController.clear();
+                    }
+                  },
+                ),
+                if (qualificationsList.isNotEmpty) ...[
+                  SizedBox(
+                    height: 40,
+                  ),
+                  TextFieldTitleWidget(
+                    label: Strings.existingQualifications,
                   ),
                   SizedBox(
-                    width: 20,
+                    height: 20,
                   ),
-                  CustomTextFormField(
-                    width: AppSizes.textfieldWidth(context),
-                    controller: _instituteController,
-                    label: Strings.institute,
-                    hintText:
-                        Strings.enterValue(Strings.institute.toLowerCase()),
-                    validator: (value) =>
-                        ValidatorUtils.customValidatorValidator(
-                      value,
-                      Strings.isRequired(Strings.institute),
+                  ...qualificationsList.map(
+                    (qualification) => InfoCard(
+                      title: qualification.degreeName ?? "",
+                      details: qualification.toMap(),
                     ),
-                  ),
+                  )
                 ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  CustomTextFormField(
-                    width: AppSizes.textfieldWidth(context),
-                    controller: _completionDateController,
-                    label: Strings.completionYear,
-                    hintText: Strings.enterValue(
-                        Strings.completionYear.toLowerCase()),
-                    validator: (value) =>
-                        ValidatorUtils.customValidatorValidator(
-                            value, Strings.isRequired(Strings.completionYear)),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  CustomTextFormField(
-                    width: AppSizes.textfieldWidth(context),
-                    controller: _qualificationSortingIndexController,
-                    label: Strings.sortingIndex,
-                    hintText:
-                        Strings.enterValue(Strings.sortingIndex.toLowerCase()),
-                    validator: (value) =>
-                        ValidatorUtils.customValidatorValidator(
-                            value, Strings.isRequired(Strings.sortingIndex)),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              NormalButton(
-                label: Strings.aDD,
-                width: AppSizes.textfieldWidth(context),
-                icon: Icons.add,
-                onTap: () {
-                  if (_qualificationFormKey.currentState!.validate()) {}
-                },
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -556,6 +601,23 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
                     },
                   ),
                 ),
+                if (workHistoryList.isNotEmpty) ...[
+                  SizedBox(
+                    height: 40,
+                  ),
+                  TextFieldTitleWidget(
+                    label: Strings.existingWorkHistory,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ...workHistoryList.map(
+                    (workHistory) => InfoCard(
+                      title: workHistory.position ?? "",
+                      details: workHistory.toMap(),
+                    ),
+                  )
+                ],
               ],
             ),
           ),

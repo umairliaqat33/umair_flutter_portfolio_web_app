@@ -5,7 +5,7 @@ import 'package:umair_liaqat/ui/login_screen/login_screen.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
-import 'package:umair_liaqat/ui/widgets/contact_form.dart';
+import 'package:umair_liaqat/ui/widgets/common_widgtes/contact_form.dart';
 import 'package:universal_html/html.dart' as html;
 
 class ContactMe extends StatefulWidget {

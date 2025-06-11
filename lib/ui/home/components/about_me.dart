@@ -1,7 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:umair_liaqat/models/user_model.dart';
-import 'package:umair_liaqat/ui/widgets/my_photo.dart';
+import 'package:umair_liaqat/ui/widgets/common_widgtes/my_photo.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';

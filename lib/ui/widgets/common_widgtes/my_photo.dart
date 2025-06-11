@@ -97,8 +97,7 @@ class _MyPhotoState extends State<MyPhoto> with TickerProviderStateMixin {
                   alignment: Alignment.bottomLeft,
                   image: widget.picture == null
                       ? AssetImage(Assets.errorImagePlaceholder)
-                      : NetworkImage(
-                          "https://drive.google.com/uc?export=view&id=1FwrPE6M1EWdlg57SgwGPUBppSwEdeDM9"),
+                      : NetworkImage(widget.picture!),
                 ),
               ),
             ),

@@ -51,6 +51,18 @@ class JobHistory {
     };
   }
 
+  Map<String, dynamic> toMapView() {
+    return <String, dynamic>{
+      'Position': position,
+      'Job Description': jobDescription,
+      'Organization': organization,
+      'FromDate': fromDate,
+      'To Date': toDate,
+      'Sort Index': sortIndex,
+      'Id': id,
+    };
+  }
+
   factory JobHistory.fromMap(Map<String, dynamic> map) {
     return JobHistory(
       position: map['position'] != null ? map['position'] as String : null,

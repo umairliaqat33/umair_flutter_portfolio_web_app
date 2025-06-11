@@ -22,6 +22,8 @@ class Strings {
 
   static String passwordMinimumLength =
       "Minimum 8 character required in password";
+  static String existingQualifications = "Existing Qualifications";
+  static String existingWorkHistory = "Existing Work History";
 
   static String emailRequired = "Email required";
   static String helloIAm = "Hello, I'm";

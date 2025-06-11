@@ -8,7 +8,7 @@ import 'package:umair_liaqat/utils/app_enum.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
-import 'package:umair_liaqat/ui/widgets/vertical_headers.dart';
+import 'package:umair_liaqat/ui/widgets/common_widgtes/vertical_headers.dart';
 
 import 'components/about_me.dart';
 import 'components/contact_me.dart';
