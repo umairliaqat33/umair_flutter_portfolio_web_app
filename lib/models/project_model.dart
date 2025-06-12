@@ -1,17 +1,21 @@
 import 'dart:convert';
 
+import 'package:file_picker/file_picker.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class ProjectModel {
   String? name;
   String? id;
   String? description;
   String? link;
-  List<String>? files;
+  List<String>? filesLinks;
+  List<PlatformFile>? files;
   ProjectModel({
     this.name,
     this.description,
     this.link,
     this.id,
+    this.filesLinks,
     this.files,
   });
 
@@ -20,13 +24,15 @@ class ProjectModel {
     String? id,
     String? description,
     String? link,
-    List<String>? files,
+    List<String>? filesLinks,
+    List<PlatformFile>? files,
   }) {
     return ProjectModel(
       name: name ?? this.name,
       id: id ?? this.id,
       description: description ?? this.description,
       link: link ?? this.link,
+      filesLinks: filesLinks ?? this.filesLinks,
       files: files ?? this.files,
     );
   }
@@ -37,7 +43,7 @@ class ProjectModel {
       'id': id,
       'description': description,
       'link': link,
-      'files': files,
+      'files': filesLinks,
     };
   }
 
@@ -48,8 +54,8 @@ class ProjectModel {
       description:
           map['description'] != null ? map['description'] as String : null,
       link: map['link'] != null ? map['link'] as String : null,
-      files: map['files'] != null
-          ? List<String>.from((map['files'] as List<String>))
+      filesLinks: map['files'] != null
+          ? List<String>.from((map['files'] as List))
           : null,
     );
   }

@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
-import 'package:umair_liaqat/ui/widgets/common_widgtes/custom_textfield.dart';
+import 'package:umair_liaqat/ui/widgets/common_widgets/custom_textfield.dart';
 
 class ContactForm extends StatefulWidget {
   const ContactForm({super.key});

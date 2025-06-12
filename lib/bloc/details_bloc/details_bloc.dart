@@ -3,15 +3,19 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_events.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_state.dart';
 import 'package:umair_liaqat/models/job_history.dart';
+import 'package:umair_liaqat/models/project_model.dart';
 import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/models/user_model.dart';
 import 'package:umair_liaqat/services/google_drive_service.dart';
 import 'package:umair_liaqat/services/media_service.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
+import 'package:umair_liaqat/utils/toast_utils.dart';
 import 'package:uuid/uuid.dart';
 
 class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
@@ -21,6 +25,10 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     on<UserDataUpdateEvent>(_updateUserProfile);
     on<UploadWorkHistory>(_uploadWorkHistory);
     on<UploadQualification>(_uploadQualification);
+    on<DeleteQualification>(_deleteQualification);
+    on<DeleteWorkHistory>(_deleteJobHistory);
+    on<DeleteProject>(_deleteProject);
+    on<UploadProjectEvent>(_uploadProject);
   }
   final Uuid _uuid = Uuid();
 
@@ -38,6 +46,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
         );
       }
     } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+
       log("Error while picking file: $e");
     }
   }
@@ -61,6 +71,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
         ),
       );
     } catch (e) {
+      Fluttertoast.showToast(msg: e.toString());
+
       log("Error while picking file: $e");
     }
   }
@@ -68,6 +80,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
   Future<void> _updateUserProfile(
       UserDataUpdateEvent event, Emitter<DetailsState> emit) async {
     try {
+      ToastUtils.showLoader(event.context);
+
       final User? user = FirebaseAuth.instance.currentUser;
       final UserModel userModel = UserModel(
         name: event.name,
@@ -85,7 +99,14 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
           .set(
             userModel.toMap(),
           );
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: Strings.valueAdded(Strings.workHistory));
     } catch (e) {
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: e.toString());
+
       log("Error while updatingUser: $e");
     }
   }
@@ -94,6 +115,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       UploadWorkHistory event, Emitter<DetailsState> emit) async {
     String id = _uuid.v4();
     try {
+      ToastUtils.showLoader(event.context);
       JobHistory jobHistory = JobHistory(
         id: id,
         fromDate: event.fromDate,
@@ -109,7 +131,14 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
           .set(
             jobHistory.toMap(),
           );
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: Strings.valueAdded(Strings.workHistory));
     } catch (e) {
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: e.toString());
+
       log("Error while uploading work history: $e");
     }
   }
@@ -118,6 +147,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       UploadQualification event, Emitter<DetailsState> emit) async {
     String id = _uuid.v4();
     try {
+      ToastUtils.showLoader(event.context);
+
       QualificationModel qualificationModel = QualificationModel(
         id: id,
         completionYear: event.completionYear,
@@ -131,7 +162,111 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
           .set(
             qualificationModel.toMap(),
           );
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: Strings.valueAdded(Strings.qualification));
     } catch (e) {
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: e.toString());
+
+      log("Error while uploading qualification: $e");
+    }
+  }
+
+  Future<void> _deleteQualification(
+      DeleteQualification event, Emitter<DetailsState> emit) async {
+    try {
+      ToastUtils.showLoader(event.context);
+
+      await FirebaseFirestore.instance
+          .collection(DatabaseCollections.qualifications)
+          .doc(event.id)
+          .delete();
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: Strings.valueDeleted(Strings.qualification));
+    } catch (e) {
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: e.toString());
+      log("Error while uploading qualification: $e");
+    }
+  }
+
+  Future<void> _deleteJobHistory(
+      DeleteWorkHistory event, Emitter<DetailsState> emit) async {
+    try {
+      ToastUtils.showLoader(event.context);
+
+      await FirebaseFirestore.instance
+          .collection(DatabaseCollections.jobHistory)
+          .doc(event.id)
+          .delete();
+      Navigator.of(event.context).pop();
+      Fluttertoast.showToast(msg: Strings.valueDeleted(Strings.jobHistory));
+    } catch (e) {
+      Navigator.of(event.context).pop();
+      Fluttertoast.showToast(msg: e.toString());
+      log("Error while uploading qualification: $e");
+      Fluttertoast.showToast(msg: e.toString());
+    }
+  }
+
+  Future<void> _deleteProject(
+      DeleteProject event, Emitter<DetailsState> emit) async {
+    try {
+      ToastUtils.showLoader(event.context);
+
+      await FirebaseFirestore.instance
+          .collection(DatabaseCollections.projects)
+          .doc(event.id)
+          .delete();
+      Navigator.of(event.context).pop();
+      Fluttertoast.showToast(
+        msg: Strings.valueDeleted(Strings.project),
+      );
+    } catch (e) {
+      Navigator.of(event.context).pop();
+      Fluttertoast.showToast(msg: e.toString());
+      log("Error while uploading qualification: $e");
+    }
+  }
+
+  Future<void> _uploadProject(
+      UploadProjectEvent event, Emitter<DetailsState> emit) async {
+    String id = _uuid.v4();
+    try {
+      ToastUtils.showLoader(event.context);
+      List<String> linksList = [];
+      if (event.projectModel.files != null &&
+          event.projectModel.files!.isNotEmpty) {
+        for (int i = 0; i < (event.projectModel.files?.length ?? 0); i++) {
+          PlatformFile file = event.projectModel.files![i];
+          String? link = await uploadPlatformFile(file);
+          if (link != null && link.isNotEmpty) {
+            linksList.add(link);
+          }
+        }
+      }
+      ProjectModel projectModel = event.projectModel.copyWith(
+        id: id,
+        filesLinks: linksList,
+      );
+
+      await FirebaseFirestore.instance
+          .collection(DatabaseCollections.projects)
+          .doc(id)
+          .set(
+            projectModel.toMap(),
+          );
+      Navigator.of(event.context).pop();
+      Fluttertoast.showToast(msg: Strings.valueAdded(Strings.qualification));
+    } catch (e) {
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: e.toString());
+
       log("Error while uploading qualification: $e");
     }
   }

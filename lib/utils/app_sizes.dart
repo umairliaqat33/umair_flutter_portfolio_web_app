@@ -80,6 +80,20 @@ class AppSizes {
     }
   }
 
+  static double infoCardTitleFontSize(BuildContext context) {
+    DeviceState state = getDeviceState(context);
+    switch (state) {
+      case DeviceState.phoneLandscape:
+        return 16.sp;
+      case DeviceState.tabletLandscape:
+        return 16.sp;
+      case DeviceState.tabletPortrait:
+        return 16.sp;
+      case DeviceState.phonePortrait:
+        return 16.sp;
+    }
+  }
+
   static EdgeInsets appPadding(BuildContext context) {
     DeviceState state = getDeviceState(context);
     switch (state) {
@@ -99,6 +113,50 @@ class AppSizes {
         return EdgeInsets.symmetric(
           horizontal: 62.w,
         );
+    }
+  }
+}
+
+class HomeScreenSizes {
+  static double workHistoryLeftSize(BuildContext context) {
+    DeviceState state = getDeviceState(context);
+    switch (state) {
+      case DeviceState.phoneLandscape:
+        return 200.w;
+      case DeviceState.tabletLandscape:
+        return 200.w;
+      case DeviceState.tabletPortrait:
+        return 200.w;
+      case DeviceState.phonePortrait:
+        return 200.w;
+    }
+  }
+
+  static double projectDialogWidth(BuildContext context) {
+    DeviceState state = getDeviceState(context);
+    switch (state) {
+      case DeviceState.phoneLandscape:
+        return 800.w;
+      case DeviceState.tabletLandscape:
+        return 800.w;
+      case DeviceState.tabletPortrait:
+        return 800.w;
+      case DeviceState.phonePortrait:
+        return 800.w;
+    }
+  }
+
+  static double projectDialogImageHeight(BuildContext context) {
+    DeviceState state = getDeviceState(context);
+    switch (state) {
+      case DeviceState.phoneLandscape:
+        return 500.w;
+      case DeviceState.tabletLandscape:
+        return 500.w;
+      case DeviceState.tabletPortrait:
+        return 500.w;
+      case DeviceState.phonePortrait:
+        return 500.w;
     }
   }
 }

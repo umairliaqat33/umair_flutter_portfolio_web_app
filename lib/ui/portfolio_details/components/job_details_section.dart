@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:umair_liaqat/utils/app_sizes.dart';
 
 class JobDetailsSection extends StatelessWidget {
   final String organization;
@@ -20,19 +21,22 @@ class JobDetailsSection extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(organization,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            SizedBox(height: 4),
-            Text(
-              "$fromDate $toDate",
-              style: TextStyle(
-                color: Colors.grey[600],
+        SizedBox(
+          width: HomeScreenSizes.workHistoryLeftSize(context),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(organization,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              SizedBox(height: 4),
+              Text(
+                "$fromDate - $toDate",
+                style: TextStyle(
+                  color: Colors.grey[600],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         SizedBox(width: 30),
         Column(

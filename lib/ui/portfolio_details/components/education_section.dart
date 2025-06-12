@@ -18,7 +18,7 @@ class EducationSection extends StatelessWidget {
       children: [
         Column(
           children: [
-            Icon(Icons.work, size: 36, color: Colors.white),
+            Icon(Icons.school, size: 36, color: Colors.white),
             Container(width: 2, height: 80, color: Colors.grey[300]),
           ],
         ),

@@ -23,14 +23,19 @@ class Strings {
   static String passwordMinimumLength =
       "Minimum 8 character required in password";
   static String existingQualifications = "Existing Qualifications";
+  static String existingProjects = "Existing Projects";
   static String existingWorkHistory = "Existing Work History";
-
+  static String pleaseWait = "Please wait";
+  static String home = "Home";
+  static String project = "Project";
+  static String contact = "Contact";
+  static String jobHistory = "Job History";
   static String emailRequired = "Email required";
   static String helloIAm = "Hello, I'm";
   static String downloadResume = "Download Resume";
   static String password = "Password";
   static String login = "Login";
-  static String qualifications = "Qualifications";
+  static String qualification = "Qualification";
   static String featuredProjects = 'Featured Projects';
   static String noProjects = 'No projects added yet';
   static String noQualifications = 'No qualifications added yet';
@@ -67,6 +72,14 @@ class Strings {
   static String selectProjectFiles = "Select files to view (pictures only)";
   static String isRequired(String value) {
     return "$value is required";
+  }
+
+  static String valueDeleted(String value) {
+    return "$value deleted successfully";
+  }
+
+  static String valueAdded(String value) {
+    return "$value added successfully";
   }
 
   static String enterValue(String value) {

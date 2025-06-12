@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
+import 'package:umair_liaqat/models/job_history.dart';
+import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/ui/home/components/education_part.dart';
 import 'package:umair_liaqat/ui/home/components/home_app_bar.dart';
 import 'package:umair_liaqat/ui/home/components/work_history_part.dart';
@@ -8,7 +10,7 @@ import 'package:umair_liaqat/utils/app_enum.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
-import 'package:umair_liaqat/ui/widgets/common_widgtes/vertical_headers.dart';
+import 'package:umair_liaqat/ui/widgets/common_widgets/vertical_headers.dart';
 
 import 'components/about_me.dart';
 import 'components/contact_me.dart';
@@ -40,6 +42,8 @@ class _HomeBodyState extends State<HomeBody> {
   final aboutMeKey = GlobalKey();
 
   final featuredProjectsKey = GlobalKey();
+  final qualificationsKey = GlobalKey();
+  final workHistoryKey = GlobalKey();
 
   final contactMeKey = GlobalKey();
 
@@ -89,11 +93,23 @@ class _HomeBodyState extends State<HomeBody> {
           }
           if (state.index == 1) {
             Scrollable.ensureVisible(
-              featuredProjectsKey.currentContext!,
+              workHistoryKey.currentContext!,
               duration: duration,
             );
           }
           if (state.index == 2) {
+            Scrollable.ensureVisible(
+              qualificationsKey.currentContext!,
+              duration: duration,
+            );
+          }
+          if (state.index == 3) {
+            Scrollable.ensureVisible(
+              featuredProjectsKey.currentContext!,
+              duration: duration,
+            );
+          }
+          if (state.index == 4) {
             Scrollable.ensureVisible(
               contactMeKey.currentContext!,
               duration: duration,
@@ -112,6 +128,21 @@ class _HomeBodyState extends State<HomeBody> {
                 controller: _controller,
                 child: BlocBuilder<HomeBloc, HomeState>(
                   builder: (BuildContext context, state) {
+                    sortBySortingIndex<QualificationModel>(
+                      context
+                              .watch<HomeBloc>()
+                              .state
+                              .userModel
+                              ?.qualifications ??
+                          [],
+                      (model) => model.sortingIndex,
+                    );
+                    sortBySortingIndex<JobHistory>(
+                      context.watch<HomeBloc>().state.userModel?.jobs ?? [],
+                      (model) => model.sortIndex,
+                      isReversed: true,
+                    );
+
                     return Column(
                       children: [
                         SizedBox(height: 0.08 * context.height),
@@ -121,12 +152,14 @@ class _HomeBodyState extends State<HomeBody> {
                         ),
                         SizedBox(height: context.height * 0.09),
                         WorkHistoryPart(
+                          key: workHistoryKey,
                           jobHistoryList:
                               context.watch<HomeBloc>().state.userModel?.jobs ??
                                   [],
                         ),
                         SizedBox(height: context.height * 0.09),
                         EducationPart(
+                          key: qualificationsKey,
                           qualifications: context
                                   .watch<HomeBloc>()
                                   .state
@@ -135,7 +168,7 @@ class _HomeBodyState extends State<HomeBody> {
                               [],
                         ),
                         SizedBox(height: context.height * 0.09),
-                        FeatureProjects(
+                        ProjectsSection(
                           key: featuredProjectsKey,
                           projectsList: context
                                   .watch<HomeBloc>()
@@ -180,5 +213,14 @@ class _HomeBodyState extends State<HomeBody> {
     return currentHeaderAxis == AppBarHeadersAxis.horizontal
         ? CrossFadeState.showSecond
         : CrossFadeState.showFirst;
+  }
+
+  void sortBySortingIndex<T>(List<T> list, int? Function(T) getSortingIndex,
+      {bool isReversed = false}) {
+    list.sort((a, b) {
+      final aIndex = getSortingIndex(a) ?? 0;
+      final bIndex = getSortingIndex(b) ?? 0;
+      return isReversed ? bIndex.compareTo(aIndex) : aIndex.compareTo(bIndex);
+    });
   }
 }

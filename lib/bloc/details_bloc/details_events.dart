@@ -1,4 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+
+import 'package:umair_liaqat/models/project_model.dart';
 
 class DetailsEvents extends Equatable {
   @override
@@ -9,8 +13,23 @@ class ImagePickEvent extends DetailsEvents {}
 
 class PickProjectFilesEvent extends DetailsEvents {}
 
+class UploadProjectEvent extends DetailsEvents {
+  final ProjectModel projectModel;
+  final BuildContext context;
+  UploadProjectEvent({
+    required this.projectModel,
+    required this.context,
+  });
+  @override
+  List<Object?> get props => [
+        projectModel,
+        context,
+      ];
+}
+
 class UserDataUpdateEvent extends DetailsEvents {
   final String name;
+  final BuildContext context;
   final String description;
   final String headline1;
   final String headline2;
@@ -21,6 +40,7 @@ class UserDataUpdateEvent extends DetailsEvents {
 
   UserDataUpdateEvent({
     required this.name,
+    required this.context,
     required this.description,
     required this.headline1,
     required this.headline2,
@@ -39,6 +59,7 @@ class UserDataUpdateEvent extends DetailsEvents {
         github,
         profilePicture,
         phoneNumber,
+        context,
       ];
 }
 
@@ -49,6 +70,7 @@ class UploadWorkHistory extends DetailsEvents {
   final String fromDate;
   final String toDate;
   final String description;
+  final BuildContext context;
 
   UploadWorkHistory({
     required this.organization,
@@ -57,6 +79,7 @@ class UploadWorkHistory extends DetailsEvents {
     required this.fromDate,
     required this.toDate,
     required this.description,
+    required this.context,
   });
   @override
   List<Object?> get props => [
@@ -66,10 +89,12 @@ class UploadWorkHistory extends DetailsEvents {
         fromDate,
         toDate,
         description,
+        context,
       ];
 }
 
 class UploadQualification extends DetailsEvents {
+  final BuildContext context;
   final String institute;
   final String degreeName;
   final int sortIndex;
@@ -78,14 +103,56 @@ class UploadQualification extends DetailsEvents {
   UploadQualification({
     required this.institute,
     required this.degreeName,
+    required this.context,
     required this.sortIndex,
     required this.completionYear,
   });
   @override
+  List<Object?> get props =>
+      [institute, degreeName, sortIndex, completionYear, context];
+}
+
+class DeleteQualification extends DetailsEvents {
+  final String id;
+  final BuildContext context;
+
+  DeleteQualification({
+    required this.id,
+    required this.context,
+  });
+  @override
   List<Object?> get props => [
-        institute,
-        degreeName,
-        sortIndex,
-        completionYear,
+        id,
+        context,
+      ];
+}
+
+class DeleteWorkHistory extends DetailsEvents {
+  final String id;
+  final BuildContext context;
+
+  DeleteWorkHistory({
+    required this.id,
+    required this.context,
+  });
+  @override
+  List<Object?> get props => [
+        id,
+        context,
+      ];
+}
+
+class DeleteProject extends DetailsEvents {
+  final String id;
+  final BuildContext context;
+
+  DeleteProject({
+    required this.id,
+    required this.context,
+  });
+  @override
+  List<Object?> get props => [
+        id,
+        context,
       ];
 }

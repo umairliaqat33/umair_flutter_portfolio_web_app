@@ -29,12 +29,17 @@ class WorkHistoryPart extends StatelessWidget {
           const SizedBox(height: 20),
           if (jobHistoryList.isNotEmpty)
             ...jobHistoryList.map(
-              (job) => JobDetailsSection(
-                organization: job.organization ?? "",
-                designation: job.position ?? "",
-                fromDate: job.fromDate ?? "",
-                toDate: job.toDate ?? "",
-                description: job.jobDescription ?? "",
+              (job) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: 20,
+                ),
+                child: JobDetailsSection(
+                  organization: job.organization ?? "",
+                  designation: job.position ?? "",
+                  fromDate: job.fromDate ?? "",
+                  toDate: job.toDate ?? "",
+                  description: job.jobDescription ?? "",
+                ),
               ),
             )
           else

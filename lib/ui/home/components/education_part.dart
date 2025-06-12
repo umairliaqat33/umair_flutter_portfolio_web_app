@@ -20,7 +20,7 @@ class EducationPart extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.qualifications,
+            "${Strings.qualification}s",
             style: Theme.of(context).textTheme.displaySmall!.copyWith(
                   color: PortfolioAppTheme.nameColor,
                   fontWeight: FontWeight.w600,
@@ -29,10 +29,15 @@ class EducationPart extends StatelessWidget {
           const SizedBox(height: 20),
           if (qualifications.isNotEmpty)
             ...qualifications.map(
-              (qualification) => EducationSection(
-                title: qualification.degreeName ?? "",
-                duration: qualification.completionYear ?? "",
-                institution: qualification.instituteName ?? "",
+              (qualification) => Padding(
+                padding: EdgeInsets.only(
+                  bottom: 20,
+                ),
+                child: EducationSection(
+                  title: qualification.degreeName ?? "",
+                  duration: qualification.completionYear ?? "",
+                  institution: qualification.instituteName ?? "",
+                ),
               ),
             )
           else

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:umair_liaqat/utils/app_strings.dart';
 
 import 'app_enum.dart';
 
@@ -6,11 +7,15 @@ extension AppBarHeaderExtension on AppBarHeaders {
   String getString() {
     switch (this) {
       case AppBarHeaders.home:
-        return 'Home';
+        return Strings.home;
       case AppBarHeaders.projects:
-        return 'Projects';
+        return "${Strings.project}s";
       case AppBarHeaders.contact:
-        return 'Contact';
+        return Strings.contact;
+      case AppBarHeaders.qualification:
+        return "${Strings.qualification}s";
+      case AppBarHeaders.workHistory:
+        return Strings.jobHistory;
     }
   }
 }
