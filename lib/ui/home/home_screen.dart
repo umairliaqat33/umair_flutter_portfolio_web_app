@@ -6,9 +6,11 @@ import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/ui/home/components/education_part.dart';
 import 'package:umair_liaqat/ui/home/components/home_app_bar.dart';
 import 'package:umair_liaqat/ui/home/components/work_history_part.dart';
+import 'package:umair_liaqat/ui/widgets/common_widgets/progress_dialog.dart';
 import 'package:umair_liaqat/utils/app_enum.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
+import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
 import 'package:umair_liaqat/ui/widgets/common_widgets/vertical_headers.dart';
 
@@ -80,130 +82,140 @@ class _HomeBodyState extends State<HomeBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<HomeBloc, HomeState>(
-      listener: (context, state) {
-        if (state is AppBarHeadersIndexChanged) {
-          Navigator.of(context).maybePop();
-          const duration = Duration(milliseconds: 300);
-          if (state.index == 0) {
-            Scrollable.ensureVisible(
-              aboutMeKey.currentContext!,
-              duration: duration,
-            );
-          }
-          if (state.index == 1) {
-            Scrollable.ensureVisible(
-              workHistoryKey.currentContext!,
-              duration: duration,
-            );
-          }
-          if (state.index == 2) {
-            Scrollable.ensureVisible(
-              qualificationsKey.currentContext!,
-              duration: duration,
-            );
-          }
-          if (state.index == 3) {
-            Scrollable.ensureVisible(
-              featuredProjectsKey.currentContext!,
-              duration: duration,
-            );
-          }
-          if (state.index == 4) {
-            Scrollable.ensureVisible(
-              contactMeKey.currentContext!,
-              duration: duration,
-            );
-          }
-        }
-      },
-      child: Stack(
-        children: [
-          Container(
-            width: context.width,
-            height: context.height,
-            padding: AppSizes.appPadding(context),
-            color: PortfolioAppTheme.primary,
-            child: SingleChildScrollView(
-                controller: _controller,
-                child: BlocBuilder<HomeBloc, HomeState>(
-                  builder: (BuildContext context, state) {
-                    sortBySortingIndex<QualificationModel>(
-                      context
-                              .watch<HomeBloc>()
-                              .state
-                              .userModel
-                              ?.qualifications ??
-                          [],
-                      (model) => model.sortingIndex,
-                    );
-                    sortBySortingIndex<JobHistory>(
-                      context.watch<HomeBloc>().state.userModel?.jobs ?? [],
-                      (model) => model.sortIndex,
-                      isReversed: true,
-                    );
-
-                    return Column(
-                      children: [
-                        SizedBox(height: 0.08 * context.height),
-                        AboutMe(
-                          key: aboutMeKey,
-                          userModel: context.watch<HomeBloc>().state.userModel,
-                        ),
-                        SizedBox(height: context.height * 0.09),
-                        WorkHistoryPart(
-                          key: workHistoryKey,
-                          jobHistoryList:
-                              context.watch<HomeBloc>().state.userModel?.jobs ??
-                                  [],
-                        ),
-                        SizedBox(height: context.height * 0.09),
-                        EducationPart(
-                          key: qualificationsKey,
-                          qualifications: context
-                                  .watch<HomeBloc>()
-                                  .state
-                                  .userModel
-                                  ?.qualifications ??
-                              [],
-                        ),
-                        SizedBox(height: context.height * 0.09),
-                        ProjectsSection(
-                          key: featuredProjectsKey,
-                          projectsList: context
-                                  .watch<HomeBloc>()
-                                  .state
-                                  .userModel
-                                  ?.projects ??
-                              [],
-                        ),
-                        SizedBox(height: context.height * 0.09),
-                        ContactMe(
-                          key: contactMeKey,
-                          userModel: context.watch<HomeBloc>().state.userModel,
-                        ),
-                        SizedBox(height: context.height * 0.09),
-                      ],
-                    );
-                  },
-                )),
-          ),
-          BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              return AnimatedCrossFade(
-                sizeCurve: Curves.bounceInOut,
-                alignment: Alignment.topCenter,
-                crossFadeState: _getCrossFadeState(context),
-                firstChild: Container(
-                  color: PortfolioAppTheme.greyButtonColor,
-                  child: const VerticalHeaders(),
-                ),
-                secondChild: Container(),
-                duration: const Duration(milliseconds: 200),
+    return Center(
+      child: BlocListener<HomeBloc, HomeState>(
+        listener: (context, state) {
+          if (state is AppBarHeadersIndexChanged) {
+            Navigator.of(context).maybePop();
+            const duration = Duration(milliseconds: 300);
+            if (state.index == 0) {
+              Scrollable.ensureVisible(
+                aboutMeKey.currentContext!,
+                duration: duration,
               );
-            },
-          )
-        ],
+            }
+            if (state.index == 1) {
+              Scrollable.ensureVisible(
+                workHistoryKey.currentContext!,
+                duration: duration,
+              );
+            }
+            if (state.index == 2) {
+              Scrollable.ensureVisible(
+                qualificationsKey.currentContext!,
+                duration: duration,
+              );
+            }
+            if (state.index == 3) {
+              Scrollable.ensureVisible(
+                featuredProjectsKey.currentContext!,
+                duration: duration,
+              );
+            }
+            if (state.index == 4) {
+              Scrollable.ensureVisible(
+                contactMeKey.currentContext!,
+                duration: duration,
+              );
+            }
+          }
+        },
+        child: Stack(
+          children: [
+            Container(
+              width: context.width,
+              height: context.height,
+              padding: AppSizes.appPadding(context),
+              color: PortfolioAppTheme.primary,
+              child: SingleChildScrollView(
+                  controller: _controller,
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (BuildContext context, state) {
+                      sortBySortingIndex<QualificationModel>(
+                        context
+                                .watch<HomeBloc>()
+                                .state
+                                .userModel
+                                ?.qualifications ??
+                            [],
+                        (model) => model.sortingIndex,
+                      );
+                      sortBySortingIndex<JobHistory>(
+                        context.watch<HomeBloc>().state.userModel?.jobs ?? [],
+                        (model) => model.sortIndex,
+                        isReversed: true,
+                      );
+                      if (context.watch<HomeBloc>().state.userModel == null) {
+                        return AlertDialog(
+                            content: ProgressDialog(text: Strings.pleaseWait));
+                      }
+                      return Column(
+                        children: [
+                          SizedBox(height: 0.08 * context.height),
+                          AboutMe(
+                            key: aboutMeKey,
+                            userModel:
+                                context.watch<HomeBloc>().state.userModel,
+                          ),
+                          SizedBox(height: context.height * 0.09),
+                          WorkHistoryPart(
+                            key: workHistoryKey,
+                            jobHistoryList: context
+                                    .watch<HomeBloc>()
+                                    .state
+                                    .userModel
+                                    ?.jobs ??
+                                [],
+                          ),
+                          SizedBox(height: context.height * 0.09),
+                          EducationPart(
+                            key: qualificationsKey,
+                            qualifications: context
+                                    .watch<HomeBloc>()
+                                    .state
+                                    .userModel
+                                    ?.qualifications ??
+                                [],
+                          ),
+                          SizedBox(height: context.height * 0.09),
+                          ProjectsSection(
+                            key: featuredProjectsKey,
+                            projectsList: context
+                                    .watch<HomeBloc>()
+                                    .state
+                                    .userModel
+                                    ?.projects ??
+                                [],
+                          ),
+                          SizedBox(height: context.height * 0.09),
+                          ContactMe(
+                            key: contactMeKey,
+                            userModel:
+                                context.watch<HomeBloc>().state.userModel,
+                          ),
+                          SizedBox(height: context.height * 0.09),
+                        ],
+                      );
+                    },
+                  )),
+            ),
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                return AnimatedCrossFade(
+                  sizeCurve: Curves.bounceInOut,
+                  alignment: Alignment.topCenter,
+                  crossFadeState: _getCrossFadeState(context),
+                  firstChild: Container(
+                    color: PortfolioAppTheme.greyButtonColor,
+                    child: const VerticalHeaders(),
+                  ),
+                  secondChild: Container(),
+                  duration: const Duration(milliseconds: 200),
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }

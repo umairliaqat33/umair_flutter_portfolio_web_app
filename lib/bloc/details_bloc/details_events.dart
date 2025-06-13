@@ -27,6 +27,20 @@ class UploadProjectEvent extends DetailsEvents {
       ];
 }
 
+class UpdateProjectEvent extends DetailsEvents {
+  final ProjectModel projectModel;
+  final BuildContext context;
+  UpdateProjectEvent({
+    required this.projectModel,
+    required this.context,
+  });
+  @override
+  List<Object?> get props => [
+        projectModel,
+        context,
+      ];
+}
+
 class UserDataUpdateEvent extends DetailsEvents {
   final String name;
   final BuildContext context;
@@ -110,6 +124,33 @@ class UploadQualification extends DetailsEvents {
   @override
   List<Object?> get props =>
       [institute, degreeName, sortIndex, completionYear, context];
+}
+
+class UpdateQualification extends DetailsEvents {
+  final BuildContext context;
+  final String institute;
+  final String id;
+  final String degreeName;
+  final int sortIndex;
+  final String completionYear;
+
+  UpdateQualification({
+    required this.institute,
+    required this.degreeName,
+    required this.context,
+    required this.sortIndex,
+    required this.completionYear,
+    required this.id,
+  });
+  @override
+  List<Object?> get props => [
+        institute,
+        degreeName,
+        sortIndex,
+        completionYear,
+        context,
+        id,
+      ];
 }
 
 class DeleteQualification extends DetailsEvents {

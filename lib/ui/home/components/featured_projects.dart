@@ -11,10 +11,16 @@ import 'package:url_launcher/url_launcher.dart';
 class ProjectsSection extends StatefulWidget {
   final List<ProjectModel> projectsList;
   final bool showHeading;
+  final Function(String, int)? editProject;
+  final Function(String, int)? deleteProject;
+  final bool isEditMode;
   const ProjectsSection({
     super.key,
     required this.projectsList,
     this.showHeading = true,
+    this.editProject,
+    this.deleteProject,
+    this.isEditMode = false,
   });
 
   @override
@@ -72,7 +78,16 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                         child: AnimatedScale(
                           scale: hoveredIndex == index ? 1.05 : 1.0,
                           duration: const Duration(milliseconds: 200),
-                          child: ProjectCard(project: project),
+                          child: ProjectCard(
+                            isEditMode: widget.isEditMode,
+                            project: project,
+                            editProject: () => widget.editProject != null
+                                ? widget.editProject!(project.id!, index)
+                                : null,
+                            deleteProject: () => widget.editProject != null
+                                ? widget.editProject!(project.id!, index)
+                                : null,
+                          ),
                         ),
                       ),
                     );
@@ -86,10 +101,16 @@ class _ProjectsSectionState extends State<ProjectsSection> {
 
 class ProjectCard extends StatefulWidget {
   final ProjectModel project;
+  final Function()? editProject;
+  final Function()? deleteProject;
+  final bool isEditMode;
 
   const ProjectCard({
     super.key,
     required this.project,
+    this.editProject,
+    this.deleteProject,
+    this.isEditMode = false,
   });
 
   @override
@@ -117,52 +138,97 @@ class _ProjectCardState extends State<ProjectCard> {
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(16)),
-              child: widget.project.filesLinks?.isNotEmpty == true &&
-                      imagePath != null
-                  ? Image.asset(
-                      imagePath.path!,
-                      height: 180,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) =>
-                          const Icon(Icons.broken_image, size: 100),
-                    )
-                  : Image.network(
-                      imageUrl,
-                      height: 180,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) =>
-                          const Icon(Icons.broken_image, size: 100),
-                    ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.project.name ?? 'No Title',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: FontWeight.bold),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(16)),
+                  child: widget.project.filesLinks?.isNotEmpty == true &&
+                          imagePath != null
+                      ? Image.asset(
+                          imagePath.path!,
+                          height: 180,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          errorBuilder: (_, __, ___) =>
+                              const Icon(Icons.broken_image, size: 100),
+                        )
+                      : Image.network(
+                          imageUrl,
+                          height: 180,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },
+                          errorBuilder: (_, __, ___) =>
+                              const Icon(Icons.broken_image, size: 100),
+                        ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.project.name ?? 'No Title',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        widget.project.description ??
+                            'No description available',
+                        maxLines: widget.isEditMode ? 5 : 10,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    widget.project.description ?? 'No description available',
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
+            ),
+            if (widget.isEditMode)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () =>
+                        widget.editProject != null ? widget.editProject!() : {},
+                    icon: Icon(
+                      Icons.edit,
+                      color: PortfolioAppTheme.normalTextColor,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () => widget.deleteProject != null
+                        ? widget.deleteProject!()
+                        : {},
+                    icon: Icon(
+                      Icons.delete,
+                      color: PortfolioAppTheme.normalTextColor,
+                    ),
                   ),
                 ],
-              ),
-            ),
+              )
           ],
         ),
       ),
@@ -238,6 +304,21 @@ class _ProjectCardState extends State<ProjectCard> {
                             HomeScreenSizes.projectDialogImageHeight(context),
                         // width: double.infinity,
                         fit: BoxFit.cover,
+                        loadingBuilder: (BuildContext context, Widget child,
+                            ImageChunkEvent? loadingProgress) {
+                          if (loadingProgress == null) {
+                            return child;
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(
+                              color: PortfolioAppTheme.primary,
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          );
+                        },
                         errorBuilder: (_, __, ___) =>
                             const Icon(Icons.broken_image, size: 100),
                       ),

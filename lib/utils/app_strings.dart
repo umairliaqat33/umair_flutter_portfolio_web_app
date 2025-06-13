@@ -28,6 +28,7 @@ class Strings {
   static String pleaseWait = "Please wait";
   static String home = "Home";
   static String project = "Project";
+  static String pleaseAddPicture = "Please add at least one picture.";
   static String contact = "Contact";
   static String jobHistory = "Job History";
   static String emailRequired = "Email required";
@@ -57,6 +58,7 @@ class Strings {
   static String addAProject = "Add a project";
   static String addWorkHistory = "Add work history";
   static String aDD = "Add";
+  static String update = "Update";
 
   static String jobPosition = "Job Position";
   static String organization = "Organization";
@@ -80,6 +82,10 @@ class Strings {
 
   static String valueAdded(String value) {
     return "$value added successfully";
+  }
+
+  static String valueUpdated(String value) {
+    return "$value updated successfully";
   }
 
   static String enterValue(String value) {

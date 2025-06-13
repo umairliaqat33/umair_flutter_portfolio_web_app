@@ -29,6 +29,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     on<DeleteWorkHistory>(_deleteJobHistory);
     on<DeleteProject>(_deleteProject);
     on<UploadProjectEvent>(_uploadProject);
+    on<UpdateProjectEvent>(_updateProject);
   }
   final Uuid _uuid = Uuid();
 
@@ -107,7 +108,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
 
       Fluttertoast.showToast(msg: e.toString());
 
-      log("Error while updatingUser: $e");
+      log("Error while updating User: $e");
     }
   }
 
@@ -174,6 +175,36 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     }
   }
 
+  Future<void> _updateQualification(
+      UpdateQualification event, Emitter<DetailsState> emit) async {
+    try {
+      ToastUtils.showLoader(event.context);
+
+      QualificationModel qualificationModel = QualificationModel(
+        id: event.id,
+        completionYear: event.completionYear,
+        degreeName: event.degreeName,
+        instituteName: event.institute,
+        sortingIndex: event.sortIndex,
+      );
+      await FirebaseFirestore.instance
+          .collection(DatabaseCollections.qualifications)
+          .doc(event.id)
+          .update(
+            qualificationModel.toMap(),
+          );
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: Strings.valueUpdated(Strings.qualification));
+    } catch (e) {
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: e.toString());
+
+      log("Error while uploading qualification: $e");
+    }
+  }
+
   Future<void> _deleteQualification(
       DeleteQualification event, Emitter<DetailsState> emit) async {
     try {
@@ -190,7 +221,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       Navigator.of(event.context).pop();
 
       Fluttertoast.showToast(msg: e.toString());
-      log("Error while uploading qualification: $e");
+      log("Error while deleting qualification: $e");
     }
   }
 
@@ -208,7 +239,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());
-      log("Error while uploading qualification: $e");
+      log("Error while deleting job history: $e");
       Fluttertoast.showToast(msg: e.toString());
     }
   }
@@ -229,7 +260,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());
-      log("Error while uploading qualification: $e");
+      log("Error while deleting project: $e");
     }
   }
 
@@ -261,13 +292,60 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
             projectModel.toMap(),
           );
       Navigator.of(event.context).pop();
-      Fluttertoast.showToast(msg: Strings.valueAdded(Strings.qualification));
+      Fluttertoast.showToast(
+        msg: Strings.valueAdded(
+          Strings.project,
+        ),
+      );
     } catch (e) {
       Navigator.of(event.context).pop();
 
       Fluttertoast.showToast(msg: e.toString());
 
-      log("Error while uploading qualification: $e");
+      log("Error while uploading project: $e");
+    }
+  }
+
+  Future<void> _updateProject(
+      UpdateProjectEvent event, Emitter<DetailsState> emit) async {
+    try {
+      ToastUtils.showLoader(event.context);
+      List<String> linksList = [];
+      if (event.projectModel.files != null &&
+          event.projectModel.files!.isNotEmpty) {
+        for (int i = 0; i < (event.projectModel.files?.length ?? 0); i++) {
+          PlatformFile file = event.projectModel.files![i];
+          String? link = await uploadPlatformFile(file);
+          if (link != null && link.isNotEmpty) {
+            linksList.add(link);
+          }
+        }
+      }
+      ProjectModel projectModel = event.projectModel.copyWith(
+        filesLinks: [
+          ...event.projectModel.filesLinks ?? [],
+          ...linksList,
+        ],
+      );
+
+      await FirebaseFirestore.instance
+          .collection(DatabaseCollections.projects)
+          .doc(event.projectModel.id)
+          .update(
+            projectModel.toMap(),
+          );
+      Navigator.of(event.context).pop();
+      Fluttertoast.showToast(
+        msg: Strings.valueUpdated(
+          Strings.project,
+        ),
+      );
+    } catch (e) {
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: e.toString());
+
+      log("Error while updating project: $e");
     }
   }
 }

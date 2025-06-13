@@ -10,7 +10,7 @@ import 'package:umair_liaqat/models/job_history.dart';
 import 'package:umair_liaqat/models/project_model.dart';
 import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/models/user_model.dart';
-import 'package:umair_liaqat/ui/portfolio_details/components/portfolio_details_widget.dart';
+import 'package:umair_liaqat/ui/portfolio_details/components/project_details_widget.dart';
 import 'package:umair_liaqat/ui/portfolio_details/components/qualification_details_widget.dart';
 import 'package:umair_liaqat/ui/portfolio_details/components/user_profile_details_widget.dart';
 import 'package:umair_liaqat/ui/portfolio_details/components/work_history_details_widget.dart';
