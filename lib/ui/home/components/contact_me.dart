@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:umair_liaqat/models/user_model.dart';
-import 'package:umair_liaqat/ui/login_screen/login_screen.dart';
 import 'package:umair_liaqat/ui/portfolio_details/portfolio_details_screen.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';

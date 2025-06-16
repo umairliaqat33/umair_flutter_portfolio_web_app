@@ -66,10 +66,6 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
                     qualificationFormKey: _qualificationFormKey,
                     addQualification: (qualification) =>
                         addQualification(qualification),
-                    editQualification: (index, id) => editQualification(
-                      id,
-                      index,
-                    ),
                     deleteQualification: (index, id) => deleteQualification(
                       id,
                       index,
@@ -150,10 +146,6 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
           ),
         );
     qualificationsList.removeAt(index);
-    setState(() {});
-  }
-
-  void editQualification(String id, int index) {
     setState(() {});
   }
 

@@ -30,6 +30,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     on<DeleteProject>(_deleteProject);
     on<UploadProjectEvent>(_uploadProject);
     on<UpdateProjectEvent>(_updateProject);
+    on<UpdateQualification>(_updateQualification);
   }
   final Uuid _uuid = Uuid();
 

@@ -2,6 +2,9 @@ import 'package:file_picker/file_picker.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:umair_liaqat/models/project_model.dart';
+import 'package:umair_liaqat/ui/widgets/image_widgets/custom_image_widget.dart';
+import 'package:umair_liaqat/ui/widgets/image_widgets/image_with_close_icon.dart';
+import 'package:umair_liaqat/utils/app_enum.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
@@ -14,6 +17,7 @@ class ProjectsSection extends StatefulWidget {
   final Function(String, int)? editProject;
   final Function(String, int)? deleteProject;
   final bool isEditMode;
+  final Function(String)? removeImage;
   const ProjectsSection({
     super.key,
     required this.projectsList,
@@ -21,6 +25,7 @@ class ProjectsSection extends StatefulWidget {
     this.editProject,
     this.deleteProject,
     this.isEditMode = false,
+    this.removeImage,
   });
 
   @override
@@ -79,6 +84,14 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                           scale: hoveredIndex == index ? 1.05 : 1.0,
                           duration: const Duration(milliseconds: 200),
                           child: ProjectCard(
+                            removeImage: (imageUrl) => widget.removeImage !=
+                                    null
+                                ? {
+                                    widget.projectsList[index].filesLinks
+                                        ?.removeWhere(
+                                            (element) => element == imageUrl)
+                                  }
+                                : {},
                             isEditMode: widget.isEditMode,
                             project: project,
                             editProject: () => widget.editProject != null
@@ -104,6 +117,7 @@ class ProjectCard extends StatefulWidget {
   final Function()? editProject;
   final Function()? deleteProject;
   final bool isEditMode;
+  final Function(String)? removeImage;
 
   const ProjectCard({
     super.key,
@@ -111,6 +125,7 @@ class ProjectCard extends StatefulWidget {
     this.editProject,
     this.deleteProject,
     this.isEditMode = false,
+    this.removeImage,
   });
 
   @override
@@ -298,30 +313,23 @@ class _ProjectCardState extends State<ProjectCard> {
                     project.filesLinks!.length,
                     (index) => ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        project.filesLinks![index],
-                        height:
-                            HomeScreenSizes.projectDialogImageHeight(context),
-                        // width: double.infinity,
-                        fit: BoxFit.cover,
-                        loadingBuilder: (BuildContext context, Widget child,
-                            ImageChunkEvent? loadingProgress) {
-                          if (loadingProgress == null) {
-                            return child;
-                          }
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: PortfolioAppTheme.primary,
-                              value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
-                                  : null,
+                      child: widget.isEditMode
+                          ? ImageWithCloseIcon(
+                              imagePath: project.filesLinks![index],
+                              imageType: ImageType.network,
+                              onCloseTap: () => widget.removeImage != null
+                                  ? widget
+                                      .removeImage!(project.filesLinks![index])
+                                  : {},
+                            )
+                          : CustomImageWidget(
+                              assetName: project.filesLinks![index],
+                              imageType: ImageType.network,
+                              height: HomeScreenSizes.projectDialogImageHeight(
+                                  context),
+                              // width: double.infinity,
+                              fit: BoxFit.cover,
                             ),
-                          );
-                        },
-                        errorBuilder: (_, __, ___) =>
-                            const Icon(Icons.broken_image, size: 100),
-                      ),
                     ),
                   ),
                   options: CarouselOptions(
