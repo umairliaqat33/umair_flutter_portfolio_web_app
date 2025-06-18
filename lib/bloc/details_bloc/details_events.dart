@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:umair_liaqat/models/job_history.dart';
 
 import 'package:umair_liaqat/models/project_model.dart';
+import 'package:umair_liaqat/models/qualification_model.dart';
 
 class DetailsEvents extends Equatable {
   @override
@@ -107,6 +109,21 @@ class UploadWorkHistory extends DetailsEvents {
       ];
 }
 
+class UpdateWorkHistory extends DetailsEvents {
+  final JobHistory jobHistory;
+  final BuildContext context;
+
+  UpdateWorkHistory({
+    required this.context,
+    required this.jobHistory,
+  });
+  @override
+  List<Object?> get props => [
+        jobHistory,
+        context,
+      ];
+}
+
 class UploadQualification extends DetailsEvents {
   final BuildContext context;
   final String institute;
@@ -128,28 +145,16 @@ class UploadQualification extends DetailsEvents {
 
 class UpdateQualification extends DetailsEvents {
   final BuildContext context;
-  final String institute;
-  final String id;
-  final String degreeName;
-  final int sortIndex;
-  final String completionYear;
+  final QualificationModel qualificationModel;
 
   UpdateQualification({
-    required this.institute,
-    required this.degreeName,
     required this.context,
-    required this.sortIndex,
-    required this.completionYear,
-    required this.id,
+    required this.qualificationModel,
   });
   @override
   List<Object?> get props => [
-        institute,
-        degreeName,
-        sortIndex,
-        completionYear,
+        qualificationModel,
         context,
-        id,
       ];
 }
 

@@ -264,7 +264,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
           height: 20,
         ),
         NormalButton(
-          label: isEditMode ? Strings.update : Strings.aDD,
+          label: isEditMode ? Strings.update : Strings.add,
           width: AppSizes.textfieldWidth(context),
           icon: isEditMode ? null : Icons.add,
           onTap: () {

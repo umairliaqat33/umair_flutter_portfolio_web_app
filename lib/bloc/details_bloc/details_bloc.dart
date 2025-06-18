@@ -31,6 +31,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     on<UploadProjectEvent>(_uploadProject);
     on<UpdateProjectEvent>(_updateProject);
     on<UpdateQualification>(_updateQualification);
+    on<UpdateWorkHistory>(_updateWorkHistory);
   }
   final Uuid _uuid = Uuid();
 
@@ -145,6 +146,30 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     }
   }
 
+  Future<void> _updateWorkHistory(
+      UpdateWorkHistory event, Emitter<DetailsState> emit) async {
+    try {
+      ToastUtils.showLoader(event.context);
+
+      await FirebaseFirestore.instance
+          .collection(DatabaseCollections.jobHistory)
+          .doc(event.jobHistory.id)
+          .update(
+            event.jobHistory.toMap(),
+          );
+      Navigator.of(event.context).pop();
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: Strings.valueUpdated(Strings.workHistory));
+    } catch (e) {
+      Navigator.of(event.context).pop();
+
+      Fluttertoast.showToast(msg: e.toString());
+
+      log("Error while uploading work history: $e");
+    }
+  }
+
   Future<void> _uploadQualification(
       UploadQualification event, Emitter<DetailsState> emit) async {
     String id = _uuid.v4();
@@ -181,19 +206,13 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     try {
       ToastUtils.showLoader(event.context);
 
-      QualificationModel qualificationModel = QualificationModel(
-        id: event.id,
-        completionYear: event.completionYear,
-        degreeName: event.degreeName,
-        instituteName: event.institute,
-        sortingIndex: event.sortIndex,
-      );
       await FirebaseFirestore.instance
           .collection(DatabaseCollections.qualifications)
-          .doc(event.id)
+          .doc(event.qualificationModel.id)
           .update(
-            qualificationModel.toMap(),
+            event.qualificationModel.toMap(),
           );
+      Navigator.of(event.context).pop();
       Navigator.of(event.context).pop();
 
       Fluttertoast.showToast(msg: Strings.valueUpdated(Strings.qualification));

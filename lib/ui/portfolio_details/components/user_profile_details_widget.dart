@@ -199,7 +199,7 @@ class UserProfileDetailsWidget extends StatelessWidget {
                   ),
                   Center(
                     child: NormalButton(
-                      label: Strings.aDD,
+                      label: Strings.add,
                       width: AppSizes.textfieldWidth(context),
                       icon: Icons.add,
                       onTap: () => updateUserData(

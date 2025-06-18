@@ -163,7 +163,7 @@ class _QualificationDetailsWidgetState
           height: 20,
         ),
         NormalButton(
-          label: (isEditMode ?? false) ? Strings.update : Strings.aDD,
+          label: (isEditMode ?? false) ? Strings.update : Strings.add,
           width: AppSizes.textfieldWidth(context),
           icon: (isEditMode ?? false) ? null : Icons.add,
           onTap: () => (isEditMode ?? false)
@@ -197,10 +197,12 @@ class _QualificationDetailsWidgetState
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.grey,
-          content: fieldsPart(
-            isEditMode: true,
-            id: qualification.id,
-            index: index,
+          content: SingleChildScrollView(
+            child: fieldsPart(
+              isEditMode: true,
+              id: qualification.id,
+              index: index,
+            ),
           ),
         );
       },
@@ -208,15 +210,21 @@ class _QualificationDetailsWidgetState
   }
 
   Future<void> editQualification(int index, String id) async {
+    QualificationModel model = QualificationModel(
+      id: id,
+      instituteName: _instituteController.text,
+      degreeName: _degreeController.text,
+      sortingIndex: int.parse(_qualificationSortingIndexController.text),
+      completionYear: _completionDateController.text,
+    );
     context.read<DetailsBloc>().add(
           UpdateQualification(
-            institute: _instituteController.text,
-            degreeName: _degreeController.text,
             context: context,
-            sortIndex: int.parse(_qualificationSortingIndexController.text),
-            completionYear: _completionDateController.text,
-            id: id,
+            qualificationModel: model,
           ),
         );
+    widget.qualificationList[index] = model;
+
+    setState(() {});
   }
 }
