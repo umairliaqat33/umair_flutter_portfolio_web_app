@@ -32,6 +32,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     on<UpdateProjectEvent>(_updateProject);
     on<UpdateQualification>(_updateQualification);
     on<UpdateWorkHistory>(_updateWorkHistory);
+    on<DeleteProjectFilesEvent>(_deleteProjectImage);
+    on<DeleteProjectAllFilesEvent>(_deleteAllProjectImages);
   }
   final Uuid _uuid = Uuid();
 
@@ -167,6 +169,38 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       Fluttertoast.showToast(msg: e.toString());
 
       log("Error while uploading work history: $e");
+    }
+  }
+
+  Future<void> _deleteProjectImage(
+      DeleteProjectFilesEvent event, Emitter<DetailsState> emit) async {
+    try {
+      state.projectFiles!.removeAt(event.index);
+      emit(
+        state.copyWith(
+          projectContent: state.projectFiles,
+        ),
+      );
+
+      Fluttertoast.showToast(msg: Strings.fileRemoved);
+    } catch (e) {
+      Fluttertoast.showToast(msg: Strings.fileNotRemoved);
+
+      log("Error while deleting project file: $e");
+    }
+  }
+
+  Future<void> _deleteAllProjectImages(
+      DeleteProjectAllFilesEvent event, Emitter<DetailsState> emit) async {
+    try {
+      state.projectFiles?.clear();
+      emit(
+        state.copyWith(
+          projectContent: state.projectFiles,
+        ),
+      );
+    } catch (e) {
+      log("Error while deleting all project files: $e");
     }
   }
 

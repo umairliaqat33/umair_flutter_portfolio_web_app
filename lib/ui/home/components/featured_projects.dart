@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:umair_liaqat/models/project_model.dart';
 import 'package:umair_liaqat/ui/widgets/image_widgets/custom_image_widget.dart';
-import 'package:umair_liaqat/ui/widgets/image_widgets/image_with_close_icon.dart';
 import 'package:umair_liaqat/utils/app_enum.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
@@ -14,17 +13,11 @@ import 'package:url_launcher/url_launcher.dart';
 class ProjectsSection extends StatefulWidget {
   final List<ProjectModel> projectsList;
   final bool showHeading;
-  final Function(String, int)? editProject;
-  final Function(String, int)? deleteProject;
-  final bool isEditMode;
   final Function(String)? removeImage;
   const ProjectsSection({
     super.key,
     required this.projectsList,
     this.showHeading = true,
-    this.editProject,
-    this.deleteProject,
-    this.isEditMode = false,
     this.removeImage,
   });
 
@@ -92,14 +85,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                                             (element) => element == imageUrl)
                                   }
                                 : {},
-                            isEditMode: widget.isEditMode,
                             project: project,
-                            editProject: () => widget.editProject != null
-                                ? widget.editProject!(project.id!, index)
-                                : null,
-                            deleteProject: () => widget.editProject != null
-                                ? widget.editProject!(project.id!, index)
-                                : null,
                           ),
                         ),
                       ),
@@ -114,17 +100,11 @@ class _ProjectsSectionState extends State<ProjectsSection> {
 
 class ProjectCard extends StatefulWidget {
   final ProjectModel project;
-  final Function()? editProject;
-  final Function()? deleteProject;
-  final bool isEditMode;
   final Function(String)? removeImage;
 
   const ProjectCard({
     super.key,
     required this.project,
-    this.editProject,
-    this.deleteProject,
-    this.isEditMode = false,
     this.removeImage,
   });
 
@@ -212,7 +192,7 @@ class _ProjectCardState extends State<ProjectCard> {
                       Text(
                         widget.project.description ??
                             'No description available',
-                        maxLines: widget.isEditMode ? 5 : 10,
+                        maxLines: 10,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
@@ -221,29 +201,6 @@ class _ProjectCardState extends State<ProjectCard> {
                 ),
               ],
             ),
-            if (widget.isEditMode)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    onPressed: () =>
-                        widget.editProject != null ? widget.editProject!() : {},
-                    icon: Icon(
-                      Icons.edit,
-                      color: PortfolioAppTheme.normalTextColor,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () => widget.deleteProject != null
-                        ? widget.deleteProject!()
-                        : {},
-                    icon: Icon(
-                      Icons.delete,
-                      color: PortfolioAppTheme.normalTextColor,
-                    ),
-                  ),
-                ],
-              )
           ],
         ),
       ),
@@ -313,23 +270,14 @@ class _ProjectCardState extends State<ProjectCard> {
                     project.filesLinks!.length,
                     (index) => ClipRRect(
                       borderRadius: BorderRadius.circular(12),
-                      child: widget.isEditMode
-                          ? ImageWithCloseIcon(
-                              imagePath: project.filesLinks![index],
-                              imageType: ImageType.network,
-                              onCloseTap: () => widget.removeImage != null
-                                  ? widget
-                                      .removeImage!(project.filesLinks![index])
-                                  : {},
-                            )
-                          : CustomImageWidget(
-                              assetName: project.filesLinks![index],
-                              imageType: ImageType.network,
-                              height: HomeScreenSizes.projectDialogImageHeight(
-                                  context),
-                              // width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
+                      child: CustomImageWidget(
+                        assetName: project.filesLinks![index],
+                        imageType: ImageType.network,
+                        height:
+                            HomeScreenSizes.projectDialogImageHeight(context),
+                        // width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   options: CarouselOptions(

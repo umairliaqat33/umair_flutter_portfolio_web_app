@@ -57,6 +57,8 @@ class Strings {
   static String enterValidEmail = "Enter a valid email";
   static String addAProject = "Add a project";
   static String addWorkHistory = "Add work history";
+  static String fileRemoved = "File removed successfully.";
+  static String fileNotRemoved = "File was not removed.";
   static String add = "Add";
   static String update = "Update";
 

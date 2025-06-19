@@ -47,6 +47,15 @@ class ProjectModel {
     };
   }
 
+  Map<String, dynamic> toMapWithoutFiles() {
+    return <String, dynamic>{
+      'name': name,
+      'id': id,
+      'description': description,
+      'link': link,
+    };
+  }
+
   factory ProjectModel.fromMap(Map<String, dynamic> map) {
     return ProjectModel(
       name: map['name'] != null ? map['name'] as String : null,

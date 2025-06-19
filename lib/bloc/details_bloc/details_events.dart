@@ -15,6 +15,17 @@ class ImagePickEvent extends DetailsEvents {}
 
 class PickProjectFilesEvent extends DetailsEvents {}
 
+class DeleteProjectFilesEvent extends DetailsEvents {
+  final int index;
+  DeleteProjectFilesEvent({
+    required this.index,
+  });
+  @override
+  List<Object?> get props => [index];
+}
+
+class DeleteProjectAllFilesEvent extends DetailsEvents {}
+
 class UploadProjectEvent extends DetailsEvents {
   final ProjectModel projectModel;
   final BuildContext context;

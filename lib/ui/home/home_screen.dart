@@ -120,102 +120,121 @@ class _HomeBodyState extends State<HomeBody> {
             }
           }
         },
-        child: Stack(
-          children: [
-            Container(
-              width: context.width,
-              height: context.height,
-              padding: AppSizes.appPadding(context),
-              color: PortfolioAppTheme.primary,
-              child: SingleChildScrollView(
-                  controller: _controller,
-                  child: BlocBuilder<HomeBloc, HomeState>(
-                    builder: (BuildContext context, state) {
-                      sortBySortingIndex<QualificationModel>(
-                        context
-                                .watch<HomeBloc>()
-                                .state
-                                .userModel
-                                ?.qualifications ??
-                            [],
-                        (model) => model.sortingIndex,
-                      );
-                      sortBySortingIndex<JobHistory>(
-                        context.watch<HomeBloc>().state.userModel?.jobs ?? [],
-                        (model) => model.sortIndex,
-                        isReversed: true,
-                      );
-                      if (context.watch<HomeBloc>().state.userModel == null) {
-                        return AlertDialog(
-                            content: ProgressDialog(text: Strings.pleaseWait));
-                      }
-                      return Column(
-                        children: [
-                          SizedBox(height: 0.08 * context.height),
-                          AboutMe(
-                            key: aboutMeKey,
-                            userModel:
-                                context.watch<HomeBloc>().state.userModel,
+        child: context.watch<HomeBloc>().state.userModel == null
+            ? Dialog(
+                insetPadding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                ),
+                child: ProgressDialog(text: Strings.pleaseWait))
+            : Stack(
+                children: [
+                  Container(
+                    width: context.width,
+                    height: context.height,
+                    color: PortfolioAppTheme.primary,
+                    child: SingleChildScrollView(
+                        controller: _controller,
+                        child: Padding(
+                          padding: AppSizes.appPadding(context),
+                          child: BlocBuilder<HomeBloc, HomeState>(
+                            builder: (BuildContext context, state) {
+                              sortBySortingIndex<QualificationModel>(
+                                context
+                                        .watch<HomeBloc>()
+                                        .state
+                                        .userModel
+                                        ?.qualifications ??
+                                    [],
+                                (model) => model.sortingIndex,
+                              );
+                              sortBySortingIndex<JobHistory>(
+                                context
+                                        .watch<HomeBloc>()
+                                        .state
+                                        .userModel
+                                        ?.jobs ??
+                                    [],
+                                (model) => model.sortIndex,
+                                isReversed: true,
+                              );
+                              // if (context.watch<HomeBloc>().state.userModel == null) {
+                              //   return AlertDialog(
+                              //       content:
+                              //           ProgressDialog(text: Strings.pleaseWait));
+                              // }
+                              return Column(
+                                children: [
+                                  SizedBox(height: 0.08 * context.height),
+                                  AboutMe(
+                                    key: aboutMeKey,
+                                    userModel: context
+                                        .watch<HomeBloc>()
+                                        .state
+                                        .userModel,
+                                  ),
+                                  SizedBox(height: context.height * 0.09),
+                                  WorkHistoryPart(
+                                    key: workHistoryKey,
+                                    jobHistoryList: context
+                                            .watch<HomeBloc>()
+                                            .state
+                                            .userModel
+                                            ?.jobs ??
+                                        [],
+                                  ),
+                                  SizedBox(height: context.height * 0.09),
+                                  EducationPart(
+                                    key: qualificationsKey,
+                                    qualifications: context
+                                            .watch<HomeBloc>()
+                                            .state
+                                            .userModel
+                                            ?.qualifications ??
+                                        [],
+                                  ),
+                                  SizedBox(height: context.height * 0.09),
+                                  ProjectsSection(
+                                    key: featuredProjectsKey,
+                                    projectsList: context
+                                            .watch<HomeBloc>()
+                                            .state
+                                            .userModel
+                                            ?.projects ??
+                                        [],
+                                  ),
+                                  SizedBox(height: context.height * 0.09),
+                                  ContactMe(
+                                    key: contactMeKey,
+                                    userModel: context
+                                        .watch<HomeBloc>()
+                                        .state
+                                        .userModel,
+                                  ),
+                                  SizedBox(height: context.height * 0.09),
+                                ],
+                              );
+                            },
                           ),
-                          SizedBox(height: context.height * 0.09),
-                          WorkHistoryPart(
-                            key: workHistoryKey,
-                            jobHistoryList: context
-                                    .watch<HomeBloc>()
-                                    .state
-                                    .userModel
-                                    ?.jobs ??
-                                [],
-                          ),
-                          SizedBox(height: context.height * 0.09),
-                          EducationPart(
-                            key: qualificationsKey,
-                            qualifications: context
-                                    .watch<HomeBloc>()
-                                    .state
-                                    .userModel
-                                    ?.qualifications ??
-                                [],
-                          ),
-                          SizedBox(height: context.height * 0.09),
-                          ProjectsSection(
-                            key: featuredProjectsKey,
-                            projectsList: context
-                                    .watch<HomeBloc>()
-                                    .state
-                                    .userModel
-                                    ?.projects ??
-                                [],
-                          ),
-                          SizedBox(height: context.height * 0.09),
-                          ContactMe(
-                            key: contactMeKey,
-                            userModel:
-                                context.watch<HomeBloc>().state.userModel,
-                          ),
-                          SizedBox(height: context.height * 0.09),
-                        ],
+                        )),
+                  ),
+                  BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      return AnimatedCrossFade(
+                        sizeCurve: Curves.bounceInOut,
+                        alignment: Alignment.topCenter,
+                        crossFadeState: _getCrossFadeState(context),
+                        firstChild: Container(
+                          color: PortfolioAppTheme.greyButtonColor,
+                          child: const VerticalHeaders(),
+                        ),
+                        secondChild: Container(),
+                        duration: const Duration(milliseconds: 200),
                       );
                     },
-                  )),
-            ),
-            BlocBuilder<HomeBloc, HomeState>(
-              builder: (context, state) {
-                return AnimatedCrossFade(
-                  sizeCurve: Curves.bounceInOut,
-                  alignment: Alignment.topCenter,
-                  crossFadeState: _getCrossFadeState(context),
-                  firstChild: Container(
-                    color: PortfolioAppTheme.greyButtonColor,
-                    child: const VerticalHeaders(),
-                  ),
-                  secondChild: Container(),
-                  duration: const Duration(milliseconds: 200),
-                );
-              },
-            )
-          ],
-        ),
+                  )
+                ],
+              ),
       ),
     );
   }
