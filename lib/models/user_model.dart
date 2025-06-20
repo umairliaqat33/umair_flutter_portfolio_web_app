@@ -50,6 +50,20 @@ class UserModel {
     };
   }
 
+  Map<String, dynamic> toMapSimpleUser() {
+    return <String, dynamic>{
+      'name': name,
+      'description': description,
+      'email': email,
+      'profilePicture': profilePicture,
+      'headline1': headline1,
+      'headline2': headline2,
+      'phoneNumber': phoneNumber,
+      'linkedIn': linkedIn,
+      'github': github,
+    };
+  }
+
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       name: map['name'] != null ? map['name'] as String : null,

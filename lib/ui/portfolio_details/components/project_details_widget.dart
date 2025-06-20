@@ -393,6 +393,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                     description: _projectDescriptionController.text,
                     link: _projectUrlController.text,
                     name: _projectNameController.text,
+                    userId: project?.userId,
                   );
                   onTap(projectModel);
                   setState(() {});

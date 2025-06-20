@@ -154,9 +154,10 @@ class UploadQualification extends DetailsEvents {
       [institute, degreeName, sortIndex, completionYear, context];
 }
 
+// ignore: must_be_immutable
 class UpdateQualification extends DetailsEvents {
   final BuildContext context;
-  final QualificationModel qualificationModel;
+  QualificationModel qualificationModel;
 
   UpdateQualification({
     required this.context,

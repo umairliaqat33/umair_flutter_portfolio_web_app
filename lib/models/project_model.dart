@@ -10,6 +10,7 @@ class ProjectModel {
   String? link;
   List<String>? filesLinks;
   List<PlatformFile>? files;
+  String? userId;
   ProjectModel({
     this.name,
     this.description,
@@ -17,6 +18,7 @@ class ProjectModel {
     this.id,
     this.filesLinks,
     this.files,
+    this.userId,
   });
 
   ProjectModel copyWith({
@@ -26,6 +28,7 @@ class ProjectModel {
     String? link,
     List<String>? filesLinks,
     List<PlatformFile>? files,
+    String? userId,
   }) {
     return ProjectModel(
       name: name ?? this.name,
@@ -34,6 +37,7 @@ class ProjectModel {
       link: link ?? this.link,
       filesLinks: filesLinks ?? this.filesLinks,
       files: files ?? this.files,
+      userId: userId ?? this.userId,
     );
   }
 
@@ -43,6 +47,7 @@ class ProjectModel {
       'id': id,
       'description': description,
       'link': link,
+      'user_id': userId,
       'files': filesLinks,
     };
   }
@@ -63,6 +68,7 @@ class ProjectModel {
       description:
           map['description'] != null ? map['description'] as String : null,
       link: map['link'] != null ? map['link'] as String : null,
+      userId: map['user_id'] != null ? map['user_id'] as String : null,
       filesLinks: map['files'] != null
           ? List<String>.from((map['files'] as List))
           : null,

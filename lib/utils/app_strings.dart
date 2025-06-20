@@ -42,6 +42,7 @@ class Strings {
   static String noQualifications = 'No qualifications added yet';
   static String noWorkHistory = 'No work history added yet';
   static String workHistory = "Work history";
+  static String userDetails = "User details";
   static String email = "Email";
   static String headline1 = "Headline 1";
   static String userName = "User name";

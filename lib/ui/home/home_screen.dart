@@ -6,6 +6,8 @@ import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/ui/home/components/education_part.dart';
 import 'package:umair_liaqat/ui/home/components/home_app_bar.dart';
 import 'package:umair_liaqat/ui/home/components/work_history_part.dart';
+import 'package:umair_liaqat/ui/login_screen/login_screen.dart';
+import 'package:umair_liaqat/ui/widgets/buttons/normal_button.dart';
 import 'package:umair_liaqat/ui/widgets/common_widgets/progress_dialog.dart';
 import 'package:umair_liaqat/utils/app_enum.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
@@ -120,121 +122,142 @@ class _HomeBodyState extends State<HomeBody> {
             }
           }
         },
-        child: context.watch<HomeBloc>().state.userModel == null
+        child: context.watch<HomeBloc>().state.isLoading
             ? Dialog(
                 insetPadding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero,
                 ),
                 child: ProgressDialog(text: Strings.pleaseWait))
-            : Stack(
-                children: [
-                  Container(
-                    width: context.width,
-                    height: context.height,
-                    color: PortfolioAppTheme.primary,
-                    child: SingleChildScrollView(
-                        controller: _controller,
-                        child: Padding(
-                          padding: AppSizes.appPadding(context),
-                          child: BlocBuilder<HomeBloc, HomeState>(
-                            builder: (BuildContext context, state) {
-                              sortBySortingIndex<QualificationModel>(
-                                context
-                                        .watch<HomeBloc>()
-                                        .state
-                                        .userModel
-                                        ?.qualifications ??
-                                    [],
-                                (model) => model.sortingIndex,
-                              );
-                              sortBySortingIndex<JobHistory>(
-                                context
-                                        .watch<HomeBloc>()
-                                        .state
-                                        .userModel
-                                        ?.jobs ??
-                                    [],
-                                (model) => model.sortIndex,
-                                isReversed: true,
-                              );
-                              // if (context.watch<HomeBloc>().state.userModel == null) {
-                              //   return AlertDialog(
-                              //       content:
-                              //           ProgressDialog(text: Strings.pleaseWait));
-                              // }
-                              return Column(
-                                children: [
-                                  SizedBox(height: 0.08 * context.height),
-                                  AboutMe(
-                                    key: aboutMeKey,
-                                    userModel: context
-                                        .watch<HomeBloc>()
-                                        .state
-                                        .userModel,
-                                  ),
-                                  SizedBox(height: context.height * 0.09),
-                                  WorkHistoryPart(
-                                    key: workHistoryKey,
-                                    jobHistoryList: context
-                                            .watch<HomeBloc>()
-                                            .state
-                                            .userModel
-                                            ?.jobs ??
-                                        [],
-                                  ),
-                                  SizedBox(height: context.height * 0.09),
-                                  EducationPart(
-                                    key: qualificationsKey,
-                                    qualifications: context
+            : context.watch<HomeBloc>().state.userModel == null
+                ? Dialog(
+                    insetPadding: EdgeInsets.zero,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                    ),
+                    child: SizedBox(
+                      width: AppSizes.textfieldWidth(context),
+                      child: NormalButton(
+                        label: "User data not found, please login",
+                        onTap: () {
+                          Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => LoginScreen(),
+                            ),
+                            (route) => false,
+                          );
+                        },
+                      ),
+                    ),
+                  )
+                : Stack(
+                    children: [
+                      Container(
+                        width: context.width,
+                        height: context.height,
+                        color: PortfolioAppTheme.primary,
+                        child: SingleChildScrollView(
+                            controller: _controller,
+                            child: Padding(
+                              padding: AppSizes.appPadding(context),
+                              child: BlocBuilder<HomeBloc, HomeState>(
+                                builder: (BuildContext context, state) {
+                                  sortBySortingIndex<QualificationModel>(
+                                    context
                                             .watch<HomeBloc>()
                                             .state
                                             .userModel
                                             ?.qualifications ??
                                         [],
-                                  ),
-                                  SizedBox(height: context.height * 0.09),
-                                  ProjectsSection(
-                                    key: featuredProjectsKey,
-                                    projectsList: context
+                                    (model) => model.sortingIndex,
+                                  );
+                                  sortBySortingIndex<JobHistory>(
+                                    context
                                             .watch<HomeBloc>()
                                             .state
                                             .userModel
-                                            ?.projects ??
+                                            ?.jobs ??
                                         [],
-                                  ),
-                                  SizedBox(height: context.height * 0.09),
-                                  ContactMe(
-                                    key: contactMeKey,
-                                    userModel: context
-                                        .watch<HomeBloc>()
-                                        .state
-                                        .userModel,
-                                  ),
-                                  SizedBox(height: context.height * 0.09),
-                                ],
-                              );
-                            },
-                          ),
-                        )),
+                                    (model) => model.sortIndex,
+                                    isReversed: true,
+                                  );
+                                  // if (context.watch<HomeBloc>().state.userModel == null) {
+                                  //   return AlertDialog(
+                                  //       content:
+                                  //           ProgressDialog(text: Strings.pleaseWait));
+                                  // }
+                                  return Column(
+                                    children: [
+                                      SizedBox(height: 0.08 * context.height),
+                                      AboutMe(
+                                        key: aboutMeKey,
+                                        userModel: context
+                                            .watch<HomeBloc>()
+                                            .state
+                                            .userModel,
+                                      ),
+                                      SizedBox(height: context.height * 0.09),
+                                      WorkHistoryPart(
+                                        key: workHistoryKey,
+                                        jobHistoryList: context
+                                                .watch<HomeBloc>()
+                                                .state
+                                                .userModel
+                                                ?.jobs ??
+                                            [],
+                                      ),
+                                      SizedBox(height: context.height * 0.09),
+                                      EducationPart(
+                                        key: qualificationsKey,
+                                        qualifications: context
+                                                .watch<HomeBloc>()
+                                                .state
+                                                .userModel
+                                                ?.qualifications ??
+                                            [],
+                                      ),
+                                      SizedBox(height: context.height * 0.09),
+                                      ProjectsSection(
+                                        key: featuredProjectsKey,
+                                        projectsList: context
+                                                .watch<HomeBloc>()
+                                                .state
+                                                .userModel
+                                                ?.projects ??
+                                            [],
+                                      ),
+                                      SizedBox(height: context.height * 0.09),
+                                      ContactMe(
+                                        key: contactMeKey,
+                                        userModel: context
+                                            .watch<HomeBloc>()
+                                            .state
+                                            .userModel,
+                                      ),
+                                      SizedBox(height: context.height * 0.09),
+                                    ],
+                                  );
+                                },
+                              ),
+                            )),
+                      ),
+                      BlocBuilder<HomeBloc, HomeState>(
+                        builder: (context, state) {
+                          return AnimatedCrossFade(
+                            sizeCurve: Curves.bounceInOut,
+                            alignment: Alignment.topCenter,
+                            crossFadeState: _getCrossFadeState(context),
+                            firstChild: Container(
+                              color: PortfolioAppTheme.greyButtonColor,
+                              child: const VerticalHeaders(),
+                            ),
+                            secondChild: Container(),
+                            duration: const Duration(milliseconds: 200),
+                          );
+                        },
+                      )
+                    ],
                   ),
-                  BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      return AnimatedCrossFade(
-                        sizeCurve: Curves.bounceInOut,
-                        alignment: Alignment.topCenter,
-                        crossFadeState: _getCrossFadeState(context),
-                        firstChild: Container(
-                          color: PortfolioAppTheme.greyButtonColor,
-                          child: const VerticalHeaders(),
-                        ),
-                        secondChild: Container(),
-                        duration: const Duration(milliseconds: 200),
-                      );
-                    },
-                  )
-                ],
-              ),
       ),
     );
   }

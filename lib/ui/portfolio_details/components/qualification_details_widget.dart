@@ -166,18 +166,28 @@ class _QualificationDetailsWidgetState
           label: (isEditMode ?? false) ? Strings.update : Strings.add,
           width: AppSizes.textfieldWidth(context),
           icon: (isEditMode ?? false) ? null : Icons.add,
-          onTap: () => (isEditMode ?? false)
-              ? editQualification(index!, id!)
-              : widget.addQualification(
-                  QualificationModel(
-                    completionYear: _completionDateController.text,
-                    degreeName: _degreeController.text,
-                    instituteName: _instituteController.text,
-                    sortingIndex: int.parse(
-                      _qualificationSortingIndexController.text,
+          onTap: () {
+            (isEditMode ?? false)
+                ? editQualification(index!, id!)
+                : widget.addQualification(
+                    QualificationModel(
+                      completionYear: _completionDateController.text,
+                      degreeName: _degreeController.text,
+                      instituteName: _instituteController.text,
+                      sortingIndex: int.parse(
+                        _qualificationSortingIndexController.text,
+                      ),
                     ),
-                  ),
-                ),
+                  );
+
+            _instituteController.clear();
+
+            _degreeController.clear();
+
+            _completionDateController.clear();
+
+            _qualificationSortingIndexController.clear();
+          },
         ),
       ],
     );

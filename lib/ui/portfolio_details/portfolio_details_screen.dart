@@ -162,7 +162,6 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
               context: context,
             ),
           );
-      workHistoryList.add(jobHistory);
     }
   }
 

@@ -1,13 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:umair_liaqat/bloc/login_bloc/login_event.dart';
 import 'package:umair_liaqat/bloc/login_bloc/login_state.dart';
 import 'package:umair_liaqat/ui/portfolio_details/portfolio_details_screen.dart';
+import 'package:umair_liaqat/utils/collections.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
@@ -15,7 +16,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginButtonPressed>(onLoginButtonPressed);
   }
   bool _isLoading = false;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   FutureOr<void> _changeLoading(
     ChangeLoading event,
     Emitter<LoginState> emit,
@@ -35,16 +35,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
 
     try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+      final response = await Collections.supabase.auth.signInWithPassword(
         email: event.email,
         password: event.password,
       );
-      emit(
-        state.copyWith(
-          isLoading: false,
-        ),
-      );
-      if (userCredential.user != null) {
+
+      if (response.user != null) {
         final context = event.context;
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
@@ -53,10 +49,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           (route) => false,
         );
       }
-    } on FirebaseAuthException catch (e) {
-      emit(state.copyWith(isLoading: false, errorMessage: e.message));
-      Fluttertoast.showToast(msg: e.message ?? "");
-      log("error while logging in: $e");
+      emit(
+        state.copyWith(
+          isLoading: false,
+        ),
+      );
+    } on AuthApiException catch (exception) {
+      emit(state.copyWith(isLoading: false, errorMessage: "Unexpected error"));
+      Fluttertoast.showToast(msg: exception.message);
+      log("error while logging in: ${exception.message}");
     } catch (e) {
       emit(state.copyWith(isLoading: false, errorMessage: "Unexpected error"));
       Fluttertoast.showToast(msg: e.toString());

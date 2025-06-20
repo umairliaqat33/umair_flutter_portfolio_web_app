@@ -3,18 +3,25 @@ part of 'home_bloc.dart';
 
 class HomeState extends Equatable {
   final UserModel? userModel;
+  final bool isLoading;
+
   const HomeState({
     this.userModel,
+    this.isLoading = false,
   });
   HomeState copyWith(
       {bool? isLoading, String? errorMessage, UserModel? userData}) {
     return HomeState(
       userModel: userData ?? userModel,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 
   @override
-  List<Object?> get props => [userModel];
+  List<Object?> get props => [
+        userModel,
+        isLoading,
+      ];
 }
 
 class HomeInitial extends HomeState {}

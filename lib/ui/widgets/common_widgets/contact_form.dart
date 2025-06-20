@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ class _ContactFormState extends State<ContactForm> {
       'name': nameController.text,
       'email': emailController.text,
       'subject': subjectController.text,
-      'timestamp': Timestamp.now().toString(),
+      'timestamp': DateTime.now().toString(),
     };
 
     try {

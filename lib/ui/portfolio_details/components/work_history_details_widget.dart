@@ -235,6 +235,7 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
                 JobHistory job = JobHistory(
                   fromDate: _fromDateController.text,
                   id: widget.workHistoryList[index!].id,
+                  userId: widget.workHistoryList[index].userId,
                   jobDescription: _jobDescriptionController.text,
                   organization: _organizationController.text,
                   position: _positionController.text,
@@ -250,6 +251,16 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
                 widget.workHistoryList[index] = job;
                 setState(() {});
               } else {
+                JobHistory job = JobHistory(
+                  fromDate: _fromDateController.text,
+                  jobDescription: _jobDescriptionController.text,
+                  organization: _organizationController.text,
+                  position: _positionController.text,
+                  toDate: _toDateController.text,
+                  sortIndex: int.parse(_jobSortingIndexController.text),
+                );
+                widget.workHistoryList.add(job);
+                setState(() {});
                 widget.addWorkHistory(
                   JobHistory(
                     fromDate: _fromDateController.text,

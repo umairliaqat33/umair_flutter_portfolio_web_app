@@ -8,6 +8,7 @@ class JobHistory {
   String? organization;
   String? fromDate;
   String? toDate;
+  String? userId;
   int? sortIndex;
   JobHistory({
     this.position,
@@ -17,6 +18,7 @@ class JobHistory {
     this.toDate,
     this.sortIndex,
     this.id,
+    this.userId,
   });
 
   JobHistory copyWith({
@@ -25,6 +27,7 @@ class JobHistory {
     String? organization,
     String? fromDate,
     String? toDate,
+    String? userId,
     int? sortIndex,
     String? id,
   }) {
@@ -36,6 +39,7 @@ class JobHistory {
       toDate: toDate ?? this.toDate,
       sortIndex: sortIndex ?? this.sortIndex,
       id: id ?? this.id,
+      userId: userId ?? this.userId,
     );
   }
 
@@ -47,6 +51,7 @@ class JobHistory {
       'fromDate': fromDate,
       'toDate': toDate,
       'sortIndex': sortIndex,
+      'userId': userId,
       'id': id,
     };
   }
@@ -58,6 +63,7 @@ class JobHistory {
       'Organization': organization,
       'FromDate': fromDate,
       'To Date': toDate,
+      'userId': userId,
       'Sort Index': sortIndex,
       'Id': id,
     };
@@ -67,6 +73,7 @@ class JobHistory {
     return JobHistory(
       position: map['position'] != null ? map['position'] as String : null,
       id: map['id'] != null ? map['id'] as String : null,
+      userId: map['userId'] != null ? map['userId'] as String : null,
       jobDescription: map['jobDescription'] != null
           ? map['jobDescription'] as String
           : null,

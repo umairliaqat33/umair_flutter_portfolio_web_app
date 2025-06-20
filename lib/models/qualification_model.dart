@@ -6,6 +6,7 @@ class QualificationModel {
   String? instituteName;
   String? completionYear;
   String? degreeName;
+  String? userId;
   int? sortingIndex;
   QualificationModel({
     this.id,
@@ -13,6 +14,7 @@ class QualificationModel {
     this.completionYear,
     this.degreeName,
     this.sortingIndex,
+    this.userId,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,6 +24,7 @@ class QualificationModel {
       'completionYear': completionYear,
       'degreeName': degreeName,
       'sortingIndex': sortingIndex,
+      'userId': userId,
     };
   }
 
@@ -35,6 +38,7 @@ class QualificationModel {
           : null,
       degreeName:
           map['degreeName'] != null ? map['degreeName'] as String : null,
+      userId: map['userId'] != null ? map['userId'] as String : null,
       sortingIndex:
           map['sortingIndex'] != null ? map['sortingIndex'] as int : null,
     );
@@ -50,6 +54,7 @@ class QualificationModel {
     String? instituteName,
     String? completionYear,
     String? degreeName,
+    String? userId,
     int? sortingIndex,
   }) {
     return QualificationModel(
@@ -58,6 +63,7 @@ class QualificationModel {
       completionYear: completionYear ?? this.completionYear,
       degreeName: degreeName ?? this.degreeName,
       sortingIndex: sortingIndex ?? this.sortingIndex,
+      userId: userId ?? this.userId,
     );
   }
 }

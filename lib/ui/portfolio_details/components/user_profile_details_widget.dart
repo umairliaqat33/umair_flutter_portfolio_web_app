@@ -202,17 +202,19 @@ class UserProfileDetailsWidget extends StatelessWidget {
                       label: Strings.add,
                       width: AppSizes.textfieldWidth(context),
                       icon: Icons.add,
-                      onTap: () => updateUserData(
-                        UserModel(
-                          description: _descriptionController.text,
-                          github: _githubController.text,
-                          headline1: _title2Controller.text,
-                          headline2: _title2Controller.text,
-                          linkedIn: _linkedInController.text,
-                          name: _userNameController.text,
-                          phoneNumber: _phoneController.text,
-                        ),
-                      ),
+                      onTap: () {
+                        updateUserData(
+                          UserModel(
+                            description: _descriptionController.text,
+                            github: _githubController.text,
+                            headline1: _titleController.text,
+                            headline2: _title2Controller.text,
+                            linkedIn: _linkedInController.text,
+                            name: _userNameController.text,
+                            phoneNumber: _phoneController.text,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ],
