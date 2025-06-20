@@ -81,9 +81,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       if (userResponse != null) {
         // var data = querySnapshot.docs.first.data() as Map<String, dynamic>;
         userModel = UserModel.fromMap(userResponse);
-        userModel!.projects = projectsList;
-        userModel!.qualifications = qualificationsList;
-        userModel!.jobs = jobsList;
+        userModel?.projects = projectsList;
+        userModel?.qualifications = qualificationsList;
+        userModel?.jobs = jobsList;
         emit(
           state.copyWith(
             userData: userModel,

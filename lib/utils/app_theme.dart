@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PortfolioAppTheme {
   static const Color primary = Color(0xFF2C2C2F);
@@ -10,7 +9,11 @@ class PortfolioAppTheme {
   static const blue = Colors.blue;
 
   static ThemeData baseTheme() {
-    final themeData = ThemeData.dark();
+    var themeData = ThemeData(
+      fontFamily: 'Poppins',
+      brightness: Brightness.dark,
+    );
+    // themeData = themeData ThemeData.dark();
 
     final theme = themeData.copyWith(
       scaffoldBackgroundColor: PortfolioAppTheme.greyButtonColor,
@@ -26,7 +29,7 @@ class PortfolioAppTheme {
           color: Colors.red,
         ),
       ),
-      textTheme: GoogleFonts.poppinsTextTheme().copyWith(
+      textTheme: TextTheme(
         bodyLarge: TextStyle(
           color: Colors.black,
         ),

@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=C:\flutter\flutter_latest"
-export "FLUTTER_APPLICATION_PATH=D:\Flutter_projects\umair_flutter_portfolio_web_app"
+export "FLUTTER_ROOT=C:\src\flutter"
+export "FLUTTER_APPLICATION_PATH=C:\Studio_Projects\umair_flutter_portfolio_web_app"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"

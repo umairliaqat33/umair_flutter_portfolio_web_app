@@ -14,8 +14,9 @@ import 'package:umair_liaqat/utils/app_theme.dart';
 import 'bloc/bloc_observer.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   await AppConfigurations.init();
+
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // await setupRemoteConfig(); // Initialize Remote Config
@@ -54,23 +55,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-// Future<FirebaseRemoteConfig> setupRemoteConfig() async {
-//   final remoteConfig = FirebaseRemoteConfig.instance;
-
-//   try {
-//     await remoteConfig.setConfigSettings(RemoteConfigSettings(
-//       fetchTimeout: const Duration(seconds: 10),
-//       minimumFetchInterval:
-//           const Duration(hours: 1), // Reduce unnecessary fetches
-//     ));
-
-//     await remoteConfig.fetchAndActivate();
-
-//     debugPrint("🔥 Remote Config Fetched Successfully");
-//   } catch (e) {
-//     debugPrint("⚠️ Remote Config Error: $e");
-//   }
-
-//   return remoteConfig;
-// }
