@@ -41,12 +41,14 @@ class AppBarHeadersIndexChanged extends HomeState {
 }
 
 class AppBarHeadersAxisChanged extends HomeState {
-  final AppBarHeadersAxis headersAxis;
+  final AppBarHeadersAxis axis;
+  @override
+  final UserModel? userModel;
 
-  const AppBarHeadersAxisChanged(this.headersAxis);
+  const AppBarHeadersAxisChanged(this.axis, this.userModel);
 
   @override
-  List<Object?> get props => [headersAxis];
+  List<Object?> get props => [axis, userModel];
 }
 
 class AppBarHeadersColorChangedByIndex extends HomeState {

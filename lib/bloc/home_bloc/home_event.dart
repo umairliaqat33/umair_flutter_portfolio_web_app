@@ -23,11 +23,15 @@ class ChangeAppBarHeadersIndex extends HomeEvent {
 
 class ChangeAppBarHeadersAxis extends HomeEvent {
   final AppBarHeadersAxis headersAxis;
+  final UserModel? userModel;
 
-  ChangeAppBarHeadersAxis(this.headersAxis);
+  ChangeAppBarHeadersAxis(this.headersAxis, this.userModel);
 
   @override
-  List<Object?> get props => [headersAxis];
+  List<Object?> get props => [
+        headersAxis,
+        userModel,
+      ];
 }
 
 class ChangeAppBarHeadersColorByColor extends HomeEvent {

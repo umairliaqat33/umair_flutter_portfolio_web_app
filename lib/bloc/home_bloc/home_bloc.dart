@@ -59,7 +59,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) {
     _appBarHeaderAxis = event.headersAxis;
-    emit(AppBarHeadersAxisChanged(_appBarHeaderAxis));
+
+    emit(AppBarHeadersAxisChanged(_appBarHeaderAxis, state.userModel));
   }
 
   Future<void> _getUserData(GetUserData event, Emitter<HomeState> emit) async {

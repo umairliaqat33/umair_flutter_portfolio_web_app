@@ -73,13 +73,19 @@ class AppBarMenu extends StatelessWidget {
 
   _menuBtnClicked(BuildContext context) {
     context.read<HomeBloc>().add(
-          ChangeAppBarHeadersAxis(AppBarHeadersAxis.vertical),
+          ChangeAppBarHeadersAxis(
+            AppBarHeadersAxis.vertical,
+            context.read<HomeBloc>().userModel,
+          ),
         );
   }
 
   _closeBtnClicked(BuildContext context) {
     context.read<HomeBloc>().add(
-          ChangeAppBarHeadersAxis(AppBarHeadersAxis.horizontal),
+          ChangeAppBarHeadersAxis(
+            AppBarHeadersAxis.horizontal,
+            context.read<HomeBloc>().userModel,
+          ),
         );
   }
 

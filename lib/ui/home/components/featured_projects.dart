@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:umair_liaqat/models/project_model.dart';
 import 'package:umair_liaqat/ui/widgets/image_widgets/custom_image_widget.dart';
 import 'package:umair_liaqat/utils/app_enum.dart';
@@ -31,7 +32,6 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    bool isMobile = context.width < 600;
     return Padding(
       padding: widget.showHeading
           ? EdgeInsets.zero
@@ -54,45 +54,74 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                     Strings.noProjects,
                   ),
                 )
-              : GridView.builder(
-                  itemCount: widget.projectsList.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: isMobile ? 1 : 3,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: isMobile ? 1.2 : 1.0,
-                  ),
-                  itemBuilder: (context, index) {
-                    var project = widget.projectsList[index];
-
-                    return MouseRegion(
-                      onEnter: (_) => setState(() => hoveredIndex = index),
-                      onExit: (_) => setState(() => hoveredIndex = -1),
-                      child: SizedBox(
-                        width: double.infinity, // Ensure it has a valid width
-
-                        child: AnimatedScale(
-                          scale: hoveredIndex == index ? 1.05 : 1.0,
-                          duration: const Duration(milliseconds: 200),
-                          child: ProjectCard(
-                            removeImage: (imageUrl) => widget.removeImage !=
-                                    null
-                                ? {
-                                    widget.projectsList[index].filesLinks
-                                        ?.removeWhere(
-                                            (element) => element == imageUrl)
-                                  }
-                                : {},
-                            project: project,
-                          ),
-                        ),
+              : isTablet(context)
+                  ? GridView.builder(
+                      itemCount: widget.projectsList.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: !isTablet(context) ? 1 : 3,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                        childAspectRatio: (MediaQuery.sizeOf(context).width >
+                                    700 &&
+                                MediaQuery.sizeOf(context).width < 1000)
+                            ? 0.5
+                            : (MediaQuery.sizeOf(context).width > 1000 &&
+                                    MediaQuery.sizeOf(context).width < 1540)
+                                ? 0.7
+                                : (MediaQuery.sizeOf(context).width > 1400 &&
+                                        MediaQuery.sizeOf(context).width < 2600)
+                                    ? 1.2
+                                    : 1,
                       ),
-                    );
-                  },
-                ),
+                      itemBuilder: (context, index) {
+                        var project = widget.projectsList[index];
+
+                        return projectCardWithMouseRegion(index, project);
+                      },
+                    )
+                  : ListView.separated(
+                      scrollDirection: Axis.vertical,
+                      itemCount: widget.projectsList.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (BuildContext context, int index) {
+                        var project = widget.projectsList[index];
+
+                        return projectCardWithMouseRegion(index, project);
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: 200.w,
+                        );
+                      },
+                    ),
         ],
+      ),
+    );
+  }
+
+  Widget projectCardWithMouseRegion(int index, ProjectModel project) {
+    return MouseRegion(
+      onEnter: (_) => setState(() => hoveredIndex = index),
+      onExit: (_) => setState(() => hoveredIndex = -1),
+      child: SizedBox(
+        width: double.infinity, // Ensure it has a valid width
+
+        child: AnimatedScale(
+          scale: hoveredIndex == index ? 1.05 : 1.0,
+          duration: const Duration(milliseconds: 200),
+          child: ProjectCard(
+            removeImage: (imageUrl) => widget.removeImage != null
+                ? {
+                    widget.projectsList[index].filesLinks
+                        ?.removeWhere((element) => element == imageUrl)
+                  }
+                : {},
+            project: project,
+          ),
+        ),
       ),
     );
   }
@@ -145,7 +174,7 @@ class _ProjectCardState extends State<ProjectCard> {
                           imagePath != null
                       ? Image.asset(
                           imagePath.path!,
-                          height: 180,
+                          height: 180.w,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) =>
@@ -153,7 +182,7 @@ class _ProjectCardState extends State<ProjectCard> {
                         )
                       : Image.network(
                           imageUrl,
-                          height: 180,
+                          height: 180.w,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           loadingBuilder: (BuildContext context, Widget child,
@@ -218,20 +247,21 @@ class _ProjectCardState extends State<ProjectCard> {
           children: [
             Text(
               project.name ?? 'Project',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: !isTablet(context) ? 48.w : null,
+                  ),
             ),
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icon(
-                Icons.close,
-                color: PortfolioAppTheme.primary,
+            if (isTablet(context))
+              IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(
+                  Icons.close,
+                  color: PortfolioAppTheme.primary,
+                ),
               ),
-            ),
           ],
         ),
         actionsAlignment: MainAxisAlignment.center,
@@ -250,6 +280,23 @@ class _ProjectCardState extends State<ProjectCard> {
               ),
               label: const Text(
                 "View Project",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          if (!isTablet(context))
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: ButtonStyle(
+                backgroundColor: WidgetStatePropertyAll(
+                  PortfolioAppTheme.primary,
+                ),
+              ),
+              child: const Text(
+                "Close",
                 style: TextStyle(
                   color: Colors.white,
                 ),
