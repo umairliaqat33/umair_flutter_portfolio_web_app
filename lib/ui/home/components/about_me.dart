@@ -118,99 +118,103 @@ class AboutMe extends StatelessWidget {
           ),
         );
       } else {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            SizedBox(width: context.width * 0.06),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    Strings.helloIAm,
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: PortfolioAppTheme.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
-                  ),
-                  SizedBox(height: context.height * 0.01),
-                  Text(
-                    userModel?.name ?? "",
-                    style: context.width > 456
-                        ? Theme.of(context).textTheme.displayLarge!.copyWith(
-                            color: PortfolioAppTheme.nameColor,
-                            fontWeight: FontWeight.w700)
-                        : Theme.of(context).textTheme.displayMedium!.copyWith(
-                            color: PortfolioAppTheme.nameColor,
-                            fontWeight: FontWeight.w700),
-                  ),
-                  SizedBox(height: context.height * 0.01),
-                  AnimatedTextKit(
-                    repeatForever: true,
-                    animatedTexts: [
-                      TyperAnimatedText(
-                        userModel?.headline1 ?? "",
-                        textStyle: Theme.of(context)
-                            .textTheme
-                            .titleMedium!
-                            .copyWith(fontWeight: FontWeight.w400),
-                        speed: const Duration(milliseconds: 120),
-                      ),
-                      TyperAnimatedText(
-                        userModel?.headline2 ?? "",
-                        textStyle: Theme.of(context).textTheme.titleMedium,
-                        speed: const Duration(milliseconds: 100),
-                      ),
-                    ],
-                    isRepeatingAnimation: true,
-                  ),
-                  SizedBox(height: context.height * 0.02),
-                  SizedBox(
-                    height: context.height * 0.042,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        html.window.open(AppConstants.resume, "pdf");
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: PortfolioAppTheme.white,
-                      ),
-                      icon: const Icon(Icons.download,
-                          color: PortfolioAppTheme.nameColor),
-                      label: FittedBox(
-                        child: Text(
-                          Strings.downloadResume,
-                          style:
-                              Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: PortfolioAppTheme.greyButtonColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: context.width * 0.05),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      Strings.helloIAm,
+                      style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: PortfolioAppTheme.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20),
+                    ),
+                    SizedBox(height: context.height * 0.01),
+                    Text(
+                      userModel?.name ?? "",
+                      style: context.width > 456
+                          ? Theme.of(context).textTheme.displayLarge!.copyWith(
+                              color: PortfolioAppTheme.nameColor,
+                              fontWeight: FontWeight.w700)
+                          : Theme.of(context).textTheme.displayMedium!.copyWith(
+                              color: PortfolioAppTheme.nameColor,
+                              fontWeight: FontWeight.w700),
+                    ),
+                    SizedBox(height: context.height * 0.01),
+                    AnimatedTextKit(
+                      repeatForever: true,
+                      animatedTexts: [
+                        TyperAnimatedText(
+                          userModel?.headline1 ?? "",
+                          textStyle: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(fontWeight: FontWeight.w400),
+                          speed: const Duration(milliseconds: 120),
+                        ),
+                        TyperAnimatedText(
+                          userModel?.headline2 ?? "",
+                          textStyle: Theme.of(context).textTheme.titleMedium,
+                          speed: const Duration(milliseconds: 100),
+                        ),
+                      ],
+                      isRepeatingAnimation: true,
+                    ),
+                    SizedBox(height: context.height * 0.02),
+                    SizedBox(
+                      height: context.height * 0.042,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          html.window.open(AppConstants.resume, "pdf");
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: PortfolioAppTheme.white,
+                        ),
+                        icon: const Icon(Icons.download,
+                            color: PortfolioAppTheme.nameColor),
+                        label: FittedBox(
+                          child: Text(
+                            Strings.downloadResume,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  color: PortfolioAppTheme.greyButtonColor,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: context.height * 0.03),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: SizedBox(
-                      width: context.width * 0.6,
-                      child: context.width > 550
-                          ? Text(
-                              userModel?.description ?? "",
-                              style: Theme.of(context).textTheme.titleMedium,
-                              // softWrap: true,
-                            )
-                          : const SizedBox(),
-                    ),
-                  )
-                ],
+                    SizedBox(height: context.height * 0.03),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: SizedBox(
+                        width: context.width * 0.6,
+                        child: context.width > 550
+                            ? Text(
+                                userModel?.description ?? "",
+                                style: Theme.of(context).textTheme.titleMedium,
+                                // softWrap: true,
+                              )
+                            : const SizedBox(),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: context.width * 0.03),
-            MyPhoto(
-              picture: userModel?.profilePicture,
-            ),
-            SizedBox(width: context.width * 0.11)
-          ],
+              SizedBox(width: context.width * 0.03),
+              MyPhoto(
+                picture: userModel?.profilePicture,
+              ),
+              SizedBox(width: context.width * 0.11)
+            ],
+          ),
         );
       }
     });

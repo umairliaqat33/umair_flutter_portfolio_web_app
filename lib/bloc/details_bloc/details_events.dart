@@ -13,6 +13,8 @@ class DetailsEvents extends Equatable {
 
 class ImagePickEvent extends DetailsEvents {}
 
+class LoadInitialDetailsEvent extends DetailsEvents {}
+
 class PickProjectFilesEvent extends DetailsEvents {}
 
 class DeleteProjectFilesEvent extends DetailsEvents {
@@ -64,6 +66,7 @@ class UserDataUpdateEvent extends DetailsEvents {
   final String github;
   final String profilePicture;
   final String phoneNumber;
+  final String skills;
 
   UserDataUpdateEvent({
     required this.name,
@@ -75,6 +78,7 @@ class UserDataUpdateEvent extends DetailsEvents {
     required this.github,
     required this.phoneNumber,
     required this.profilePicture,
+    required this.skills,
   });
   @override
   List<Object?> get props => [
@@ -87,6 +91,7 @@ class UserDataUpdateEvent extends DetailsEvents {
         profilePicture,
         phoneNumber,
         context,
+        skills,
       ];
 }
 

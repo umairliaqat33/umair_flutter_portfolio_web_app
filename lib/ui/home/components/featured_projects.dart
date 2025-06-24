@@ -13,12 +13,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ProjectsSection extends StatefulWidget {
   final List<ProjectModel> projectsList;
-  final bool showHeading;
   final Function(String)? removeImage;
   const ProjectsSection({
     super.key,
     required this.projectsList,
-    this.showHeading = true,
     this.removeImage,
   });
 
@@ -33,20 +31,17 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: widget.showHeading
-          ? EdgeInsets.zero
-          : EdgeInsets.symmetric(horizontal: context.width * 0.05),
+      padding: EdgeInsets.symmetric(horizontal: context.width * 0.05),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.showHeading)
-            Text(
-              Strings.featuredProjects,
-              style: textTheme.displaySmall!.copyWith(
-                color: PortfolioAppTheme.nameColor,
-                fontWeight: FontWeight.w600,
-              ),
+          Text(
+            Strings.featuredProjects,
+            style: textTheme.displaySmall!.copyWith(
+              color: PortfolioAppTheme.nameColor,
+              fontWeight: FontWeight.w600,
             ),
+          ),
           const SizedBox(height: 20),
           widget.projectsList.isEmpty
               ? Center(
@@ -323,7 +318,7 @@ class _ProjectCardState extends State<ProjectCard> {
                         height:
                             HomeScreenSizes.projectDialogImageHeight(context),
                         // width: double.infinity,
-                        fit: BoxFit.cover,
+                        // fit: BoxFit.cover,
                       ),
                     ),
                   ),

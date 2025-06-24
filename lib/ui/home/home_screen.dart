@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marquee/marquee.dart';
 import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
 import 'package:umair_liaqat/models/job_history.dart';
 import 'package:umair_liaqat/models/qualification_model.dart';
@@ -186,6 +187,15 @@ class _HomeBodyState extends State<HomeBody> {
                                   //       content:
                                   //           ProgressDialog(text: Strings.pleaseWait));
                                   // }
+                                  String skillsText = context
+                                          .watch<HomeBloc>()
+                                          .state
+                                          .userModel
+                                          ?.skills ??
+                                      "";
+
+                                  String marqueeText =
+                                      skillsText.replaceAll(', ', '        • ');
                                   return Column(
                                     children: [
                                       SizedBox(height: 0.08 * context.height),
@@ -196,7 +206,50 @@ class _HomeBodyState extends State<HomeBody> {
                                             .state
                                             .userModel,
                                       ),
-                                      SizedBox(height: context.height * 0.09),
+                                      SizedBox(height: context.height * 0.02),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: context.width * 0.05),
+                                        height: 60,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                              top: BorderSide(
+                                                color: Colors.white,
+                                                width: 1,
+                                              ),
+                                              bottom: BorderSide(
+                                                color: Colors.white,
+                                                width: 1,
+                                              ),
+                                            ),
+                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: 20,
+                                          ),
+                                          child: Marquee(
+                                            text: marqueeText,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            scrollAxis: Axis.horizontal,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            blankSpace: 20.0,
+                                            velocity: 100.0,
+                                            pauseAfterRound:
+                                                Duration(seconds: 1),
+                                            startPadding: 10.0,
+                                            accelerationDuration:
+                                                Duration(seconds: 1),
+                                            accelerationCurve: Curves.linear,
+                                            decelerationDuration:
+                                                Duration(milliseconds: 500),
+                                            decelerationCurve: Curves.easeOut,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: context.height * 0.04),
                                       WorkHistoryPart(
                                         key: workHistoryKey,
                                         jobHistoryList: context

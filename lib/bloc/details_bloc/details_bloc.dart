@@ -33,8 +33,65 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     on<UpdateWorkHistory>(_updateWorkHistory);
     on<DeleteProjectFilesEvent>(_deleteProjectImage);
     on<DeleteProjectAllFilesEvent>(_deleteAllProjectImages);
+    on<LoadInitialDetailsEvent>(_loadInitialData);
   }
   final Uuid _uuid = Uuid();
+
+  Future<void> _loadInitialData(
+    LoadInitialDetailsEvent event,
+    Emitter<DetailsState> emit,
+  ) async {
+    try {
+      final userId = Supabase.instance.client.auth.currentUser?.id;
+      if (userId == null) {
+        Fluttertoast.showToast(msg: "User not authenticated");
+        return;
+      }
+
+      final userResponse = await Supabase.instance.client
+          .from(Collections.users)
+          .select()
+          .limit(1)
+          .maybeSingle();
+
+      final projectsResponse =
+          await Supabase.instance.client.from(Collections.projects).select();
+
+      final jobsResponse =
+          await Supabase.instance.client.from(Collections.jobHistory).select();
+
+      final qualificationsResponse = await Supabase.instance.client
+          .from(Collections.qualifications)
+          .select()
+          .order('sortingIndex', ascending: true);
+
+      final userModel =
+          userResponse != null ? UserModel.fromMap(userResponse) : null;
+
+      final projects = (projectsResponse as List)
+          .map((e) => ProjectModel.fromMap(e))
+          .toList();
+
+      final jobs =
+          (jobsResponse as List).map((e) => JobHistory.fromMap(e)).toList();
+
+      final qualifications = (qualificationsResponse as List)
+          .map((e) => QualificationModel.fromMap(e))
+          .toList();
+
+      emit(
+        state.copyWith(
+          jobHistories: jobs,
+          qualificationsList: qualifications,
+          projectList: projects,
+          userModel: userModel,
+        ),
+      );
+    } catch (e) {
+      log("Error loading initial data: $e");
+      Fluttertoast.showToast(msg: "Error loading data");
+    }
+  }
 
   Future<void> _imagePick(
       ImagePickEvent event, Emitter<DetailsState> emit) async {
@@ -104,6 +161,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
         github: event.github,
         linkedIn: event.linkedIn,
         phoneNumber: event.phoneNumber,
+        skills: event.skills,
       );
       final userResponse = await Supabase.instance.client
           .from(Collections.users)
@@ -171,6 +229,9 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
           .from(Collections.jobHistory)
           .insert(jobHistory.toMap());
 
+      List<JobHistory> updatedList = [...state.jobHistories ?? [], jobHistory];
+
+      emit(state.copyWith(jobHistories: updatedList));
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: Strings.valueAdded(Strings.workHistory));
     } catch (e) {
@@ -265,7 +326,12 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       await Supabase.instance.client
           .from(Collections.qualifications)
           .insert(data);
+      List<QualificationModel> updatedList = [
+        ...state.qualificationsList ?? [],
+        qualificationModel
+      ];
 
+      emit(state.copyWith(qualificationsList: updatedList));
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: Strings.valueAdded(Strings.qualification));
     } catch (e) {
@@ -412,7 +478,12 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       await Supabase.instance.client
           .from('projects')
           .insert(projectModel.toMap());
+      List<ProjectModel> updatedList = [
+        ...state.projectList ?? [],
+        projectModel
+      ];
 
+      emit(state.copyWith(projectList: updatedList));
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: Strings.valueAdded(Strings.project));
     } catch (e) {

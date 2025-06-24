@@ -36,6 +36,7 @@ class Strings {
   static String downloadResume = "Download Resume";
   static String password = "Password";
   static String login = "Login";
+  static String logout = "Logout";
   static String qualification = "Qualification";
   static String featuredProjects = 'Featured Projects';
   static String noProjects = 'No projects added yet';
@@ -48,6 +49,8 @@ class Strings {
   static String userName = "User name";
   static String headline2 = "Headline 2";
   static String description = "Description";
+  static String skills = "Skills";
+  static String separatedByComma = "separated by comma.";
   static String institute = "Institute";
   static String degreeName = "Degree Name";
   static String completionYear = "Completion Year";
