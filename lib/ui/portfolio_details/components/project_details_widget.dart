@@ -91,8 +91,6 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                               context: context,
                             ),
                           );
-                      widget.projectsList.add(project);
-                      setState(() {});
                     },
                   ),
                   if (widget.projectsList.isNotEmpty && !widget.isEditMode) ...[

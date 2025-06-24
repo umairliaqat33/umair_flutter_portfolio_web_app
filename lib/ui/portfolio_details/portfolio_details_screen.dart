@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_bloc.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_events.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_state.dart';
-import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
+import 'package:umair_liaqat/bloc/login_bloc/login_bloc.dart';
+import 'package:umair_liaqat/bloc/login_bloc/login_event.dart';
 import 'package:umair_liaqat/models/job_history.dart';
 import 'package:umair_liaqat/models/project_model.dart';
 import 'package:umair_liaqat/models/qualification_model.dart';
@@ -15,6 +16,7 @@ import 'package:umair_liaqat/ui/portfolio_details/components/qualification_detai
 import 'package:umair_liaqat/ui/portfolio_details/components/user_profile_details_widget.dart';
 import 'package:umair_liaqat/ui/portfolio_details/components/work_history_details_widget.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
+import 'package:umair_liaqat/utils/app_strings.dart';
 
 class PortfolioDetailsScreen extends StatefulWidget {
   const PortfolioDetailsScreen({super.key});
@@ -45,8 +47,41 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<LoginBloc>().add(
+                    LogoutButtonPressed(
+                      context,
+                    ),
+                  );
+            },
+            icon: Row(
+              children: [
+                Text(Strings.logout),
+                Icon(Icons.logout_rounded),
+              ],
+            ),
+          ),
+        ],
+      ),
       body: BlocBuilder<DetailsBloc, DetailsState>(
         builder: (BuildContext context, DetailsState state) {
+          if (state.jobHistories != null && state.jobHistories!.isNotEmpty) {
+            workHistoryList = state.jobHistories ?? [];
+          }
+
+          if (state.projectList != null && state.projectList!.isNotEmpty) {
+            projectsList = state.projectList ?? [];
+          }
+          if (state.qualificationsList != null &&
+              state.qualificationsList!.isNotEmpty) {
+            qualificationsList = state.qualificationsList ?? [];
+          }
+          if (state.userModel != null) {
+            user = state.userModel;
+          }
           return SingleChildScrollView(
             child: Padding(
               padding: AppSizes.appPadding(context).copyWith(
@@ -55,6 +90,7 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
               child: Column(
                 children: [
                   UserProfileDetailsWidget(
+                    userModel: user,
                     userDetailsFormKey: _userDetailsFormKey,
                     updateUserData: (UserModel user) => updateUserData(user),
                   ),
@@ -102,15 +138,7 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
 
   void getUserData() {
     try {
-      context.read<HomeBloc>().add(GetUserData());
-      UserModel? userModel = context.read<HomeBloc>().state.userModel;
-      if (userModel != null) {
-        user = userModel;
-        projectsList = userModel.projects ?? [];
-        workHistoryList = userModel.jobs ?? [];
-        qualificationsList = userModel.qualifications ?? [];
-        setState(() {});
-      }
+      context.read<DetailsBloc>().add(LoadInitialDetailsEvent());
     } catch (e) {
       log("Error fetching data in portfolio screen: ${e.toString()}");
     }
@@ -121,16 +149,20 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
       if (_userDetailsFormKey.currentState!.validate()) {
         context.read<DetailsBloc>().add(
               UserDataUpdateEvent(
-                  context: context,
-                  name: userModel.name!,
-                  description: userModel.description!,
-                  headline1: userModel.headline1!,
-                  headline2: userModel.headline2!,
-                  linkedIn: userModel.linkedIn!,
-                  github: userModel.github!,
-                  phoneNumber: userModel.phoneNumber!,
-                  profilePicture:
-                      context.read<DetailsBloc>().state.profilePictureLink!),
+                context: context,
+                name: userModel.name!,
+                description: userModel.description!,
+                headline1: userModel.headline1!,
+                headline2: userModel.headline2!,
+                linkedIn: userModel.linkedIn!,
+                github: userModel.github!,
+                phoneNumber: userModel.phoneNumber!,
+                skills: userModel.skills!,
+                profilePicture:
+                    context.read<DetailsBloc>().state.profilePictureLink ??
+                        user?.profilePicture ??
+                        "",
+              ),
             );
       }
     } catch (e) {
@@ -191,16 +223,6 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
               completionYear: qualification.completionYear!,
             ),
           );
-      qualificationsList.add(
-        QualificationModel(
-          instituteName: qualification.instituteName!,
-          degreeName: qualification.degreeName!,
-          sortingIndex: qualification.sortingIndex!,
-          completionYear: qualification.completionYear!,
-        ),
-      );
-
-      setState(() {});
     }
   }
 }

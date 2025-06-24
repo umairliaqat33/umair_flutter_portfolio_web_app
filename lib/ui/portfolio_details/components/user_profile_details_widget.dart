@@ -15,14 +15,23 @@ import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/validator_utils.dart';
 
-class UserProfileDetailsWidget extends StatelessWidget {
+class UserProfileDetailsWidget extends StatefulWidget {
   final Function(UserModel) updateUserData;
+  final UserModel? userModel;
   final Key userDetailsFormKey;
-  UserProfileDetailsWidget({
+  const UserProfileDetailsWidget({
     super.key,
     required this.userDetailsFormKey,
     required this.updateUserData,
+    this.userModel,
   });
+
+  @override
+  State<UserProfileDetailsWidget> createState() =>
+      _UserProfileDetailsWidgetState();
+}
+
+class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
   final TextEditingController _userNameController = TextEditingController();
 
   final TextEditingController _titleController = TextEditingController();
@@ -31,18 +40,32 @@ class UserProfileDetailsWidget extends StatelessWidget {
 
   final TextEditingController _descriptionController = TextEditingController();
 
+  final TextEditingController _skillsController = TextEditingController();
+
   final TextEditingController _phoneController = TextEditingController();
 
   final TextEditingController _linkedInController = TextEditingController();
 
   final TextEditingController _githubController = TextEditingController();
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant UserProfileDetailsWidget oldWidget) {
+    getUserData();
+    super.didUpdateWidget(oldWidget);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DetailsBloc, DetailsState>(
         builder: (BuildContext context, DetailsState state) {
-      getUserData(context);
       return Form(
-        key: userDetailsFormKey,
+        key: widget.userDetailsFormKey,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -141,6 +164,23 @@ class UserProfileDetailsWidget extends StatelessWidget {
                     height: 10,
                   ),
                   CustomTextFormField(
+                    inputAction: TextInputAction.next,
+                    maxLines: 5,
+                    // inputType: TextInputType.de,
+                    controller: _skillsController,
+                    label: Strings.skills,
+                    hintText:
+                        "${Strings.enterValue(Strings.skills.toLowerCase())} ${Strings.separatedByComma}",
+                    validator: (value) =>
+                        ValidatorUtils.customValidatorValidator(
+                      value,
+                      Strings.isRequired(Strings.skills),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFormField(
                     inputAction: TextInputAction.newline,
                     maxLines: 5,
                     inputType: TextInputType.multiline,
@@ -203,7 +243,7 @@ class UserProfileDetailsWidget extends StatelessWidget {
                       width: AppSizes.textfieldWidth(context),
                       icon: Icons.add,
                       onTap: () {
-                        updateUserData(
+                        widget.updateUserData(
                           UserModel(
                             description: _descriptionController.text,
                             github: _githubController.text,
@@ -212,6 +252,7 @@ class UserProfileDetailsWidget extends StatelessWidget {
                             linkedIn: _linkedInController.text,
                             name: _userNameController.text,
                             phoneNumber: _phoneController.text,
+                            skills: _skillsController.text,
                           ),
                         );
                       },
@@ -226,19 +267,18 @@ class UserProfileDetailsWidget extends StatelessWidget {
     });
   }
 
-  void getUserData(BuildContext context) {
+  void getUserData() {
     try {
-      context.read<HomeBloc>().add(GetUserData());
-      UserModel? userModel = context.read<HomeBloc>().state.userModel;
-      if (userModel != null) {
-        _userNameController.text = userModel.name!;
-        _linkedInController.text = userModel.linkedIn!;
-        _githubController.text = userModel.github!;
-        _descriptionController.text = userModel.description!;
-        // _pictureUrl = userModel.profilePicture!;
-        _phoneController.text = userModel.phoneNumber!;
-        _title2Controller.text = userModel.headline2!;
-        _titleController.text = userModel.headline1!;
+      if (widget.userModel != null) {
+        _userNameController.text = widget.userModel?.name ?? "";
+        _linkedInController.text = widget.userModel?.linkedIn ?? "";
+        _githubController.text = widget.userModel?.github ?? "";
+        _descriptionController.text = widget.userModel?.description ?? "";
+        _skillsController.text = widget.userModel?.skills ?? "";
+        // _pictureUrl = userModel?.profilePicture!;
+        _phoneController.text = widget.userModel?.phoneNumber ?? "";
+        _title2Controller.text = widget.userModel?.headline2 ?? "";
+        _titleController.text = widget.userModel?.headline1 ?? "";
       }
     } catch (e) {
       log("Error fetching data in portfolio screen: ${e.toString()}");

@@ -9,6 +9,7 @@ class UserModel {
   String? name;
   String? description;
   String? email;
+  String? skills;
   String? profilePicture;
   String? headline1;
   String? headline2;
@@ -31,6 +32,7 @@ class UserModel {
     this.projects,
     this.jobs,
     this.description,
+    this.skills,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,6 +40,7 @@ class UserModel {
       'name': name,
       'description': description,
       'email': email,
+      'skills': skills,
       'profilePicture': profilePicture,
       'headline1': headline1,
       'headline2': headline2,
@@ -55,6 +58,7 @@ class UserModel {
       'name': name,
       'description': description,
       'email': email,
+      'skills': skills,
       'profilePicture': profilePicture,
       'headline1': headline1,
       'headline2': headline2,
@@ -69,6 +73,7 @@ class UserModel {
       name: map['name'] != null ? map['name'] as String : null,
       description:
           map['description'] != null ? map['description'] as String : null,
+      skills: map['skills'] != null ? map['skills'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
       profilePicture: map['profilePicture'] != null
           ? map['profilePicture'] as String
@@ -118,6 +123,7 @@ class UserModel {
     String? phoneNumber,
     String? linkedIn,
     String? github,
+    String? skills,
     List<QualificationModel>? qualifications,
     List<ProjectModel>? projects,
     List<JobHistory>? jobs,
@@ -133,6 +139,7 @@ class UserModel {
       linkedIn: linkedIn ?? this.linkedIn,
       github: github ?? this.github,
       qualifications: qualifications ?? this.qualifications,
+      skills: skills ?? this.skills,
       projects: projects ?? this.projects,
       jobs: jobs ?? this.jobs,
     );
