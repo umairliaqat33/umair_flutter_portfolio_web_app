@@ -25,7 +25,8 @@ class _ContactFormState extends State<ContactForm> {
     final formData = {
       'name': nameController.text,
       'email': emailController.text,
-      'subject': subjectController.text,
+      'message': subjectController.text,
+      'subject': "Flutter web portfolio.",
       'timestamp': DateTime.now().toString(),
     };
 
