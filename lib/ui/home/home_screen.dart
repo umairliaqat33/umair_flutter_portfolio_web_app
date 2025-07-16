@@ -197,6 +197,8 @@ class _HomeBodyState extends State<HomeBody> {
                                   String marqueeText =
                                       skillsText.replaceAll(', ', '        • ');
                                   return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(height: 0.08 * context.height),
                                       AboutMe(

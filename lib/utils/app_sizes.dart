@@ -156,7 +156,7 @@ class HomeScreenSizes {
       case DeviceState.tabletPortrait:
         return 500.w;
       case DeviceState.phonePortrait:
-        return 500.w;
+        return 800.w;
     }
   }
 }
