@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:umair_liaqat/models/project_model.dart';
 import 'package:umair_liaqat/ui/widgets/image_widgets/custom_image_widget.dart';
 import 'package:umair_liaqat/utils/app_enum.dart';
-import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
@@ -31,7 +30,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.width * 0.05),
+      padding: AppSizes.appPadding(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
