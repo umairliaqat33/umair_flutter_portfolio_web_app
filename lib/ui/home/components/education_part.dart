@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/ui/portfolio_details/components/education_section.dart';
-import 'package:umair_liaqat/utils/app_extensions.dart';
+import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
 
@@ -15,7 +15,7 @@ class EducationPart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.width * 0.05),
+      padding: AppSizes.appPadding(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

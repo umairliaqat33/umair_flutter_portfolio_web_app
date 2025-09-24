@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:umair_liaqat/models/user_model.dart';
 import 'package:umair_liaqat/ui/login_screen/login_screen.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
+import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
 import 'package:umair_liaqat/ui/widgets/common_widgets/contact_form.dart';
@@ -34,7 +35,7 @@ class _ContactMeState extends State<ContactMe> {
             constraints.maxWidth < 600; // Adjust layout based on screen width
 
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.width * 0.05),
+          padding: AppSizes.appPadding(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -1,6 +1,6 @@
 class AppConstants {
   static const String resume =
-      'https://drive.google.com/file/d/1ON4gsfxDJSGv6qJzI0CkDB65muAu5dik/view?usp=sharing';
+      'https://drive.google.com/file/d/1ON4gsfxDJSGv6qJzI0CkDB65muAu5dik/view?usp=drive_link';
   static const String cv =
       'https://drive.google.com/file/d/1-xFLmtCidL7bCXX_K_hYEUSk4eh4KuRd/view?usp=sharing';
   static const String whatsapp =

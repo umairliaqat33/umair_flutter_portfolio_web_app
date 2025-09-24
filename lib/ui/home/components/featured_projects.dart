@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:umair_liaqat/models/project_model.dart';
 import 'package:umair_liaqat/ui/widgets/image_widgets/custom_image_widget.dart';
 import 'package:umair_liaqat/utils/app_enum.dart';
-import 'package:umair_liaqat/utils/app_extensions.dart';
 import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
@@ -31,7 +30,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.width * 0.05),
+      padding: AppSizes.appPadding(context),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,31 +49,21 @@ class _ProjectsSectionState extends State<ProjectsSection> {
                   ),
                 )
               : isTablet(context)
-                  ? GridView.builder(
-                      itemCount: widget.projectsList.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: !isTablet(context) ? 1 : 3,
-                        crossAxisSpacing: 16,
-                        mainAxisSpacing: 16,
-                        childAspectRatio: (MediaQuery.sizeOf(context).width >
-                                    700 &&
-                                MediaQuery.sizeOf(context).width < 1000)
-                            ? 0.5
-                            : (MediaQuery.sizeOf(context).width > 1000 &&
-                                    MediaQuery.sizeOf(context).width < 1540)
-                                ? 0.7
-                                : (MediaQuery.sizeOf(context).width > 1400 &&
-                                        MediaQuery.sizeOf(context).width < 2600)
-                                    ? 1.2
-                                    : 1,
-                      ),
-                      itemBuilder: (context, index) {
-                        var project = widget.projectsList[index];
-
-                        return projectCardWithMouseRegion(index, project);
-                      },
+                  ? Wrap(
+                      spacing: 16,
+                      runSpacing: 16,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      alignment: WrapAlignment.start,
+                      runAlignment: WrapAlignment.start,
+                      children: widget.projectsList
+                          .asMap()
+                          .entries
+                          .map((entry) => SizedBox(
+                                width: 340.w,
+                                child: projectCardWithMouseRegion(
+                                    entry.key, entry.value),
+                              ))
+                          .toList(),
                     )
                   : ListView.separated(
                       scrollDirection: Axis.vertical,
@@ -246,7 +235,7 @@ class _ProjectCardState extends State<ProjectCard> {
                 project.name ?? 'Project',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       fontWeight: FontWeight.bold,
-                      fontSize: !isTablet(context) ? 48.w : null,
+                      fontSize: !isTablet(context) ? 48.sp : null,
                     ),
               ),
               if (isTablet(context))
@@ -308,30 +297,33 @@ class _ProjectCardState extends State<ProjectCard> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const SizedBox(height: 16),
-                  CarouselSlider(
-                    carouselController: carouselController,
-                    items: List.generate(
-                      project.filesLinks!.length,
-                      (index) => ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: CustomImageWidget(
-                          assetName: project.filesLinks![index],
-                          imageType: ImageType.network,
-                          height:
-                              HomeScreenSizes.projectDialogImageHeight(context),
-                          // width: double.infinity,
-                          // fit: BoxFit.cover,
+                  SizedBox(
+                    height: HomeScreenSizes.projectDialogImageHeight(context),
+                    child: CarouselSlider(
+                      carouselController: carouselController,
+                      items: List.generate(
+                        project.filesLinks!.length,
+                        (index) => ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: CustomImageWidget(
+                            assetName: project.filesLinks![index],
+                            imageType: ImageType.network,
+                            height: HomeScreenSizes.projectDialogImageHeight(
+                                context),
+                            // width: double.infinity,
+                            // fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    options: CarouselOptions(
-                      autoPlay: true,
-                      enlargeCenterPage: true,
-                      enableInfiniteScroll: true,
-                      viewportFraction: isLandScape(context) ? 0.6 : 0.8,
-                      // onPageChanged: (page, reason) {
-                      //   controller.selectedPage.value = page;
-                      // },
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: true,
+                        viewportFraction: isLandScape(context) ? 0.6 : 0.8,
+                        // onPageChanged: (page, reason) {
+                        //   controller.selectedPage.value = page;
+                        // },
+                      ),
                     ),
                   ),
                   Container(

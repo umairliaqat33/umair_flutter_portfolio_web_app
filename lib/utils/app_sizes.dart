@@ -98,21 +98,13 @@ class AppSizes {
     DeviceState state = getDeviceState(context);
     switch (state) {
       case DeviceState.phoneLandscape:
-        return EdgeInsets.symmetric(
-          horizontal: 62.w,
-        );
+        return EdgeInsets.symmetric(horizontal: 40.w);
       case DeviceState.tabletLandscape:
-        return EdgeInsets.symmetric(
-          horizontal: 62.w,
-        );
+        return EdgeInsets.symmetric(horizontal: 30.w);
       case DeviceState.tabletPortrait:
-        return EdgeInsets.symmetric(
-          horizontal: 62.w,
-        );
+        return EdgeInsets.symmetric(horizontal: 30.w);
       case DeviceState.phonePortrait:
-        return EdgeInsets.symmetric(
-          horizontal: 62.w,
-        );
+        return EdgeInsets.symmetric(horizontal: 40.w);
     }
   }
 }
@@ -156,7 +148,7 @@ class HomeScreenSizes {
       case DeviceState.tabletPortrait:
         return 500.w;
       case DeviceState.phonePortrait:
-        return 500.w;
+        return 800.w;
     }
   }
 }

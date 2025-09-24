@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:umair_liaqat/models/user_model.dart';
 import 'package:umair_liaqat/ui/widgets/common_widgets/my_photo.dart';
 import 'package:umair_liaqat/utils/app_extensions.dart';
+import 'package:umair_liaqat/utils/app_sizes.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/app_theme.dart';
 import 'package:universal_html/html.dart' as html;
@@ -119,7 +120,7 @@ class AboutMe extends StatelessWidget {
         );
       } else {
         return Padding(
-          padding: EdgeInsets.symmetric(horizontal: context.width * 0.05),
+          padding: AppSizes.appPadding(context),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
