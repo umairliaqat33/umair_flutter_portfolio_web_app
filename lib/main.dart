@@ -1,7 +1,11 @@
+import 'dart:ui_web' as ui;
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:universal_html/html.dart' as html;
+
 import 'package:umair_liaqat/bloc/details_bloc/details_bloc.dart';
 import 'package:umair_liaqat/bloc/home_bloc/home_bloc.dart';
 import 'package:umair_liaqat/bloc/login_bloc/login_bloc.dart';
@@ -21,6 +25,16 @@ Future<void> main() async {
 
   // await setupRemoteConfig(); // Initialize Remote Config
   Bloc.observer = MyBlocObserver();
+  ui.platformViewRegistry.registerViewFactory(
+    'my-marquee',
+    (int viewId) {
+      final div = html.DivElement()
+        ..style.width = '100%'
+        ..style.height = '100%'
+        ..innerHtml = '<marquee>My marquee content</marquee>';
+      return div;
+    },
+  );
   runApp(const MyApp());
 }
 

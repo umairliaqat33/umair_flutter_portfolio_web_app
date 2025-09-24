@@ -73,14 +73,16 @@ class _HomeBodyState extends State<HomeBody> {
   void _initListenerForInteractWithHeaderIndex() {
     _controller.addListener(() {
       double controllerHeight = _controller.offset;
-      if (_controller.position.extentAfter == 0.0) {
-        context.read<HomeBloc>().add(ChangeAppBarHeadersColorByColor(2));
-      } else if (controllerHeight < 100) {
+      if (_controller.position.extentAfter <15 && _controller.position.extentAfter>20) {
         context.read<HomeBloc>().add(ChangeAppBarHeadersColorByColor(0));
-      } else if (controllerHeight < (500)) {
+      } else if (controllerHeight > 20 && controllerHeight < 470) {
         context.read<HomeBloc>().add(ChangeAppBarHeadersColorByColor(1));
-      } else {
+      } else if (controllerHeight > 470 && controllerHeight < 1000) {
         context.read<HomeBloc>().add(ChangeAppBarHeadersColorByColor(2));
+      } else if (controllerHeight > 1000 && controllerHeight < 1550) {
+        context.read<HomeBloc>().add(ChangeAppBarHeadersColorByColor(3));
+      } else if (controllerHeight > 1550) {
+        context.read<HomeBloc>().add(ChangeAppBarHeadersColorByColor(4));
       }
     });
   }
@@ -231,25 +233,29 @@ class _HomeBodyState extends State<HomeBody> {
                                             vertical: 20,
                                           ),
                                           child: SelectionContainer.disabled(
-                                            child: Marquee(
-                                              text: marqueeText,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
+                                            child: IgnorePointer(
+                                              child: Marquee(
+                                                text: marqueeText,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                scrollAxis: Axis.horizontal,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                blankSpace: 20.0,
+                                                velocity: 100.0,
+                                                pauseAfterRound:
+                                                    Duration(seconds: 1),
+                                                startPadding: 10.0,
+                                                accelerationDuration:
+                                                    Duration(seconds: 1),
+                                                accelerationCurve:
+                                                    Curves.linear,
+                                                decelerationDuration:
+                                                    Duration(milliseconds: 500),
+                                                decelerationCurve:
+                                                    Curves.easeOut,
                                               ),
-                                              scrollAxis: Axis.horizontal,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              blankSpace: 20.0,
-                                              velocity: 100.0,
-                                              pauseAfterRound:
-                                                  Duration(seconds: 1),
-                                              startPadding: 10.0,
-                                              accelerationDuration:
-                                                  Duration(seconds: 1),
-                                              accelerationCurve: Curves.linear,
-                                              decelerationDuration:
-                                                  Duration(milliseconds: 500),
-                                              decelerationCurve: Curves.easeOut,
                                             ),
                                           ),
                                         ),
