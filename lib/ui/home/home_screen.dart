@@ -27,9 +27,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: HomeAppBar(),
-      body: HomeBody(),
+    return SelectionArea(
+      child: Scaffold(
+        appBar: HomeAppBar(),
+        body: HomeBody(),
+      ),
     );
   }
 }
@@ -227,25 +229,27 @@ class _HomeBodyState extends State<HomeBody> {
                                           padding: EdgeInsets.symmetric(
                                             vertical: 20,
                                           ),
-                                          child: Marquee(
-                                            text: marqueeText,
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
+                                          child: SelectionContainer.disabled(
+                                            child: Marquee(
+                                              text: marqueeText,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              scrollAxis: Axis.horizontal,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              blankSpace: 20.0,
+                                              velocity: 100.0,
+                                              pauseAfterRound:
+                                                  Duration(seconds: 1),
+                                              startPadding: 10.0,
+                                              accelerationDuration:
+                                                  Duration(seconds: 1),
+                                              accelerationCurve: Curves.linear,
+                                              decelerationDuration:
+                                                  Duration(milliseconds: 500),
+                                              decelerationCurve: Curves.easeOut,
                                             ),
-                                            scrollAxis: Axis.horizontal,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            blankSpace: 20.0,
-                                            velocity: 100.0,
-                                            pauseAfterRound:
-                                                Duration(seconds: 1),
-                                            startPadding: 10.0,
-                                            accelerationDuration:
-                                                Duration(seconds: 1),
-                                            accelerationCurve: Curves.linear,
-                                            decelerationDuration:
-                                                Duration(milliseconds: 500),
-                                            decelerationCurve: Curves.easeOut,
                                           ),
                                         ),
                                       ),

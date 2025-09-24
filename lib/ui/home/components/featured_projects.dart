@@ -234,112 +234,117 @@ class _ProjectCardState extends State<ProjectCard> {
   void _showProjectDialog(BuildContext context, ProjectModel project) {
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        backgroundColor: PortfolioAppTheme.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              project.name ?? 'Project',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontSize: !isTablet(context) ? 48.w : null,
+      builder: (_) => SelectionArea(
+        child: AlertDialog(
+          backgroundColor: PortfolioAppTheme.white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                project.name ?? 'Project',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: !isTablet(context) ? 48.w : null,
+                    ),
+              ),
+              if (isTablet(context))
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(
+                    Icons.close,
+                    color: PortfolioAppTheme.primary,
                   ),
-            ),
-            if (isTablet(context))
-              IconButton(
+                ),
+            ],
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          actions: [
+            if (project.link != null && project.link!.isNotEmpty)
+              TextButton.icon(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(
+                    PortfolioAppTheme.primary,
+                  ),
+                ),
+                onPressed: () => _launchUrl(project.link!),
+                icon: const Icon(
+                  Icons.link,
+                  color: Colors.white,
+                ),
+                label: const Text(
+                  "View Project",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            if (!isTablet(context))
+              TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                icon: Icon(
-                  Icons.close,
-                  color: PortfolioAppTheme.primary,
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(
+                    PortfolioAppTheme.primary,
+                  ),
+                ),
+                child: const Text(
+                  "Close",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
               ),
           ],
-        ),
-        actionsAlignment: MainAxisAlignment.center,
-        actions: [
-          if (project.link != null && project.link!.isNotEmpty)
-            TextButton.icon(
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  PortfolioAppTheme.primary,
-                ),
-              ),
-              onPressed: () => _launchUrl(project.link!),
-              icon: const Icon(
-                Icons.link,
-                color: Colors.white,
-              ),
-              label: const Text(
-                "View Project",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          if (!isTablet(context))
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              style: ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(
-                  PortfolioAppTheme.primary,
-                ),
-              ),
-              child: const Text(
-                "Close",
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-        ],
-        content: SingleChildScrollView(
-          child: Container(
-            width: HomeScreenSizes.projectDialogWidth(context),
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 16),
-                CarouselSlider(
-                  carouselController: carouselController,
-                  items: List.generate(
-                    project.filesLinks!.length,
-                    (index) => ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: CustomImageWidget(
-                        assetName: project.filesLinks![index],
-                        imageType: ImageType.network,
-                        height:
-                            HomeScreenSizes.projectDialogImageHeight(context),
-                        // width: double.infinity,
-                        // fit: BoxFit.cover,
+          content: SingleChildScrollView(
+            child: Container(
+              width: HomeScreenSizes.projectDialogWidth(context),
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 16),
+                  CarouselSlider(
+                    carouselController: carouselController,
+                    items: List.generate(
+                      project.filesLinks!.length,
+                      (index) => ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: CustomImageWidget(
+                          assetName: project.filesLinks![index],
+                          imageType: ImageType.network,
+                          height:
+                              HomeScreenSizes.projectDialogImageHeight(context),
+                          // width: double.infinity,
+                          // fit: BoxFit.cover,
+                        ),
                       ),
                     ),
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      enableInfiniteScroll: true,
+                      viewportFraction: isLandScape(context) ? 0.6 : 0.8,
+                      // onPageChanged: (page, reason) {
+                      //   controller.selectedPage.value = page;
+                      // },
+                    ),
                   ),
-                  options: CarouselOptions(
-                    autoPlay: true,
-                    enlargeCenterPage: true,
-                    enableInfiniteScroll: true,
-                    viewportFraction: isLandScape(context) ? 0.6 : 0.8,
-                    // onPageChanged: (page, reason) {
-                    //   controller.selectedPage.value = page;
-                    // },
+                  Container(
+                      width: double.infinity,
+                      height: 2,
+                      color: Colors.grey[400]),
+                  const SizedBox(height: 20),
+                  Text(
+                    project.description ?? 'No description provided',
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
-                ),
-                Container(
-                    width: double.infinity, height: 2, color: Colors.grey[400]),
-                const SizedBox(height: 20),
-                Text(
-                  project.description ?? 'No description provided',
-                  style: Theme.of(context).textTheme.bodyLarge,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
