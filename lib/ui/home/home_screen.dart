@@ -73,9 +73,9 @@ class _HomeBodyState extends State<HomeBody> {
   void _initListenerForInteractWithHeaderIndex() {
     _controller.addListener(() {
       double controllerHeight = _controller.offset;
-      if (_controller.position.extentAfter <15 && _controller.position.extentAfter>20) {
+      if (controllerHeight > 0 && controllerHeight < 80) {
         context.read<HomeBloc>().add(ChangeAppBarHeadersColorByColor(0));
-      } else if (controllerHeight > 20 && controllerHeight < 470) {
+      } else if (controllerHeight > 80 && controllerHeight < 470) {
         context.read<HomeBloc>().add(ChangeAppBarHeadersColorByColor(1));
       } else if (controllerHeight > 470 && controllerHeight < 1000) {
         context.read<HomeBloc>().add(ChangeAppBarHeadersColorByColor(2));
