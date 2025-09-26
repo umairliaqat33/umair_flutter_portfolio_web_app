@@ -35,7 +35,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.featuredProjects,
+            AppStrings.featuredProjects,
             style: textTheme.displaySmall!.copyWith(
               color: PortfolioAppTheme.nameColor,
               fontWeight: FontWeight.w600,
@@ -45,7 +45,7 @@ class _ProjectsSectionState extends State<ProjectsSection> {
           widget.projectsList.isEmpty
               ? Center(
                   child: Text(
-                    Strings.noProjects,
+                    AppStrings.noProjects,
                   ),
                 )
               : isTablet(context)

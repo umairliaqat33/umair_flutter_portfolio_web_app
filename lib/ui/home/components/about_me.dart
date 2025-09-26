@@ -30,7 +30,7 @@ class AboutMe extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    Strings.helloIAm,
+                    AppStrings.helloIAm,
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: PortfolioAppTheme.white,
                         fontWeight: FontWeight.bold,
@@ -84,7 +84,7 @@ class AboutMe extends StatelessWidget {
                           color: PortfolioAppTheme.nameColor),
                       label: FittedBox(
                         child: Text(
-                          Strings.downloadResume,
+                          AppStrings.downloadResume,
                           style:
                               Theme.of(context).textTheme.titleMedium!.copyWith(
                                     color: PortfolioAppTheme.greyButtonColor,
@@ -129,7 +129,7 @@ class AboutMe extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      Strings.helloIAm,
+                      AppStrings.helloIAm,
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: PortfolioAppTheme.white,
                           fontWeight: FontWeight.bold,
@@ -180,7 +180,7 @@ class AboutMe extends StatelessWidget {
                             color: PortfolioAppTheme.nameColor),
                         label: FittedBox(
                           child: Text(
-                            Strings.downloadResume,
+                            AppStrings.downloadResume,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!

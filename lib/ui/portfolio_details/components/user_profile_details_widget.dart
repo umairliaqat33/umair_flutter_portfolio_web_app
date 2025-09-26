@@ -97,7 +97,7 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                                 ?.profilePicture,
                   ),
                   NormalTextWidget(
-                    Strings.profilePictureSize,
+                    AppStrings.profilePictureSize,
                   ),
                 ],
               ),
@@ -108,13 +108,13 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                 children: [
                   CustomTextFormField(
                     controller: _userNameController,
-                    label: Strings.userName,
-                    hintText:
-                        Strings.enterValue(Strings.userName.toLowerCase()),
+                    label: AppStrings.userName,
+                    hintText: AppStrings.enterValue(
+                        AppStrings.userName.toLowerCase()),
                     validator: (value) =>
                         ValidatorUtils.customValidatorValidator(
                       value,
-                      Strings.isRequired(Strings.userName),
+                      AppStrings.isRequired(AppStrings.userName),
                     ),
                   ),
                   SizedBox(
@@ -122,13 +122,13 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                   ),
                   CustomTextFormField(
                     controller: _titleController,
-                    label: Strings.headline1,
-                    hintText:
-                        Strings.enterValue(Strings.headline1.toLowerCase()),
+                    label: AppStrings.headline1,
+                    hintText: AppStrings.enterValue(
+                        AppStrings.headline1.toLowerCase()),
                     validator: (value) =>
                         ValidatorUtils.customValidatorValidator(
                       value,
-                      Strings.isRequired(Strings.headline1),
+                      AppStrings.isRequired(AppStrings.headline1),
                     ),
                   ),
                   SizedBox(
@@ -136,12 +136,12 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                   ),
                   CustomTextFormField(
                     controller: _title2Controller,
-                    label: Strings.headline2,
-                    hintText:
-                        Strings.enterValue(Strings.headline2.toLowerCase()),
+                    label: AppStrings.headline2,
+                    hintText: AppStrings.enterValue(
+                        AppStrings.headline2.toLowerCase()),
                     validator: (value) =>
                         ValidatorUtils.customValidatorValidator(
-                            value, Strings.isRequired(Strings.headline2)),
+                            value, AppStrings.isRequired(AppStrings.headline2)),
                   ),
                   SizedBox(
                     height: 10,
@@ -151,13 +151,13 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                     maxLines: 5,
                     inputType: TextInputType.multiline,
                     controller: _descriptionController,
-                    label: Strings.description,
-                    hintText:
-                        Strings.enterValue(Strings.description.toLowerCase()),
+                    label: AppStrings.description,
+                    hintText: AppStrings.enterValue(
+                        AppStrings.description.toLowerCase()),
                     validator: (value) =>
                         ValidatorUtils.customValidatorValidator(
                       value,
-                      Strings.isRequired(Strings.description),
+                      AppStrings.isRequired(AppStrings.description),
                     ),
                   ),
                   SizedBox(
@@ -168,13 +168,13 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                     maxLines: 5,
                     // inputType: TextInputType.de,
                     controller: _skillsController,
-                    label: Strings.skills,
+                    label: AppStrings.skills,
                     hintText:
-                        "${Strings.enterValue(Strings.skills.toLowerCase())} ${Strings.separatedByComma}",
+                        "${AppStrings.enterValue(AppStrings.skills.toLowerCase())} ${AppStrings.separatedByComma}",
                     validator: (value) =>
                         ValidatorUtils.customValidatorValidator(
                       value,
-                      Strings.isRequired(Strings.skills),
+                      AppStrings.isRequired(AppStrings.skills),
                     ),
                   ),
                   SizedBox(
@@ -185,13 +185,13 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                     maxLines: 5,
                     inputType: TextInputType.multiline,
                     controller: _phoneController,
-                    label: Strings.phoneNumber,
-                    hintText:
-                        Strings.enterValue(Strings.phoneNumber.toLowerCase()),
+                    label: AppStrings.phoneNumber,
+                    hintText: AppStrings.enterValue(
+                        AppStrings.phoneNumber.toLowerCase()),
                     validator: (value) =>
                         ValidatorUtils.customValidatorValidator(
                       value,
-                      Strings.isRequired(Strings.phoneNumber),
+                      AppStrings.isRequired(AppStrings.phoneNumber),
                     ),
                   ),
                   SizedBox(
@@ -205,13 +205,13 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                         maxLines: 5,
                         inputType: TextInputType.multiline,
                         controller: _githubController,
-                        label: Strings.gitHub,
-                        hintText:
-                            Strings.enterValue(Strings.gitHub.toLowerCase()),
+                        label: AppStrings.gitHub,
+                        hintText: AppStrings.enterValue(
+                            AppStrings.gitHub.toLowerCase()),
                         validator: (value) =>
                             ValidatorUtils.customValidatorValidator(
                           value,
-                          Strings.isRequired(Strings.gitHub),
+                          AppStrings.isRequired(AppStrings.gitHub),
                         ),
                       ),
                       SizedBox(
@@ -223,13 +223,13 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                         maxLines: 5,
                         inputType: TextInputType.multiline,
                         controller: _linkedInController,
-                        label: Strings.linkedIn,
-                        hintText:
-                            Strings.enterValue(Strings.linkedIn.toLowerCase()),
+                        label: AppStrings.linkedIn,
+                        hintText: AppStrings.enterValue(
+                            AppStrings.linkedIn.toLowerCase()),
                         validator: (value) =>
                             ValidatorUtils.customValidatorValidator(
                           value,
-                          Strings.isRequired(Strings.linkedIn),
+                          AppStrings.isRequired(AppStrings.linkedIn),
                         ),
                       ),
                     ],
@@ -239,7 +239,7 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                   ),
                   Center(
                     child: NormalButton(
-                      label: Strings.add,
+                      label: AppStrings.add,
                       width: AppSizes.textfieldWidth(context),
                       icon: Icons.add,
                       onTap: () {

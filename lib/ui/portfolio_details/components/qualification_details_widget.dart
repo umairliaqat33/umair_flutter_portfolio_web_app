@@ -50,7 +50,7 @@ class _QualificationDetailsWidgetState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           HeadingTextWidget(
-            Strings.addADegree,
+            AppStrings.addADegree,
           ),
           SizedBox(
             height: 20,
@@ -74,7 +74,7 @@ class _QualificationDetailsWidgetState
                     height: 40,
                   ),
                   TextFieldTitleWidget(
-                    label: Strings.existingQualifications,
+                    label: AppStrings.existingQualifications,
                   ),
                   SizedBox(
                     height: 20,
@@ -110,11 +110,12 @@ class _QualificationDetailsWidgetState
             CustomTextFormField(
               width: AppSizes.textfieldWidth(context),
               controller: _degreeController,
-              label: Strings.degreeName,
-              hintText: Strings.enterValue(Strings.degreeName.toLowerCase()),
+              label: AppStrings.degreeName,
+              hintText:
+                  AppStrings.enterValue(AppStrings.degreeName.toLowerCase()),
               validator: (value) => ValidatorUtils.customValidatorValidator(
                 value,
-                Strings.isRequired(Strings.degreeName),
+                AppStrings.isRequired(AppStrings.degreeName),
               ),
             ),
             SizedBox(
@@ -123,11 +124,12 @@ class _QualificationDetailsWidgetState
             CustomTextFormField(
               width: AppSizes.textfieldWidth(context),
               controller: _instituteController,
-              label: Strings.institute,
-              hintText: Strings.enterValue(Strings.institute.toLowerCase()),
+              label: AppStrings.institute,
+              hintText:
+                  AppStrings.enterValue(AppStrings.institute.toLowerCase()),
               validator: (value) => ValidatorUtils.customValidatorValidator(
                 value,
-                Strings.isRequired(Strings.institute),
+                AppStrings.isRequired(AppStrings.institute),
               ),
             ),
           ],
@@ -140,11 +142,11 @@ class _QualificationDetailsWidgetState
             CustomTextFormField(
               width: AppSizes.textfieldWidth(context),
               controller: _completionDateController,
-              label: Strings.completionYear,
-              hintText:
-                  Strings.enterValue(Strings.completionYear.toLowerCase()),
+              label: AppStrings.completionYear,
+              hintText: AppStrings.enterValue(
+                  AppStrings.completionYear.toLowerCase()),
               validator: (value) => ValidatorUtils.customValidatorValidator(
-                  value, Strings.isRequired(Strings.completionYear)),
+                  value, AppStrings.isRequired(AppStrings.completionYear)),
             ),
             SizedBox(
               width: 20,
@@ -152,10 +154,11 @@ class _QualificationDetailsWidgetState
             CustomTextFormField(
               width: AppSizes.textfieldWidth(context),
               controller: _qualificationSortingIndexController,
-              label: Strings.sortingIndex,
-              hintText: Strings.enterValue(Strings.sortingIndex.toLowerCase()),
+              label: AppStrings.sortingIndex,
+              hintText:
+                  AppStrings.enterValue(AppStrings.sortingIndex.toLowerCase()),
               validator: (value) => ValidatorUtils.customValidatorValidator(
-                  value, Strings.isRequired(Strings.sortingIndex)),
+                  value, AppStrings.isRequired(AppStrings.sortingIndex)),
             ),
           ],
         ),
@@ -163,7 +166,7 @@ class _QualificationDetailsWidgetState
           height: 20,
         ),
         NormalButton(
-          label: (isEditMode ?? false) ? Strings.update : Strings.add,
+          label: (isEditMode ?? false) ? AppStrings.update : AppStrings.add,
           width: AppSizes.textfieldWidth(context),
           icon: (isEditMode ?? false) ? null : Icons.add,
           onTap: () {

@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:umair_liaqat/bloc/login_bloc/login_event.dart';
 import 'package:umair_liaqat/bloc/login_bloc/login_state.dart';
+import 'package:umair_liaqat/repositories/user_repository.dart';
 import 'package:umair_liaqat/ui/home/home_screen.dart';
 import 'package:umair_liaqat/ui/portfolio_details/portfolio_details_screen.dart';
 import 'package:umair_liaqat/utils/collections.dart';
@@ -35,14 +36,19 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         isLoading: true,
       ),
     );
-
+    UserRepository userRepository = UserRepository();
     try {
-      final response = await Collections.supabase.auth.signInWithPassword(
-        email: event.email,
-        password: event.password,
+      bool isLoggedIn = await userRepository.login(
+        event.email,
+        event.password,
       );
 
-      if (response.user != null) {
+      emit(
+        state.copyWith(
+          isLoading: false,
+        ),
+      );
+      if (isLoggedIn) {
         final context = event.context;
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
@@ -51,11 +57,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           (route) => false,
         );
       }
-      emit(
-        state.copyWith(
-          isLoading: false,
-        ),
-      );
     } on AuthApiException catch (exception) {
       emit(state.copyWith(isLoading: false, errorMessage: "Unexpected error"));
       Fluttertoast.showToast(msg: exception.message);

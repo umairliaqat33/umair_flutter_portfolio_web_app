@@ -146,7 +146,7 @@ class _ContactMeState extends State<ContactMe> {
             ),
             ElevatedButton.icon(
               label: Text(
-                Strings.login,
+                AppStrings.login,
                 style: textTheme.titleMedium,
               ),
               icon: Row(

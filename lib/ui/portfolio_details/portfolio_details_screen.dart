@@ -59,7 +59,7 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
             },
             icon: Row(
               children: [
-                Text(Strings.logout),
+                Text(AppStrings.logout),
                 Icon(Icons.logout_rounded),
               ],
             ),

@@ -7,15 +7,15 @@ extension AppBarHeaderExtension on AppBarHeaders {
   String getString() {
     switch (this) {
       case AppBarHeaders.home:
-        return Strings.home;
+        return AppStrings.home;
       case AppBarHeaders.projects:
-        return "${Strings.project}s";
+        return "${AppStrings.project}s";
       case AppBarHeaders.contact:
-        return Strings.contact;
+        return AppStrings.contact;
       case AppBarHeaders.qualification:
-        return "${Strings.qualification}s";
+        return "${AppStrings.qualification}s";
       case AppBarHeaders.workHistory:
-        return Strings.jobHistory;
+        return AppStrings.jobHistory;
     }
   }
 }

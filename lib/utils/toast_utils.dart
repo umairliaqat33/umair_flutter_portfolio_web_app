@@ -10,7 +10,7 @@ class ToastUtils {
       context: context,
       builder: (BuildContext context) {
         return ProgressDialog(
-          text: Strings.pleaseWait,
+          text: AppStrings.pleaseWait,
         );
       },
     );

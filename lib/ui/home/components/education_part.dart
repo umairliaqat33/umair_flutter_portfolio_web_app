@@ -20,7 +20,7 @@ class EducationPart extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${Strings.qualification}s",
+            "${AppStrings.qualification}s",
             style: Theme.of(context).textTheme.displaySmall!.copyWith(
                   color: PortfolioAppTheme.nameColor,
                   fontWeight: FontWeight.w600,
@@ -43,7 +43,7 @@ class EducationPart extends StatelessWidget {
           else
             Center(
               child: Text(
-                Strings.noQualifications,
+                AppStrings.noQualifications,
               ),
             ),
         ],

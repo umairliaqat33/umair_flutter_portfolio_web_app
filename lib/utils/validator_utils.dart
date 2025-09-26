@@ -3,12 +3,12 @@ import 'package:umair_liaqat/utils/app_strings.dart';
 class ValidatorUtils {
   static String? emailValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return Strings.emailRequired;
+      return AppStrings.emailRequired;
     } else if (value.isEmpty) {
-      return Strings.emailRequired;
+      return AppStrings.emailRequired;
     } else if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}\$")
         .hasMatch(value)) {
-      return Strings.enterValidEmail;
+      return AppStrings.enterValidEmail;
     } else {
       return null;
     }
@@ -16,11 +16,11 @@ class ValidatorUtils {
 
   static String? passwordValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return Strings.passwordRequired;
+      return AppStrings.passwordRequired;
     } else if (value.isEmpty) {
-      return Strings.passwordRequired;
+      return AppStrings.passwordRequired;
     } else if (value.length < 8) {
-      return Strings.passwordMinimumLength;
+      return AppStrings.passwordMinimumLength;
     } else {
       return null;
     }

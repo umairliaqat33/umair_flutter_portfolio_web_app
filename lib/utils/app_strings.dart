@@ -17,7 +17,7 @@ class DatabaseCollections {
   static String qualifications = "qualifications";
 }
 
-class Strings {
+class AppStrings {
   static String passwordRequired = "Password is required";
 
   static String passwordMinimumLength =
@@ -26,6 +26,7 @@ class Strings {
   static String existingProjects = "Existing Projects";
   static String existingWorkHistory = "Existing Work History";
   static String pleaseWait = "Please wait";
+  static String alert = "Alert";
   static String home = "Home";
   static String project = "Project";
   static String pleaseAddPicture = "Please add at least one picture.";
@@ -34,6 +35,7 @@ class Strings {
   static String emailRequired = "Email required";
   static String helloIAm = "Hello, I'm";
   static String downloadResume = "Download Resume";
+  static String somethingWentWrong = "Something went wrong, please try again.";
   static String password = "Password";
   static String login = "Login";
   static String logout = "Logout";
@@ -77,9 +79,14 @@ class Strings {
   static String phoneNumber = "Phone Number";
   static String gitHub = "Github";
   static String linkedIn = "LinkedIn";
+  static String failedToDo = "Failed to";
   static String selectProjectFiles = "Select files to view (pictures only)";
   static String isRequired(String value) {
     return "$value is required";
+  }
+
+  static String failedToDoSomething(String value) {
+    return "${AppStrings.failedToDo} $value";
   }
 
   static String valueDeleted(String value) {

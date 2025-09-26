@@ -133,7 +133,7 @@ class _HomeBodyState extends State<HomeBody> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero,
                 ),
-                child: ProgressDialog(text: Strings.pleaseWait))
+                child: ProgressDialog(text: AppStrings.pleaseWait))
             : context.watch<HomeBloc>().state.userModel == null
                 ? Dialog(
                     insetPadding: EdgeInsets.zero,

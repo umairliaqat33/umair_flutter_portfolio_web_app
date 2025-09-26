@@ -7,10 +7,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_events.dart';
 import 'package:umair_liaqat/bloc/details_bloc/details_state.dart';
+import 'package:umair_liaqat/config/app_configurations.dart';
 import 'package:umair_liaqat/models/job_history.dart';
 import 'package:umair_liaqat/models/project_model.dart';
 import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/models/user_model.dart';
+import 'package:umair_liaqat/repositories/user_repository.dart';
 import 'package:umair_liaqat/services/media_service.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
 import 'package:umair_liaqat/utils/collections.dart';
@@ -42,17 +44,11 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     Emitter<DetailsState> emit,
   ) async {
     try {
-      final userId = Supabase.instance.client.auth.currentUser?.id;
-      if (userId == null) {
+      if (AppConfigurations.authToken.isEmpty) {
         Fluttertoast.showToast(msg: "User not authenticated");
         return;
       }
-
-      final userResponse = await Supabase.instance.client
-          .from(Collections.users)
-          .select()
-          .limit(1)
-          .maybeSingle();
+      UserRepository userRepository = UserRepository();
 
       final projectsResponse =
           await Supabase.instance.client.from(Collections.projects).select();
@@ -65,8 +61,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
           .select()
           .order('sortingIndex', ascending: true);
 
-      final userModel =
-          userResponse != null ? UserModel.fromMap(userResponse) : null;
+      final userModel = await userRepository.getUser();
 
       final projects = (projectsResponse as List)
           .map((e) => ProjectModel.fromMap(e))
@@ -164,7 +159,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
         skills: event.skills,
       );
       final userResponse = await Supabase.instance.client
-          .from(Collections.users)
+          .from(Collections.user)
           .select()
           .limit(1)
           .maybeSingle();
@@ -189,8 +184,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       Navigator.of(event.context).pop();
 
       Fluttertoast.showToast(
-        msg: Strings.valueUpdated(
-          Strings.userDetails,
+        msg: AppStrings.valueUpdated(
+          AppStrings.userDetails,
         ),
       );
     } catch (e) {
@@ -233,7 +228,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
 
       emit(state.copyWith(jobHistories: updatedList));
       Navigator.of(event.context).pop();
-      Fluttertoast.showToast(msg: Strings.valueAdded(Strings.workHistory));
+      Fluttertoast.showToast(
+          msg: AppStrings.valueAdded(AppStrings.workHistory));
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());
@@ -261,7 +257,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       Navigator.of(event.context).pop();
       Navigator.of(event.context).pop();
 
-      Fluttertoast.showToast(msg: Strings.valueUpdated(Strings.workHistory));
+      Fluttertoast.showToast(
+          msg: AppStrings.valueUpdated(AppStrings.workHistory));
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());
@@ -279,9 +276,9 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
         ),
       );
 
-      Fluttertoast.showToast(msg: Strings.fileRemoved);
+      Fluttertoast.showToast(msg: AppStrings.fileRemoved);
     } catch (e) {
-      Fluttertoast.showToast(msg: Strings.fileNotRemoved);
+      Fluttertoast.showToast(msg: AppStrings.fileNotRemoved);
 
       log("Error while deleting project file: $e");
     }
@@ -333,7 +330,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
 
       emit(state.copyWith(qualificationsList: updatedList));
       Navigator.of(event.context).pop();
-      Fluttertoast.showToast(msg: Strings.valueAdded(Strings.qualification));
+      Fluttertoast.showToast(
+          msg: AppStrings.valueAdded(AppStrings.qualification));
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());
@@ -363,7 +361,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
 
       Navigator.of(event.context).pop();
       Navigator.of(event.context).pop();
-      Fluttertoast.showToast(msg: Strings.valueUpdated(Strings.qualification));
+      Fluttertoast.showToast(
+          msg: AppStrings.valueUpdated(AppStrings.qualification));
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());
@@ -389,7 +388,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
           .eq('userId', userId);
 
       Navigator.of(event.context).pop();
-      Fluttertoast.showToast(msg: Strings.valueDeleted(Strings.qualification));
+      Fluttertoast.showToast(
+          msg: AppStrings.valueDeleted(AppStrings.qualification));
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());
@@ -415,7 +415,8 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
           .eq('userId', userId); // prevent deleting others' data
 
       Navigator.of(event.context).pop();
-      Fluttertoast.showToast(msg: Strings.valueDeleted(Strings.jobHistory));
+      Fluttertoast.showToast(
+          msg: AppStrings.valueDeleted(AppStrings.jobHistory));
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());
@@ -436,7 +437,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
           .eq('id', event.id);
 
       Navigator.of(event.context).pop();
-      Fluttertoast.showToast(msg: Strings.valueDeleted(Strings.project));
+      Fluttertoast.showToast(msg: AppStrings.valueDeleted(AppStrings.project));
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());
@@ -485,7 +486,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
 
       emit(state.copyWith(projectList: updatedList));
       Navigator.of(event.context).pop();
-      Fluttertoast.showToast(msg: Strings.valueAdded(Strings.project));
+      Fluttertoast.showToast(msg: AppStrings.valueAdded(AppStrings.project));
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());
@@ -524,7 +525,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
           .eq('id', updatedProject.id!);
 
       Navigator.of(event.context).pop();
-      Fluttertoast.showToast(msg: Strings.valueUpdated(Strings.project));
+      Fluttertoast.showToast(msg: AppStrings.valueUpdated(AppStrings.project));
     } catch (e) {
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: e.toString());

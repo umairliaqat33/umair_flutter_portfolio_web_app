@@ -35,7 +35,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
     return Column(
       children: [
         TextFieldTitleWidget(
-          label: widget.label ?? Strings.password,
+          label: widget.label ?? AppStrings.password,
           asterisk: "*",
         ),
         SizedBox(
@@ -59,7 +59,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             filled: widget.textFieldFilled,
             fillColor: Colors.white,
             hintText: widget.hintText ??
-                Strings.enterValue(Strings.password.toLowerCase()),
+                AppStrings.enterValue(AppStrings.password.toLowerCase()),
             hintStyle: TextStyle(
               // color: Colors.white,
               fontWeight: FontWeight.w400,

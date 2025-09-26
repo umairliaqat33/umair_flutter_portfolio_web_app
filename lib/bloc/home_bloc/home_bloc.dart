@@ -71,7 +71,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
       final userResponse = await Supabase.instance.client
-          .from(Collections.users)
+          .from(Collections.supabaseUsers)
           .select()
           .limit(1)
           .maybeSingle();

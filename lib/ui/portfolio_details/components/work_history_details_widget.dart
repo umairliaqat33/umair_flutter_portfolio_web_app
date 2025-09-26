@@ -55,7 +55,7 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           HeadingTextWidget(
-            Strings.addWorkHistory,
+            AppStrings.addWorkHistory,
           ),
           SizedBox(
             height: 20,
@@ -79,7 +79,7 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
                     height: 40,
                   ),
                   TextFieldTitleWidget(
-                    label: Strings.existingWorkHistory,
+                    label: AppStrings.existingWorkHistory,
                   ),
                   SizedBox(
                     height: 20,
@@ -147,10 +147,11 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
             CustomTextFormField(
               width: AppSizes.textfieldWidth(context),
               controller: _positionController,
-              label: Strings.jobPosition,
-              hintText: Strings.enterValue(Strings.jobPosition.toLowerCase()),
+              label: AppStrings.jobPosition,
+              hintText:
+                  AppStrings.enterValue(AppStrings.jobPosition.toLowerCase()),
               validator: (value) => ValidatorUtils.customValidatorValidator(
-                  value, Strings.isRequired(Strings.jobPosition)),
+                  value, AppStrings.isRequired(AppStrings.jobPosition)),
             ),
             SizedBox(
               width: 20,
@@ -158,10 +159,11 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
             CustomTextFormField(
               width: AppSizes.textfieldWidth(context),
               controller: _organizationController,
-              label: Strings.organization,
-              hintText: Strings.enterValue(Strings.organization.toLowerCase()),
+              label: AppStrings.organization,
+              hintText:
+                  AppStrings.enterValue(AppStrings.organization.toLowerCase()),
               validator: (value) => ValidatorUtils.customValidatorValidator(
-                  value, Strings.isRequired(Strings.organization)),
+                  value, AppStrings.isRequired(AppStrings.organization)),
             ),
           ],
         ),
@@ -173,10 +175,11 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
             CustomTextFormField(
               width: AppSizes.textfieldWidth(context),
               controller: _fromDateController,
-              label: Strings.fromDate,
-              hintText: Strings.enterValue(Strings.fromDate.toLowerCase()),
+              label: AppStrings.fromDate,
+              hintText:
+                  AppStrings.enterValue(AppStrings.fromDate.toLowerCase()),
               validator: (value) => ValidatorUtils.customValidatorValidator(
-                  value, Strings.isRequired(Strings.fromDate)),
+                  value, AppStrings.isRequired(AppStrings.fromDate)),
             ),
             SizedBox(
               width: 20,
@@ -184,10 +187,10 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
             CustomTextFormField(
               width: AppSizes.textfieldWidth(context),
               controller: _toDateController,
-              label: Strings.toDate,
-              hintText: Strings.enterValue(Strings.toDate.toLowerCase()),
+              label: AppStrings.toDate,
+              hintText: AppStrings.enterValue(AppStrings.toDate.toLowerCase()),
               validator: (value) => ValidatorUtils.customValidatorValidator(
-                  value, Strings.isRequired(Strings.toDate)),
+                  value, AppStrings.isRequired(AppStrings.toDate)),
             ),
           ],
         ),
@@ -203,11 +206,11 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
               maxLines: 5,
               inputType: TextInputType.multiline,
               controller: _jobDescriptionController,
-              label: Strings.jobDescription,
-              hintText:
-                  Strings.enterValue(Strings.jobDescription.toLowerCase()),
+              label: AppStrings.jobDescription,
+              hintText: AppStrings.enterValue(
+                  AppStrings.jobDescription.toLowerCase()),
               validator: (value) => ValidatorUtils.customValidatorValidator(
-                  value, Strings.isRequired(Strings.jobDescription)),
+                  value, AppStrings.isRequired(AppStrings.jobDescription)),
             ),
             SizedBox(
               width: 20,
@@ -215,10 +218,11 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
             CustomTextFormField(
               width: AppSizes.textfieldWidth(context),
               controller: _jobSortingIndexController,
-              label: Strings.sortingIndex,
-              hintText: Strings.enterValue(Strings.sortingIndex.toLowerCase()),
+              label: AppStrings.sortingIndex,
+              hintText:
+                  AppStrings.enterValue(AppStrings.sortingIndex.toLowerCase()),
               validator: (value) => ValidatorUtils.customValidatorValidator(
-                  value, Strings.isRequired(Strings.sortingIndex)),
+                  value, AppStrings.isRequired(AppStrings.sortingIndex)),
             ),
           ],
         ),
@@ -227,7 +231,7 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
         ),
         Center(
           child: NormalButton(
-            label: isEditMode ? Strings.update : Strings.add,
+            label: isEditMode ? AppStrings.update : AppStrings.add,
             width: AppSizes.textfieldWidth(context),
             icon: isEditMode ? null : Icons.add,
             onTap: () {

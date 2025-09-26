@@ -54,7 +54,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             HeadingTextWidget(
-              Strings.addAProject,
+              AppStrings.addAProject,
             ),
             SizedBox(
               height: 20,
@@ -81,7 +81,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                               ?.isEmpty ??
                           true) {
                         Fluttertoast.showToast(
-                          msg: Strings.pleaseAddPicture,
+                          msg: AppStrings.pleaseAddPicture,
                         );
                         return;
                       }
@@ -98,7 +98,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                       height: 40,
                     ),
                     TextFieldTitleWidget(
-                      label: Strings.existingProjects,
+                      label: AppStrings.existingProjects,
                     ),
                     SizedBox(
                       height: 20,
@@ -262,11 +262,11 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                 CustomTextFormField(
                   width: AppSizes.textfieldWidth(context),
                   controller: _projectNameController,
-                  label: Strings.projectName,
-                  hintText:
-                      Strings.enterValue(Strings.projectName.toLowerCase()),
+                  label: AppStrings.projectName,
+                  hintText: AppStrings.enterValue(
+                      AppStrings.projectName.toLowerCase()),
                   validator: (value) => ValidatorUtils.customValidatorValidator(
-                      value, Strings.isRequired(Strings.projectName)),
+                      value, AppStrings.isRequired(AppStrings.projectName)),
                 ),
                 SizedBox(
                   width: 20,
@@ -274,11 +274,11 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                 CustomTextFormField(
                   width: AppSizes.textfieldWidth(context),
                   controller: _projectUrlController,
-                  label: Strings.projectUrl,
-                  hintText:
-                      Strings.enterValue(Strings.projectUrl.toLowerCase()),
+                  label: AppStrings.projectUrl,
+                  hintText: AppStrings.enterValue(
+                      AppStrings.projectUrl.toLowerCase()),
                   validator: (value) => ValidatorUtils.customValidatorValidator(
-                      value, Strings.isRequired(Strings.projectUrl)),
+                      value, AppStrings.isRequired(AppStrings.projectUrl)),
                 ),
               ],
             ),
@@ -294,12 +294,12 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                   inputAction: TextInputAction.newline,
                   maxLines: 5,
                   inputType: TextInputType.multiline,
-                  label: Strings.projectDescription,
-                  hintText: Strings.enterValue(
-                      Strings.projectDescription.toLowerCase()),
+                  label: AppStrings.projectDescription,
+                  hintText: AppStrings.enterValue(
+                      AppStrings.projectDescription.toLowerCase()),
                   validator: (value) => ValidatorUtils.customValidatorValidator(
                     value,
-                    Strings.isRequired(Strings.projectDescription),
+                    AppStrings.isRequired(AppStrings.projectDescription),
                   ),
                 ),
                 SizedBox(
@@ -316,7 +316,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: NormalTextWidget(
-                    Strings.selectProjectFiles,
+                    AppStrings.selectProjectFiles,
                     textColor: Colors.white,
                   ),
                 ).onTapWidget(
@@ -379,7 +379,7 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
               height: 20,
             ),
             NormalButton(
-              label: isEditMode ? Strings.update : Strings.add,
+              label: isEditMode ? AppStrings.update : AppStrings.add,
               width: AppSizes.textfieldWidth(context),
               icon: isEditMode ? null : Icons.add,
               onTap: () {

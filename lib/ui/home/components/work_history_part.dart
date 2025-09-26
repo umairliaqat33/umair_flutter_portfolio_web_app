@@ -20,7 +20,7 @@ class WorkHistoryPart extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.workHistory,
+            AppStrings.workHistory,
             style: Theme.of(context).textTheme.displaySmall!.copyWith(
                   color: PortfolioAppTheme.nameColor,
                   fontWeight: FontWeight.w600,
@@ -45,7 +45,7 @@ class WorkHistoryPart extends StatelessWidget {
           else
             Center(
               child: Text(
-                Strings.noWorkHistory,
+                AppStrings.noWorkHistory,
               ),
             ),
         ],

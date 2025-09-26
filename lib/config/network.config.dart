@@ -150,21 +150,26 @@ class NetworkConfiguration {
 }
 
 class NoInternetException implements Exception {
-  NoInternetException({required String message});
+  final String message;
+  NoInternetException({required this.message});
 }
 
 class TimeoutException implements Exception {
-  TimeoutException({required String message});
+  final String message;
+  TimeoutException({required this.message});
 }
 
 class ServerException implements Exception {
-  ServerException({required String message});
+  final String message;
+  ServerException({required this.message});
 }
 
 class ClientException implements Exception {
-  ClientException({required String message});
+  final String message;
+  ClientException({required this.message});
 }
 
 class AuthException implements Exception {
-  AuthException({required String message});
+  final String message;
+  AuthException({required this.message});
 }
