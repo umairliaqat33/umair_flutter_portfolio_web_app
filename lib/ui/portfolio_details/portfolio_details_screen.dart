@@ -64,6 +64,10 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
               ],
             ),
           ),
+          IconButton(
+            onPressed: () => getUserData(),
+            icon: Icon(Icons.refresh),
+          ),
         ],
       ),
       body: BlocBuilder<DetailsBloc, DetailsState>(
@@ -162,6 +166,8 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
                     context.read<DetailsBloc>().state.profilePictureLink ??
                         user?.profilePicture ??
                         "",
+                email: userModel.email!,
+                id: userModel.id!,
               ),
             );
       }

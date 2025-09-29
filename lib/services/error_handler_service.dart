@@ -11,7 +11,7 @@ class ErrorHandlerService {
     Function? finallyOperation,
     required String functionName,
     String? error,
-    bool showSnackBar = false,
+    bool showToast = false,
   }) async {
     try {
       return await operation();
@@ -20,41 +20,51 @@ class ErrorHandlerService {
       if (catchOperation != null) {
         catchOperation();
       }
-      Fluttertoast.showToast(
-          msg:
-              "${AppStrings.failedToDoSomething(error ?? functionName)}: ${e.toString()}");
+      if (showToast) {
+        Fluttertoast.showToast(
+            msg:
+                "${AppStrings.failedToDoSomething(error ?? functionName)}: ${e.toString()}");
+      }
     } on ServerException catch (e) {
       log("ServerException: Error in $functionName: ${e.message}");
       if (catchOperation != null) {
         catchOperation();
       }
-      Fluttertoast.showToast(
-          msg:
-              "${AppStrings.failedToDoSomething(error ?? functionName)}: ${e.toString()}");
+      if (showToast) {
+        Fluttertoast.showToast(
+            msg:
+                "${AppStrings.failedToDoSomething(error ?? functionName)}: ${e.toString()}");
+      }
     } on ClientException catch (e) {
       log("ClientException: Error in $functionName: ${e.message}");
       if (catchOperation != null) {
         catchOperation();
       }
-      Fluttertoast.showToast(
-          msg:
-              "${AppStrings.failedToDoSomething(error ?? functionName)}: ${e.toString()}");
+      if (showToast) {
+        Fluttertoast.showToast(
+            msg:
+                "${AppStrings.failedToDoSomething(error ?? functionName)}: ${e.toString()}");
+      }
     } on NoInternetException catch (e) {
       log("NoInternetException: Error in $functionName: ${e.message}");
       if (catchOperation != null) {
         catchOperation();
       }
-      Fluttertoast.showToast(
-          msg:
-              "${AppStrings.failedToDoSomething(error ?? functionName)}: ${e.toString()}");
+      if (showToast) {
+        Fluttertoast.showToast(
+            msg:
+                "${AppStrings.failedToDoSomething(error ?? functionName)}: ${e.toString()}");
+      }
     } catch (e) {
       log("Error in $functionName: $e");
       if (catchOperation != null) {
         catchOperation();
       }
-      Fluttertoast.showToast(
-          msg:
-              "${AppStrings.failedToDoSomething(error ?? functionName)}: ${e.toString()}");
+      if (showToast) {
+        Fluttertoast.showToast(
+            msg:
+                "${AppStrings.failedToDoSomething(error ?? functionName)}: ${e.toString()}");
+      }
     } finally {
       if (finallyOperation != null) {
         finallyOperation();

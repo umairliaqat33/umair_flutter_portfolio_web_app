@@ -12,6 +12,7 @@ import 'package:umair_liaqat/models/job_history.dart';
 import 'package:umair_liaqat/models/project_model.dart';
 import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/models/user_model.dart';
+import 'package:umair_liaqat/repositories/qualification_repository.dart';
 import 'package:umair_liaqat/repositories/user_repository.dart';
 import 'package:umair_liaqat/services/media_service.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
@@ -38,7 +39,9 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     on<LoadInitialDetailsEvent>(_loadInitialData);
   }
   final Uuid _uuid = Uuid();
-
+  final UserRepository userRepository = UserRepository();
+  final QualificationRepository qualificationRepository =
+      QualificationRepository();
   Future<void> _loadInitialData(
     LoadInitialDetailsEvent event,
     Emitter<DetailsState> emit,
@@ -48,37 +51,14 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
         Fluttertoast.showToast(msg: "User not authenticated");
         return;
       }
-      UserRepository userRepository = UserRepository();
-
-      final projectsResponse =
-          await Supabase.instance.client.from(Collections.projects).select();
-
-      final jobsResponse =
-          await Supabase.instance.client.from(Collections.jobHistory).select();
-
-      final qualificationsResponse = await Supabase.instance.client
-          .from(Collections.qualifications)
-          .select()
-          .order('sortingIndex', ascending: true);
 
       final userModel = await userRepository.getUser();
 
-      final projects = (projectsResponse as List)
-          .map((e) => ProjectModel.fromMap(e))
-          .toList();
-
-      final jobs =
-          (jobsResponse as List).map((e) => JobHistory.fromMap(e)).toList();
-
-      final qualifications = (qualificationsResponse as List)
-          .map((e) => QualificationModel.fromMap(e))
-          .toList();
-
       emit(
         state.copyWith(
-          jobHistories: jobs,
-          qualificationsList: qualifications,
-          projectList: projects,
+          jobHistories: userModel?.jobs ?? [],
+          qualificationsList: userModel?.qualifications ?? [],
+          projectList: userModel?.projects ?? [],
           userModel: userModel,
         ),
       );
@@ -140,16 +120,16 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       UserDataUpdateEvent event, Emitter<DetailsState> emit) async {
     try {
       ToastUtils.showLoader(event.context);
-      final client = Supabase.instance.client;
-      final userEmail = client.auth.currentUser?.email;
+      // final client = Supabase.instance.client;
+      // final userEmail = client.auth.currentUser?.email;
 
-      if (userEmail == null) {
-        throw Exception("User not authenticated");
-      }
+      // if (userEmail == null) {
+      //   throw Exception("User not authenticated");
+      // }
       final UserModel userModel = UserModel(
         name: event.name,
         description: event.description,
-        email: userEmail,
+        email: event.email,
         headline1: event.headline1,
         headline2: event.headline2,
         profilePicture: event.profilePicture,
@@ -157,37 +137,12 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
         linkedIn: event.linkedIn,
         phoneNumber: event.phoneNumber,
         skills: event.skills,
+        id: event.id,
       );
-      final userResponse = await Supabase.instance.client
-          .from(Collections.user)
-          .select()
-          .limit(1)
-          .maybeSingle();
-      if (userResponse == null) {
-        final updateResponse = await client
-            .from('users')
-            .insert(userModel.toMapSimpleUser())
-            .eq('email', userEmail);
-        if (updateResponse != null) {
-          debugPrint(updateResponse);
-        }
-      } else {
-        final updateResponse = await client
-            .from('users')
-            .update(userModel.toMapSimpleUser())
-            .eq('email', userEmail);
-        if (updateResponse != null) {
-          debugPrint(updateResponse);
-        }
-      }
+
+      await userRepository.updateUser(userModel);
 
       Navigator.of(event.context).pop();
-
-      Fluttertoast.showToast(
-        msg: AppStrings.valueUpdated(
-          AppStrings.userDetails,
-        ),
-      );
     } catch (e) {
       Navigator.of(event.context).pop();
 
@@ -300,29 +255,19 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
 
   Future<void> _uploadQualification(
       UploadQualification event, Emitter<DetailsState> emit) async {
-    final userId = Supabase.instance.client.auth.currentUser?.id;
-    if (userId == null) {
-      Fluttertoast.showToast(msg: "User not authenticated");
-      return;
-    }
-
-    final id = _uuid.v4();
     try {
       ToastUtils.showLoader(event.context);
 
       final qualificationModel = QualificationModel(
-        id: id,
         completionYear: event.completionYear,
         degreeName: event.degreeName,
         instituteName: event.institute,
         sortingIndex: event.sortIndex,
+        userId: state.userModel?.id ?? "",
       );
 
-      final data = qualificationModel.toMap()..addAll({'userId': userId});
+      await qualificationRepository.addQualification(qualificationModel);
 
-      await Supabase.instance.client
-          .from(Collections.qualifications)
-          .insert(data);
       List<QualificationModel> updatedList = [
         ...state.qualificationsList ?? [],
         qualificationModel
@@ -341,23 +286,12 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
 
   Future<void> _updateQualification(
       UpdateQualification event, Emitter<DetailsState> emit) async {
-    final userId = Supabase.instance.client.auth.currentUser?.id;
-    if (userId == null) {
-      Fluttertoast.showToast(msg: "User not authenticated");
-      return;
-    }
-
     try {
       ToastUtils.showLoader(event.context);
 
-      event.qualificationModel =
-          event.qualificationModel.copyWith(userId: userId);
-
-      await Supabase.instance.client
-          .from(Collections.qualifications)
-          .update(event.qualificationModel.toMap())
-          .eq('id', event.qualificationModel.id!)
-          .eq('userId', userId);
+      event.qualificationModel = event.qualificationModel;
+      await qualificationRepository
+          .updateQualification(event.qualificationModel);
 
       Navigator.of(event.context).pop();
       Navigator.of(event.context).pop();

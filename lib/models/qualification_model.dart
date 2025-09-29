@@ -19,7 +19,7 @@ class QualificationModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      // 'id': id,
       'instituteName': instituteName,
       'completionYear': completionYear,
       'degreeName': degreeName,
@@ -30,7 +30,7 @@ class QualificationModel {
 
   factory QualificationModel.fromMap(Map<String, dynamic> map) {
     return QualificationModel(
-      id: map['id'] != null ? map['id'] as String : null,
+      id: map['_id'] != null ? map['_id'] as String : null,
       instituteName:
           map['instituteName'] != null ? map['instituteName'] as String : null,
       completionYear: map['completionYear'] != null

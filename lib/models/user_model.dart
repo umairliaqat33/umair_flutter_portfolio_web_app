@@ -7,6 +7,7 @@ import 'package:umair_liaqat/models/qualification_model.dart';
 
 class UserModel {
   String? name;
+  String? id;
   String? description;
   String? email;
   String? skills;
@@ -33,6 +34,7 @@ class UserModel {
     this.jobs,
     this.description,
     this.skills,
+    this.id,
   });
 
   Map<String, dynamic> toMap() {
@@ -47,9 +49,6 @@ class UserModel {
       'phoneNumber': phoneNumber,
       'linkedIn': linkedIn,
       'github': github,
-      'qualifications': qualifications?.map((x) => x.toMap()).toList(),
-      'projects': projects?.map((x) => x.toMap()).toList(),
-      'jobs': jobs?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -65,12 +64,14 @@ class UserModel {
       'phoneNumber': phoneNumber,
       'linkedIn': linkedIn,
       'github': github,
+      'id': id,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       name: map['name'] != null ? map['name'] as String : null,
+      id: map['_id'] != null ? map['_id'] as String : null,
       description:
           map['description'] != null ? map['description'] as String : null,
       skills: map['skills'] != null ? map['skills'] as String : null,
@@ -86,21 +87,21 @@ class UserModel {
       github: map['github'] != null ? map['github'] as String : null,
       qualifications: map['qualifications'] != null
           ? List<QualificationModel>.from(
-              (map['qualifications'] as List<int>).map<QualificationModel?>(
+              (map['qualifications'] as List).map<QualificationModel?>(
                 (x) => QualificationModel.fromMap(x as Map<String, dynamic>),
               ),
             )
           : null,
       projects: map['projects'] != null
           ? List<ProjectModel>.from(
-              (map['projects'] as List<int>).map<ProjectModel?>(
+              (map['projects'] as List).map<ProjectModel?>(
                 (x) => ProjectModel.fromMap(x as Map<String, dynamic>),
               ),
             )
           : null,
       jobs: map['jobs'] != null
           ? List<JobHistory>.from(
-              (map['jobs'] as List<int>).map<JobHistory?>(
+              (map['jobs'] as List).map<JobHistory?>(
                 (x) => JobHistory.fromMap(x as Map<String, dynamic>),
               ),
             )
@@ -114,6 +115,7 @@ class UserModel {
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   UserModel copyWith({
+    String? id,
     String? name,
     String? description,
     String? email,
@@ -130,6 +132,7 @@ class UserModel {
   }) {
     return UserModel(
       name: name ?? this.name,
+      id: id ?? this.id,
       description: description ?? this.description,
       email: email ?? this.email,
       profilePicture: profilePicture ?? this.profilePicture,

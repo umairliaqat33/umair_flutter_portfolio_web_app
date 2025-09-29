@@ -58,6 +58,7 @@ class UpdateProjectEvent extends DetailsEvents {
 
 class UserDataUpdateEvent extends DetailsEvents {
   final String name;
+  final String id;
   final BuildContext context;
   final String description;
   final String headline1;
@@ -67,9 +68,12 @@ class UserDataUpdateEvent extends DetailsEvents {
   final String profilePicture;
   final String phoneNumber;
   final String skills;
+  final String email;
 
   UserDataUpdateEvent({
+    required this.email,
     required this.name,
+    required this.id,
     required this.context,
     required this.description,
     required this.headline1,
@@ -92,6 +96,8 @@ class UserDataUpdateEvent extends DetailsEvents {
         phoneNumber,
         context,
         skills,
+        email,
+        id,
       ];
 }
 

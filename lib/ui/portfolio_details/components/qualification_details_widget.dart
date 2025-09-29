@@ -50,7 +50,7 @@ class _QualificationDetailsWidgetState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           HeadingTextWidget(
-            AppStrings.addADegree,
+            AppStrings.addAQualification,
           ),
           SizedBox(
             height: 20,
@@ -102,7 +102,12 @@ class _QualificationDetailsWidgetState
     );
   }
 
-  Widget fieldsPart({bool? isEditMode, int? index, String? id}) {
+  Widget fieldsPart({
+    bool? isEditMode,
+    int? index,
+    String? id,
+    String? userId,
+  }) {
     return Column(
       children: [
         Row(
@@ -171,7 +176,11 @@ class _QualificationDetailsWidgetState
           icon: (isEditMode ?? false) ? null : Icons.add,
           onTap: () {
             (isEditMode ?? false)
-                ? editQualification(index!, id!)
+                ? editQualification(
+                    index!,
+                    id!,
+                    userId!,
+                  )
                 : widget.addQualification(
                     QualificationModel(
                       completionYear: _completionDateController.text,
@@ -215,6 +224,7 @@ class _QualificationDetailsWidgetState
               isEditMode: true,
               id: qualification.id,
               index: index,
+              userId: qualification.userId,
             ),
           ),
         );
@@ -222,13 +232,14 @@ class _QualificationDetailsWidgetState
     );
   }
 
-  Future<void> editQualification(int index, String id) async {
+  Future<void> editQualification(int index, String id, String userID) async {
     QualificationModel model = QualificationModel(
       id: id,
       instituteName: _instituteController.text,
       degreeName: _degreeController.text,
       sortingIndex: int.parse(_qualificationSortingIndexController.text),
       completionYear: _completionDateController.text,
+      userId: userID,
     );
     context.read<DetailsBloc>().add(
           UpdateQualification(

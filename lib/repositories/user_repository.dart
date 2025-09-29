@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:umair_liaqat/config/app_configurations.dart';
 import 'package:umair_liaqat/config/network.config.dart';
 import 'package:umair_liaqat/models/user_model.dart';
@@ -29,6 +30,22 @@ class UserRepository extends NetworkConfiguration {
     );
   }
 
+  Future<UserModel?> getUserWithoutToken() async {
+    return await ErrorHandlerService.errorHandler(
+      operation: () async {
+        var response = await get(
+          endpoint: ApiEndpoints.getUserWithoutToken,
+        );
+        if (response.statusCode == 200) {
+          final user = UserModel.fromJson(response.body);
+          return user;
+        }
+        return null;
+      },
+      functionName: "getUser",
+    );
+  }
+
   Future<UserModel?> getUser() async {
     return await ErrorHandlerService.errorHandler(
       operation: () async {
@@ -43,6 +60,24 @@ class UserRepository extends NetworkConfiguration {
         return null;
       },
       functionName: "getUser",
+    );
+  }
+
+  Future<void> updateUser(UserModel user) async {
+    await ErrorHandlerService.errorHandler(
+      operation: () async {
+        var response = await put(
+          endpoint: "${ApiEndpoints.getUser}/${user.id ?? ""}",
+          body: user.toMap(),
+        );
+        if (response.statusCode == 200) {
+          Fluttertoast.showToast(
+            msg: AppStrings.valueUpdated(AppStrings.userDetails),
+          );
+        }
+      },
+      showToast: true,
+      functionName: "updateUser",
     );
   }
 }

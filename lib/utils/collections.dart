@@ -7,7 +7,7 @@ class Collections {
   static String user = "${api}user";
   static String auth = "${api}auth";
   static String jobHistory = "job_history";
-  static String qualifications = "qualifications";
+  static String qualifications = "${api}qualification";
   static String storageBucketId = "portfolio";
   static String projects = "projects";
 }
@@ -15,4 +15,7 @@ class Collections {
 class ApiEndpoints {
   static String login = "${Collections.auth}/login";
   static String getUser = "${Collections.user}/user";
+  static String getUserWithoutToken = "${Collections.user}/tokenLessUser";
+  static String addQualification = "${Collections.qualifications}/";
+  static String updateQualification = "${Collections.qualifications}/";
 }

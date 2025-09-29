@@ -129,7 +129,7 @@ class NetworkConfiguration {
       try {
         var jsonData = jsonDecode(response.body);
 
-        if (response.statusCode == 200) {
+        if (response.statusCode == 200 || response.statusCode == 201) {
           return response;
         } else if (jsonData['message'] != null) {
           if (response.statusCode == 401) {

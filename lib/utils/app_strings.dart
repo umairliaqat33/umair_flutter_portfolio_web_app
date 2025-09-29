@@ -59,7 +59,8 @@ class AppStrings {
   static String sortingIndex = "Sorting Index (At what index will this show?)";
   static String profilePictureSize =
       "Picture's dimensions must be 2494 x 2494.";
-  static String addADegree = "Add a degree";
+
+  static String addAQualification = "Add a Qualification";
   static String enterValidEmail = "Enter a valid email";
   static String addAProject = "Add a project";
   static String addWorkHistory = "Add work history";

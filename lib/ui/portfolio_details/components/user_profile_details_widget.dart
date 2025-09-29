@@ -243,6 +243,18 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                       width: AppSizes.textfieldWidth(context),
                       icon: Icons.add,
                       onTap: () {
+                        _descriptionController.text =
+                            "I'm a multi-skilled professional with over 5 years of experience in mobile app development,customer support, and sales. I specialize in building cross-platform Flutter applications with clean architecture, Google maps, API integration, and responsive UI. With a strong foundation in both technical execution and client communication, I bring a balanced approach to solving real-world problems and delivering user-focused digital solutions.";
+                        _githubController.text =
+                            'https://github.com/umairliaqat33';
+                        _titleController.text = 'Flutter Developer';
+                        _title2Controller.text =
+                            'Technical Customer Support and Sales Representative';
+                        _linkedInController.text =
+                            'https://www.linkedin.com/in/umair-liaqat-305450228/';
+                        _phoneController.text = '+923134146206';
+                        _skillsController.text =
+                            'Flutter Development, Mobile application development, Branch Sdk, Socket.io, Rest api, Google Maps, Deep linking, RESTful APIs Integration, Firebase, Firestore, Debugging, GetX, Bloc, Provider, Go Router, UI/UX, FCM, Firebase cloud messaging, Twilio, Speech to text, Text to speech, Git, MVC, MVVM, Stripe, Payment Gateway, Flutter web, Flutter dektop, Google sign-in, Facebook sign-in,';
                         widget.updateUserData(
                           UserModel(
                             description: _descriptionController.text,
@@ -253,6 +265,8 @@ class _UserProfileDetailsWidgetState extends State<UserProfileDetailsWidget> {
                             name: _userNameController.text,
                             phoneNumber: _phoneController.text,
                             skills: _skillsController.text,
+                            email: widget.userModel?.email ?? "",
+                            id: widget.userModel?.id ?? "",
                           ),
                         );
                       },

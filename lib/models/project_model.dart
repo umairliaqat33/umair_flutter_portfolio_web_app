@@ -64,7 +64,7 @@ class ProjectModel {
   factory ProjectModel.fromMap(Map<String, dynamic> map) {
     return ProjectModel(
       name: map['name'] != null ? map['name'] as String : null,
-      id: map['id'] != null ? map['id'] as String : null,
+      id: map['_id'] != null ? map['_id'] as String : null,
       description:
           map['description'] != null ? map['description'] as String : null,
       link: map['link'] != null ? map['link'] as String : null,

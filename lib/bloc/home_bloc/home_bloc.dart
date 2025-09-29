@@ -3,13 +3,9 @@ import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:umair_liaqat/models/job_history.dart';
-import 'package:umair_liaqat/models/project_model.dart';
-import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/models/user_model.dart';
+import 'package:umair_liaqat/repositories/user_repository.dart';
 import 'package:umair_liaqat/utils/app_enum.dart';
-import 'package:umair_liaqat/utils/collections.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
@@ -22,6 +18,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetUserData>(_getUserData);
   }
   int _appBarHeaderIndex = 0;
+  final UserRepository userRepository = UserRepository();
   UserModel? userModel;
   int get appBarHeaderIndex => _appBarHeaderIndex;
   bool isLoading = false;
@@ -70,21 +67,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           isLoading: true,
         ),
       );
-      final userResponse = await Supabase.instance.client
-          .from(Collections.supabaseUsers)
-          .select()
-          .limit(1)
-          .maybeSingle();
-      List<ProjectModel> projectsList = await getProjects() ?? [];
-      List<JobHistory> jobsList = await getJobHistory() ?? [];
-      List<QualificationModel> qualificationsList =
-          await getQualifications() ?? [];
-      if (userResponse != null) {
-        // var data = querySnapshot.docs.first.data() as Map<String, dynamic>;
-        userModel = UserModel.fromMap(userResponse);
-        userModel?.projects = projectsList;
-        userModel?.qualifications = qualificationsList;
-        userModel?.jobs = jobsList;
+      final user = await userRepository.getUserWithoutToken();
+      if (user != null) {
+        userModel = user;
         emit(
           state.copyWith(
             userData: userModel,
@@ -99,51 +84,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           isLoading: false,
         ),
       );
-    }
-  }
-
-  Future<List<ProjectModel>?> getProjects() async {
-    try {
-      final response = await Supabase.instance.client
-          .from(Collections.projects)
-          .select(); // Optional if needed
-
-      return (response as List<dynamic>)
-          .map((data) => ProjectModel.fromMap(data as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      log("Error while fetching projects information: $e");
-      return null;
-    }
-  }
-
-  Future<List<QualificationModel>?> getQualifications() async {
-    try {
-      final response = await Supabase.instance.client
-          .from(Collections.qualifications)
-          .select()
-          .order('sortingIndex', ascending: true);
-
-      return (response as List)
-          .map((e) => QualificationModel.fromMap(e as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      log("Error while fetching qualifications: $e");
-      return null;
-    }
-  }
-
-  Future<List<JobHistory>?> getJobHistory() async {
-    try {
-      final response =
-          await Supabase.instance.client.from(Collections.jobHistory).select();
-
-      return (response as List)
-          .map((e) => JobHistory.fromMap(e as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      log("Error while fetching jobs information: $e");
-      return null;
     }
   }
 }

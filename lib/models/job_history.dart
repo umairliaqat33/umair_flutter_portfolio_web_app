@@ -72,7 +72,7 @@ class JobHistory {
   factory JobHistory.fromMap(Map<String, dynamic> map) {
     return JobHistory(
       position: map['position'] != null ? map['position'] as String : null,
-      id: map['id'] != null ? map['id'] as String : null,
+      id: map['_id'] != null ? map['_id'] as String : null,
       userId: map['userId'] != null ? map['userId'] as String : null,
       jobDescription: map['jobDescription'] != null
           ? map['jobDescription'] as String
