@@ -9,7 +9,7 @@ class QualificationRepository extends NetworkConfiguration {
     await ErrorHandlerService.errorHandler(
       operation: () async {
         var response = await post(
-            endpoint: ApiEndpoints.addQualification,
+            endpoint: ApiEndpoints.qualificationCrudRoute,
             body: qualification.toMap());
 
         if (response.statusCode == 200) {
@@ -25,11 +25,23 @@ class QualificationRepository extends NetworkConfiguration {
     await ErrorHandlerService.errorHandler(
       operation: () async {
         await put(
-          endpoint: "${ApiEndpoints.updateQualification}${qualification.id}",
+          endpoint: "${ApiEndpoints.qualificationCrudRoute}${qualification.id}",
           body: qualification.toMap(),
         );
       },
       functionName: 'updateQualification',
+      showToast: true,
+    );
+  }
+
+  Future<void> deleteQualification(String qualificationId) async {
+    await ErrorHandlerService.errorHandler(
+      operation: () async {
+        await delete(
+          endpoint: "${ApiEndpoints.qualificationCrudRoute}$qualificationId",
+        );
+      },
+      functionName: 'deleteQualification',
       showToast: true,
     );
   }

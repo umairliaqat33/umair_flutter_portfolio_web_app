@@ -12,19 +12,22 @@ class CustomTextField extends StatelessWidget {
   final bool isPass;
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final TextInputAction? inputAction;
 
-  const CustomTextField(
-      {super.key,
-      required this.hintText,
-      this.obscureText = false,
-      this.prefix,
-      this.suffixButton,
-      this.textInputType = TextInputType.text,
-      this.suffix,
-      this.validator,
-      this.isPass = false,
-      this.maxLines,
-      required this.controller});
+  const CustomTextField({
+    super.key,
+    required this.hintText,
+    required this.controller,
+    this.obscureText = false,
+    this.prefix,
+    this.suffixButton,
+    this.textInputType = TextInputType.text,
+    this.suffix,
+    this.validator,
+    this.isPass = false,
+    this.maxLines,
+    this.inputAction,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: textInputType,
       obscureText: obscureText,
       controller: controller,
+      textInputAction: inputAction,
       decoration: InputDecoration(
         suffix: suffixButton,
         hintText: hintText,

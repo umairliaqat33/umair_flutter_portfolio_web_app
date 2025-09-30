@@ -46,8 +46,6 @@ class MediaService {
     bool isForProfile = false,
   }) async {
     try {
-      final userId = Supabase.instance.client.auth.currentUser?.id;
-      if (userId == null) return null;
       final filePath =
           "${isForProfile ? "profile" : "projects"}/${DateTime.now().millisecondsSinceEpoch}_${file.name}";
 

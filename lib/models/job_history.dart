@@ -9,14 +9,14 @@ class JobHistory {
   String? fromDate;
   String? toDate;
   String? userId;
-  int? sortIndex;
+  int? sortingIndex;
   JobHistory({
     this.position,
     this.jobDescription,
     this.organization,
     this.fromDate,
     this.toDate,
-    this.sortIndex,
+    this.sortingIndex,
     this.id,
     this.userId,
   });
@@ -28,7 +28,7 @@ class JobHistory {
     String? fromDate,
     String? toDate,
     String? userId,
-    int? sortIndex,
+    int? sortingIndex,
     String? id,
   }) {
     return JobHistory(
@@ -37,7 +37,7 @@ class JobHistory {
       organization: organization ?? this.organization,
       fromDate: fromDate ?? this.fromDate,
       toDate: toDate ?? this.toDate,
-      sortIndex: sortIndex ?? this.sortIndex,
+      sortingIndex: sortingIndex ?? this.sortingIndex,
       id: id ?? this.id,
       userId: userId ?? this.userId,
     );
@@ -50,7 +50,7 @@ class JobHistory {
       'organization': organization,
       'fromDate': fromDate,
       'toDate': toDate,
-      'sortIndex': sortIndex,
+      'sortingIndex': sortingIndex,
       'userId': userId,
       'id': id,
     };
@@ -64,7 +64,7 @@ class JobHistory {
       'FromDate': fromDate,
       'To Date': toDate,
       'userId': userId,
-      'Sort Index': sortIndex,
+      'Sort Index': sortingIndex,
       'Id': id,
     };
   }
@@ -81,7 +81,8 @@ class JobHistory {
           map['organization'] != null ? map['organization'] as String : null,
       fromDate: map['fromDate'] != null ? map['fromDate'] as String : null,
       toDate: map['toDate'] != null ? map['toDate'] as String : null,
-      sortIndex: map['sortIndex'] != null ? map['sortIndex'] as int : null,
+      sortingIndex:
+          map['sortingIndex'] != null ? map['sortingIndex'] as int : null,
     );
   }
 

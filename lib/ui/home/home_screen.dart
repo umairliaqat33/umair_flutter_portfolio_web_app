@@ -183,7 +183,7 @@ class _HomeBodyState extends State<HomeBody> {
                                             .userModel
                                             ?.jobs ??
                                         [],
-                                    (model) => model.sortIndex,
+                                    (model) => model.sortingIndex,
                                     isReversed: true,
                                   );
                                   // if (context.watch<HomeBloc>().state.userModel == null) {

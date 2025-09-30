@@ -12,20 +12,20 @@ import 'package:umair_liaqat/models/job_history.dart';
 import 'package:umair_liaqat/models/project_model.dart';
 import 'package:umair_liaqat/models/qualification_model.dart';
 import 'package:umair_liaqat/models/user_model.dart';
+import 'package:umair_liaqat/repositories/job_history_repository.dart';
+import 'package:umair_liaqat/repositories/projects_repository.dart';
 import 'package:umair_liaqat/repositories/qualification_repository.dart';
 import 'package:umair_liaqat/repositories/user_repository.dart';
 import 'package:umair_liaqat/services/media_service.dart';
 import 'package:umair_liaqat/utils/app_strings.dart';
-import 'package:umair_liaqat/utils/collections.dart';
 import 'package:umair_liaqat/utils/toast_utils.dart';
-import 'package:uuid/uuid.dart';
 
 class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
   DetailsBloc() : super(DetailInitial()) {
     on<ImagePickEvent>(_imagePick);
     on<PickProjectFilesEvent>(_selectProjectFiles);
     on<UserDataUpdateEvent>(_updateUserProfile);
-    on<UploadWorkHistory>(_uploadWorkHistory);
+    on<UploadWorkHistory>(_uploadJobHistory);
     on<UploadQualification>(_uploadQualification);
     on<DeleteQualification>(_deleteQualification);
     on<DeleteWorkHistory>(_deleteJobHistory);
@@ -33,13 +33,14 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     on<UploadProjectEvent>(_uploadProject);
     on<UpdateProjectEvent>(_updateProject);
     on<UpdateQualification>(_updateQualification);
-    on<UpdateWorkHistory>(_updateWorkHistory);
+    on<UpdateWorkHistory>(_updateJobHistory);
     on<DeleteProjectFilesEvent>(_deleteProjectImage);
     on<DeleteProjectAllFilesEvent>(_deleteAllProjectImages);
     on<LoadInitialDetailsEvent>(_loadInitialData);
   }
-  final Uuid _uuid = Uuid();
   final UserRepository userRepository = UserRepository();
+  final JobHistoryRepository jobHistoryRepository = JobHistoryRepository();
+  final ProjectRepository projectRepository = ProjectRepository();
   final QualificationRepository qualificationRepository =
       QualificationRepository();
   Future<void> _loadInitialData(
@@ -152,36 +153,28 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     }
   }
 
-  Future<void> _uploadWorkHistory(
+  Future<void> _uploadJobHistory(
       UploadWorkHistory event, Emitter<DetailsState> emit) async {
-    final userId = Supabase.instance.client.auth.currentUser?.id;
-    if (userId == null) {
-      Fluttertoast.showToast(msg: "User not authenticated");
-      return;
-    }
-
-    String id = _uuid.v4();
     try {
       ToastUtils.showLoader(event.context);
 
       JobHistory jobHistory = JobHistory(
-        id: id,
         fromDate: event.fromDate,
         toDate: event.toDate,
         jobDescription: event.description,
         organization: event.organization,
         position: event.jobPosition,
-        sortIndex: event.sortIndex,
-        userId: userId, // Make sure your model has this
+        sortingIndex: event.sortIndex,
+        userId: state.userModel?.id, // Make sure your model has this
       );
 
-      await Supabase.instance.client
-          .from(Collections.jobHistory)
-          .insert(jobHistory.toMap());
+      final job = await jobHistoryRepository.addJobHistory(jobHistory);
 
-      List<JobHistory> updatedList = [...state.jobHistories ?? [], jobHistory];
+      if (job != null) {
+        List<JobHistory> updatedList = [...state.jobHistories ?? [], job];
 
-      emit(state.copyWith(jobHistories: updatedList));
+        emit(state.copyWith(jobHistories: updatedList));
+      }
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(
           msg: AppStrings.valueAdded(AppStrings.workHistory));
@@ -192,22 +185,12 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     }
   }
 
-  Future<void> _updateWorkHistory(
+  Future<void> _updateJobHistory(
       UpdateWorkHistory event, Emitter<DetailsState> emit) async {
-    final userId = Supabase.instance.client.auth.currentUser?.id;
-    if (userId == null) {
-      Fluttertoast.showToast(msg: "User not authenticated");
-      return;
-    }
-
     try {
       ToastUtils.showLoader(event.context);
 
-      await Supabase.instance.client
-          .from(Collections.jobHistory)
-          .update(event.jobHistory.toMap())
-          .eq('id', event.jobHistory.id!)
-          .eq('userId', userId); // ownership check
+      await jobHistoryRepository.updateJobHistory(event.jobHistory);
 
       Navigator.of(event.context).pop();
       Navigator.of(event.context).pop();
@@ -306,20 +289,10 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
 
   Future<void> _deleteQualification(
       DeleteQualification event, Emitter<DetailsState> emit) async {
-    final userId = Supabase.instance.client.auth.currentUser?.id;
-    if (userId == null) {
-      Fluttertoast.showToast(msg: "User not authenticated");
-      return;
-    }
-
     try {
       ToastUtils.showLoader(event.context);
 
-      await Supabase.instance.client
-          .from(Collections.qualifications)
-          .delete()
-          .eq('id', event.id)
-          .eq('userId', userId);
+      await qualificationRepository.deleteQualification(event.id);
 
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(
@@ -333,20 +306,10 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
 
   Future<void> _deleteJobHistory(
       DeleteWorkHistory event, Emitter<DetailsState> emit) async {
-    final userId = Supabase.instance.client.auth.currentUser?.id;
-    if (userId == null) {
-      Fluttertoast.showToast(msg: "User not authenticated");
-      return;
-    }
-
     try {
       ToastUtils.showLoader(event.context);
 
-      await Supabase.instance.client
-          .from(Collections.jobHistory)
-          .delete()
-          .eq('id', event.id)
-          .eq('userId', userId); // prevent deleting others' data
+      await jobHistoryRepository.deleteJobHistory(event.id);
 
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(
@@ -365,10 +328,7 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     try {
       ToastUtils.showLoader(event.context);
 
-      await Supabase.instance.client
-          .from('projects')
-          .delete()
-          .eq('id', event.id);
+      await projectRepository.deleteProject(event.id);
 
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: AppStrings.valueDeleted(AppStrings.project));
@@ -383,19 +343,14 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
     UploadProjectEvent event,
     Emitter<DetailsState> emit,
   ) async {
-    final id = _uuid.v4();
     try {
-      final userId = Supabase.instance.client.auth.currentUser?.id;
-      if (userId == null) {
-        Fluttertoast.showToast(msg: "User not authenticated");
-        return;
-      }
       ToastUtils.showLoader(event.context);
 
-      List<String> linksList = [];
+      List<String>? linksList;
 
       if (event.projectModel.files != null &&
           event.projectModel.files!.isNotEmpty) {
+        linksList = [];
         for (PlatformFile file in event.projectModel.files!) {
           String? link = await MediaService.uploadPlatformFile(file);
           if (link != null && link.isNotEmpty) {
@@ -405,20 +360,16 @@ class DetailsBloc extends Bloc<DetailsEvents, DetailsState> {
       }
 
       ProjectModel projectModel = event.projectModel.copyWith(
-        id: id,
         filesLinks: linksList,
-        userId: userId,
+        userId: state.userModel?.id,
       );
 
-      await Supabase.instance.client
-          .from('projects')
-          .insert(projectModel.toMap());
-      List<ProjectModel> updatedList = [
-        ...state.projectList ?? [],
-        projectModel
-      ];
+      final project = await projectRepository.addProject(projectModel);
+      if (project != null) {
+        List<ProjectModel> updatedList = [...state.projectList ?? [], project];
 
-      emit(state.copyWith(projectList: updatedList));
+        emit(state.copyWith(projectList: updatedList));
+      }
       Navigator.of(event.context).pop();
       Fluttertoast.showToast(msg: AppStrings.valueAdded(AppStrings.project));
     } catch (e) {

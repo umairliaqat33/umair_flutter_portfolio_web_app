@@ -64,10 +64,6 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
               ],
             ),
           ),
-          IconButton(
-            onPressed: () => getUserData(),
-            icon: Icon(Icons.refresh),
-          ),
         ],
       ),
       body: BlocBuilder<DetailsBloc, DetailsState>(
@@ -193,7 +189,7 @@ class _PortfolioDetailsScreenState extends State<PortfolioDetailsScreen> {
             UploadWorkHistory(
               organization: jobHistory.organization!,
               jobPosition: jobHistory.position!,
-              sortIndex: jobHistory.sortIndex!,
+              sortIndex: jobHistory.sortingIndex!,
               fromDate: jobHistory.fromDate!,
               toDate: jobHistory.toDate!,
               description: jobHistory.jobDescription!,

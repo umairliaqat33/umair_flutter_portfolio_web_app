@@ -91,6 +91,10 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                               context: context,
                             ),
                           );
+
+                      _projectDescriptionController.clear();
+                      _projectNameController.clear();
+                      _projectUrlController.clear();
                     },
                   ),
                   if (widget.projectsList.isNotEmpty && !widget.isEditMode) ...[
@@ -391,13 +395,9 @@ class _ProjectDetailsWidgetState extends State<ProjectDetailsWidget> {
                     description: _projectDescriptionController.text,
                     link: _projectUrlController.text,
                     name: _projectNameController.text,
-                    userId: project?.userId,
                   );
                   onTap(projectModel);
                   setState(() {});
-                  _projectDescriptionController.clear();
-                  _projectNameController.clear();
-                  _projectUrlController.clear();
                 }
               },
             ),

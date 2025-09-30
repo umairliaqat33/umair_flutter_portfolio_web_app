@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:umair_liaqat/config/app_configurations.dart';
 import 'package:umair_liaqat/config/network.config.dart';
@@ -43,6 +45,54 @@ class UserRepository extends NetworkConfiguration {
         return null;
       },
       functionName: "getUser",
+    );
+  }
+
+  Future<void> contactForm(
+      {required String email,
+      required String name,
+      required String message,
+      required BuildContext context}) async {
+    await ErrorHandlerService.errorHandler(
+      operation: () async {
+        var response = await post(endpoint: ApiEndpoints.contactForm, body: {
+          "Email": email,
+          "Name": name,
+          "Message": message,
+          'Subject': "Flutter web portfolio.",
+          'Timestamp': DateTime.now().toString(),
+        });
+
+        if (response.statusCode == 200) {
+          final json = jsonDecode(response.body);
+          if (json['ok']) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("Your response has been recorded!"),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
+        } else {
+          log(response.body);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Error submitting form"),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      catchOperation: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text("Error submitting form"),
+            backgroundColor: Colors.red,
+          ),
+        );
+      },
+      functionName: "contactForm",
     );
   }
 

@@ -119,7 +119,8 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
 
     _jobDescriptionController.text = qualification.jobDescription ?? "";
 
-    _jobSortingIndexController.text = qualification.sortIndex?.toString() ?? "";
+    _jobSortingIndexController.text =
+        qualification.sortingIndex?.toString() ?? "";
     await showDialog(
       context: context,
       builder: (context) {
@@ -244,7 +245,7 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
                   organization: _organizationController.text,
                   position: _positionController.text,
                   toDate: _toDateController.text,
-                  sortIndex: int.parse(_jobSortingIndexController.text),
+                  sortingIndex: int.parse(_jobSortingIndexController.text),
                 );
                 context.read<DetailsBloc>().add(
                       UpdateWorkHistory(
@@ -261,7 +262,7 @@ class _WorkHistoryDetailsWidgetState extends State<WorkHistoryDetailsWidget> {
                     jobDescription: _jobDescriptionController.text,
                     organization: _organizationController.text,
                     position: _positionController.text,
-                    sortIndex: int.parse(_jobSortingIndexController.text),
+                    sortingIndex: int.parse(_jobSortingIndexController.text),
                     toDate: _toDateController.text,
                   ),
                 );

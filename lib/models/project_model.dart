@@ -47,8 +47,8 @@ class ProjectModel {
       'id': id,
       'description': description,
       'link': link,
-      'user_id': userId,
-      'files': filesLinks,
+      'userId': userId,
+      'filesLinks': filesLinks,
     };
   }
 
@@ -68,9 +68,9 @@ class ProjectModel {
       description:
           map['description'] != null ? map['description'] as String : null,
       link: map['link'] != null ? map['link'] as String : null,
-      userId: map['user_id'] != null ? map['user_id'] as String : null,
-      filesLinks: map['files'] != null
-          ? List<String>.from((map['files'] as List))
+      userId: map['userId'] != null ? map['userId'] as String : null,
+      filesLinks: map['filesLinks'] != null
+          ? List<String>.from((map['filesLinks'] as List))
           : null,
     );
   }

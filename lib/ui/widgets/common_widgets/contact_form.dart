@@ -1,10 +1,8 @@
-import 'dart:developer';
-
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:umair_liaqat/utils/app_theme.dart';
+
+import 'package:umair_liaqat/repositories/user_repository.dart';
 import 'package:umair_liaqat/ui/widgets/common_widgets/custom_textfield.dart';
+import 'package:umair_liaqat/utils/app_theme.dart';
 
 class ContactForm extends StatefulWidget {
   const ContactForm({super.key});
@@ -21,43 +19,13 @@ class _ContactFormState extends State<ContactForm> {
 
   Future<void> _submitForm() async {
     if (!_formKey.currentState!.validate()) return;
-
-    final formData = {
-      'name': nameController.text,
-      'email': emailController.text,
-      'message': subjectController.text,
-      'subject': "Flutter web portfolio.",
-      'timestamp': DateTime.now().toString(),
-    };
-
-    try {
-      // Save to Firebase Firestore
-      // await FirebaseFirestore.instance.collection('contact_form').add(formData);
-
-      // Send email notification
-      await sendEmail(
-        formData,
-      ); // Show success Snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("Your response has been recorded!"),
-          backgroundColor: Colors.green,
-        ),
-      );
-
-      // Clear form fields
-      nameController.clear();
-      emailController.clear();
-      subjectController.clear();
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Error submitting form: $e"),
-          backgroundColor: Colors.red,
-        ),
-      );
-      log(e.toString());
-    }
+    UserRepository userRepository = UserRepository();
+    await userRepository.contactForm(
+      email: emailController.text,
+      name: nameController.text,
+      message: subjectController.text,
+      context: context,
+    );
   }
 
   @override
@@ -88,7 +56,9 @@ class _ContactFormState extends State<ContactForm> {
           CustomTextField(
             hintText: 'Subject & Description',
             controller: subjectController,
-            maxLines: 4,
+            inputAction: TextInputAction.newline,
+            maxLines: 5,
+            textInputType: TextInputType.multiline,
             validator: (value) =>
                 value == null || value.isEmpty ? 'Please enter subject' : null,
           ),
@@ -113,23 +83,5 @@ class _ContactFormState extends State<ContactForm> {
         ],
       ),
     );
-  }
-}
-
-Future<void> sendEmail(var data) async {
-  final url = Uri.parse('https://formspree.io/f/xrgwqbnz');
-
-  final response = await http.post(
-    url,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: jsonEncode(data),
-  );
-
-  if (response.statusCode == 200) {
-    log("Email sent successfully!");
-  } else {
-    log("Failed to send email: ${response.body}");
   }
 }
